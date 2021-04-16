@@ -3,6 +3,8 @@ title: JavaScript类型你不知道的细节
 date: 2021-02-01 16:57:49
 tags:
 - JavaScript
+categories:
+- JavaScript
 ---
 
 JavaScript 类型对每个前端程序员来说，几乎都是最为熟悉的概念了。但是你真的很了解它们吗？
