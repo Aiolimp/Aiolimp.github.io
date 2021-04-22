@@ -1,6 +1,8 @@
 ---
 title: JavaScript类型你不知道的细节
 date: 2021-02-01 16:57:49
+top_img: https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fs1.51cto.com%2Fimages%2F201511%2Fb66d75329518876a3d8304d0693f31f0855fdb_big.jpg&refer=http%3A%2F%2Fs1.51cto.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1621676274&t=71ef1c8736a1d765a1078c7eaf1e4b85
+cover: https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fs1.51cto.com%2Fimages%2F201511%2Fb66d75329518876a3d8304d0693f31f0855fdb_big.jpg&refer=http%3A%2F%2Fs1.51cto.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1621676274&t=71ef1c8736a1d765a1078c7eaf1e4b85
 tags:
 - JavaScript
 categories:
