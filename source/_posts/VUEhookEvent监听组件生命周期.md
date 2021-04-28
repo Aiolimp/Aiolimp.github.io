@@ -9,8 +9,10 @@ categories:
 - VUE
 ---
 **1.内部监听生命周期函数**
+
+<!-- more -->
+
 在Vue组件中，可以用过$on,$once去监听所有的生命周期钩子函数，如监听组件的updated钩子函数可以写成 this.$on('hook:updated', () => {})
-<!--more-->
 
 
 ```javascript

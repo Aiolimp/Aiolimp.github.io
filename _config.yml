@@ -114,7 +114,14 @@ aplayerInject:
   enable: true
   per_page: true
 # A simple 404 page
+
 error_404:
   enable: true
   subtitle: "頁面沒有找到"
   background: 
+  # 字数统计
+wordcount:
+  enable: true
+  post_wordcount: true
+  min2read: true
+  total_wordcount: true

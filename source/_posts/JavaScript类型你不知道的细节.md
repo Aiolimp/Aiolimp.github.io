@@ -1,8 +1,8 @@
 ---
 title: JavaScript类型你不知道的细节
 date: 2021-02-01 16:57:49
-top_img: https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fs1.51cto.com%2Fimages%2F201511%2Fb66d75329518876a3d8304d0693f31f0855fdb_big.jpg&refer=http%3A%2F%2Fs1.51cto.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1621676274&t=71ef1c8736a1d765a1078c7eaf1e4b85
-cover: https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fs1.51cto.com%2Fimages%2F201511%2Fb66d75329518876a3d8304d0693f31f0855fdb_big.jpg&refer=http%3A%2F%2Fs1.51cto.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1621676274&t=71ef1c8736a1d765a1078c7eaf1e4b85
+top_img: https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/cb5b42b73a624a38b10e8e48e00ecfa5~tplv-k3u1fbpfcp-watermark.image
+cover: https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/cb5b42b73a624a38b10e8e48e00ecfa5~tplv-k3u1fbpfcp-watermark.image
 tags:
 - JavaScript
 categories:
@@ -10,7 +10,7 @@ categories:
 ---
 
 JavaScript 类型对每个前端程序员来说，几乎都是最为熟悉的概念了。但是你真的很了解它们吗？
-<!--more-->
+<!-- more -->
 1. **为什么有的编程规范要求用 void 0 代替 undefined？** 
 
    ​      Undefined 类型表示未定义，它的类型只有一个值，就是 undefined。任何变量在赋值前是 Undefined 类型、值为 undefined，一般我们可以用全局变量 undefined（就是名为 undefined 的这个变量）来表达这个值，或者 void 运算来把任意一个表达式变成 undefined 值。
