@@ -23,17 +23,20 @@ BFC(Block Formatting contexts)，"块级格式上下文"。BFC是一个独立的
 
 #### **如何产生BFC**
 
-- float的值不是none。
-- position的值不是static或者relative。
-- display的值是inline-block、table-cell、flex、table-caption或者inline-flex
-- overflow的值不是visible。
+- float的值不是`none`。
+- 根节点：`html`。
+- position的值不是`static`或者`relative`。
+- display的值是`inline-block`、`table-cell`、`flex`、`table-caption`或者`inline-flex`
+- overflow的值不是`visible`。
+- 浮动节点：`float:left/right`
 
 #### BFC布局规则
 
 - 内部的box都会按**垂直**方向进行排列
-- Box垂直方向的间距由**margin**决定，**同一个**BFC中相邻的两个box间距会重叠。
+- Box垂直方向的间距由**margin**决定，**同一个**BFC中相邻的两个box间距会重叠，以最大**margin**为合并值。
 - 容器上面的子元素不会影响外面的元素，反之也是如此。
 - 计算BFC高度时，浮动元素的高度也会计算进去，并且和浮动区域不会重叠。
+- 节点的`margin-left/right`与父节点的`左边/右边`相接触，即使处于浮动也如此，除非自行形成BFC
 
 #### **BFC的作用**
 
@@ -41,12 +44,25 @@ BFC(Block Formatting contexts)，"块级格式上下文"。BFC是一个独立的
 - BFC可以自适应两栏的布局，因为BFC的区域不会和浮动区域重叠，所以设置"overflow: hidden";让box的宽度自适应。
 - BFC可以清楚浮动。当父元素没有高度，子元素进行浮动时会产生高度塌陷，此时给父节点激活BFC可以解决这个问题。
 
+**margin折叠计算问题**
+
+- 两个盒子相邻边的`margin`都为正值，取最大值
+- 两个盒子相邻边的`margin`都为负值，取最小值，两者会互相重合
+- 两个盒子相邻边的`margin`一正一负，取两者相加值，若结果为负，两者会互相重合
+
 ### **IFC**
 
-IFC(Inline Formating contexts),"内联格式上下文"。IFC的line box(线框)高度由其行内元素中最高的实际高度计算而来。
+IFC(Inline Formating contexts),"行内格式上下文"。IFC的line box(线框)高度由其行内元素中最高的实际高度计算而来。
 **作用**：
 水平居中：当一个块要在环境中水平局中时，设置其为inline-block则会在外参产生IFC，通过text-align使其水平居中。
 垂直居中：创建一个IFC，用其中一个元素撑开父元素的高度，然后设置其vertical-align:middle，其他元素则可以在这个父元素中垂直居中。
+
+**成因：**
+
+- 声明`display:inline[-x]`形成行内元素
+- 声明`line-height`
+- 声明`vertical-align`
+- 声明`font-size`
 
 ### GFC
 
