@@ -1,8 +1,8 @@
 ---
 title: CSS技巧篇(一)：背景与遮罩
 date: 2021-02-01 16:57:49
-top_img: https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6c432708fb0541b1974d0fde1aa051c6~tplv-k3u1fbpfcp-zoom-1.image
-cover: https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6c432708fb0541b1974d0fde1aa051c6~tplv-k3u1fbpfcp-zoom-1.image
+top_img: /images/css/icss.gif
+cover: /images/css/icss.gif
 tags:
 - CSS
 categories:
