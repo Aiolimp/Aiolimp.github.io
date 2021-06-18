@@ -1,8 +1,8 @@
 ---
 title: CSS技巧篇(二)：阴影和滤镜
 date: 2021-02-01 16:57:49
-top_img: /images/css/icss.gif
-cover: /images/css/icss.gif
+top_img: /images/CSS.gif
+cover: /images/CSS.gif
 tags:
 - CSS
 categories:
