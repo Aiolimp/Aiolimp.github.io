@@ -188,7 +188,7 @@ Number instanceof Object; //true
 var obj = {a: 1};
 obj.toString();//"[object Object]"
 Object.prototype.toString.call(obj);//"[object Object]"
-复制代码
+
 ```
 
 这里我们思考一个问题，任何对象object都可以通过this绑定调用Object.prototype.toString()方法吗？答案是可以，结果如下
@@ -216,7 +216,7 @@ Object.prototype.toString.call(new Date());
 <!--"[object Date]"-->
 Object.prototype.toString.call(/at/);
 <!--"[object RegExp]"-->
-复制代码
+
 ```
 
 从上述代码可以看到，因为Object是所有子类的父类，所以任何类型的对象object都可以通过this绑定调用Object.prototype.toString()方法，返回该对象的字符串表示
@@ -229,7 +229,7 @@ Object.prototype.toString.call(/at/);
 var array = [1, 's', true, {a: 2}];
 array.toString();//"1,s,true,[object Object]"
 Array.prototype.toString.call(array);//"1,s,true,[object Object]"
-复制代码
+
 ```
 
 这里我们同样思考上述问题，非数组对象也可以通过this绑定调用Array.prototype.toString()方法吗？答案是可以，结果如下
@@ -252,7 +252,7 @@ Array.prototype.toString.call();
 <!--Cannot convert undefined or null to object at toString-->
 Array.prototype.toString.call(undefined);
 Array.prototype.toString.call(null);
-复制代码
+
 ```
 
 从上述代码中我们可以发现，数组对象通过this绑定调用Array.prototype.toString()方法，返回数组值的字符串拼接，但是非数组对象通过this绑定调用Array.prototype.toString()方法，返回的是该对象的字符串表示，另外null和undefined不可以通过绑定调用Array.prototype.toString()方法。
@@ -273,7 +273,7 @@ Function.prototype.toString.call(foo);
 <!--"function foo(){-->
 <!--    console.log('function');-->
 <!--}"-->
-复制代码
+
 ```
 
 此处，我们还需要注意到一个问题，上述我们提到的所有“类”，本质上都是构造函数，所以调用toString()方法返回的都是函数代码。
@@ -286,7 +286,7 @@ Function.toString();
 Array.toString();
 //"function Array() { [native code] }"
 ....
-复制代码
+
 ```
 
 另外，我们再考虑一下上述提到的问题，非函数对象也可以通过this绑定调用Array.prototype.toString()方法吗？答案是不可以，结果如下
@@ -294,7 +294,7 @@ Array.toString();
 ```
 Function.prototype.toString.call({});
 <!--Function.prototype.toString requires that 'this' be a Function-->
-复制代码
+
 ```
 
 另外，通过对其他Object子类的测试，除了上述提到的Object和Array两种情况，其他类型都不支持非自身实例通过this绑定调用该Object子类原型对象上的toString()方法，这说明它们在重写toString()方法时，明确限定了调用该方法的对象类型，非自身对象实例不可调用。所以，一般我们只使用Object.prototype.toString.call/apply()方法。
@@ -311,7 +311,7 @@ date.toString();
 //"Fri May 11 2018 14:55:43 GMT+0800 (中国标准时间)"
 Date.prototype.toString.call(date);
 //"Fri May 11 2018 14:55:43 GMT+0800 (中国标准时间)"
-复制代码
+
 ```
 
 5.正则表达式（RegExp类）
@@ -322,7 +322,7 @@ Date.prototype.toString.call(date);
 var re = /cat/g;
 re.toString();// "/cat/g"
 RegExp.prototype.toString.call(re);// "/cat/g"
-复制代码
+
 ```
 
 6.基本包装类型（Boolean/Number/String类）
@@ -334,7 +334,7 @@ ECMAScript提供了三个特殊的引用类型Boolean、Number、String，它们
 ```
 var str = 'wangpf';
 str.toString();//"wangpf"
-复制代码
+
 ```
 
 关于上述代码存在疑问，首先我定义了一个基本类型的字符串变量str，它不是对象，但为什么可以调用toString()方法呢，另外，toString()方法又是哪里来的呢？
@@ -350,7 +350,7 @@ var strObject = new String('I am a string');
 typeof strObject; //"object"
 strObject instanceof String; //true
 strObject instanceof Object; //true
-复制代码
+
 ```
 
 原来，由于String基本包装类型的存在，在必要的时候JS引擎会把字符串字面量转换成一个String对象，从而可以执行访问属性和方法的操作，具体过程如下所示：
@@ -359,7 +359,7 @@ strObject instanceof Object; //true
 （1）创建一个String类型的实例；
 （2）在实例上调用指定的方法；
 （3）销毁这个实例。
-复制代码
+
 ```
 
 因此调用toString()方法的过程如下所示：
@@ -368,7 +368,7 @@ strObject instanceof Object; //true
 var strObject = new String('wangpf');
 strObject.toString(); //'wangpf'
 strObject = null;
-复制代码
+
 ```
 
 注意，上述代码是JS引擎自动执行的，你无法访问strObject对象，它只存在于代码的执行瞬间，然后立即销毁，所以我们无法再运行时给基本类型添加属性和方法，除非直接通过new显示调用基本包装类型创建对象，但我们不建议！！！
@@ -381,7 +381,7 @@ strObject = null;
 var str = "a";
 str.toString(); //"a"
 String.prototype.toString.call(str); //"a"
-复制代码
+
 ```
 
 8.数值number（Number类）
@@ -392,7 +392,7 @@ String.prototype.toString.call(str); //"a"
 var num = 520;
 num.toString(); //"520"
 Number.prototype.toString.call(num); //"520"
-复制代码
+
 ```
 
 9.布尔值boolean（Boolean类）
@@ -403,7 +403,7 @@ Number.prototype.toString.call(num); //"520"
 var boo = true;
 boo.toString(); //"true"
 Boolean.prototype.toString.call(boo); //"true"
-复制代码
+
 ```
 
 10.null和undefined
@@ -423,7 +423,7 @@ window.toString();
 <!--"[object Window]"-->
 Window.prototype.toString.call(window);//这里其实有问题
 <!--"[object Window]"-->
-复制代码
+
 ```
 
 经查看，Winodw类并没有在Window.prototype原型对象上重写toString()方法，它会顺着原型链查找调用Object.prototype.toString()。
