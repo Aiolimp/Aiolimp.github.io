@@ -1,5 +1,5 @@
 ---
-title: 鱼鱼的第一篇blog
+title: Aiolimp的第一篇blog
 top_img: /images/bg.jpg
 sticky: 1
 cover: /images/bg.jpg

@@ -1,12 +1,12 @@
 ---
-title: JSONP原理及实现
+title: JSONP 原理及实现
 date: 2021-05-19 16:57:49
-top_img: /images/jsonp.gif
-cover: /images/jsonp.gif
+top_img: https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/cb5b42b73a624a38b10e8e48e00ecfa5~tplv-k3u1fbpfcp-watermark.image
+cover: https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/cb5b42b73a624a38b10e8e48e00ecfa5~tplv-k3u1fbpfcp-watermark.image
 tags:
-- 跨域
+- 计算机网络
 categories:
-- 跨域
+- 计算机网络
 ---
 
 # JSONP 原理及实现
