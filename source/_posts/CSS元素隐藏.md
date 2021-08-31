@@ -1,8 +1,8 @@
 ---
 title: CSS元素隐藏
-date: 2021-02-01 16:57:49
-top_img: https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/cb5b42b73a624a38b10e8e48e00ecfa5~tplv-k3u1fbpfcp-watermark.image
-cover: https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/cb5b42b73a624a38b10e8e48e00ecfa5~tplv-k3u1fbpfcp-watermark.image
+date: 2021-04-13 16:57:49
+top_img: https://static001.geekbang.org/resource/image/cb/8d/cb4a6ded3cdc7c0eb6a7e3879567f08d.jpg
+cover: https://static001.geekbang.org/resource/image/cb/8d/cb4a6ded3cdc7c0eb6a7e3879567f08d.jpg
 tags:
 - CSS
 categories:

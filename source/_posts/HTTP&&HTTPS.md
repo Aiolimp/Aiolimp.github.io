@@ -1,8 +1,8 @@
 ---
 title: HTTP&&HTTPS
-date: 2021-05-19 16:57:49
-top_img: https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/cb5b42b73a624a38b10e8e48e00ecfa5~tplv-k3u1fbpfcp-watermark.image
-cover: https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/cb5b42b73a624a38b10e8e48e00ecfa5~tplv-k3u1fbpfcp-watermark.image
+date: 2021-08-10 16:57:49
+top_img: https://static001.geekbang.org/resource/image/9f/28/9f68cbdfd275739a1cd3a4dfa85ead28.jpg
+cover: https://static001.geekbang.org/resource/image/9f/28/9f68cbdfd275739a1cd3a4dfa85ead28.jpg
 tags:
 - 计算机网络
 categories:

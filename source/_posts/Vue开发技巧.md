@@ -1,8 +1,8 @@
 ---
 title: Vue 开发技巧
-date: 2021-04-14 16:57:49
-top_img: https://user-gold-cdn.xitu.io/2019/6/13/16b51305d9427161?imageView2/1/w/1304/h/734/q/85/format/webp/interlace/1
-cover: https://user-gold-cdn.xitu.io/2019/6/13/16b51305d9427161?imageView2/1/w/1304/h/734/q/85/format/webp/interlace/1
+date: 2021-06-14 16:57:49
+top_img: https://static001.geekbang.org/resource/image/fb/c0/fb4e210a483a7892433331082f5f09c0.jpg
+cover: https://static001.geekbang.org/resource/image/fb/c0/fb4e210a483a7892433331082f5f09c0.jpg
 tags:
 - VUE
 categories:

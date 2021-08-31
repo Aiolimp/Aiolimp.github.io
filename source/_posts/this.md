@@ -1,8 +1,8 @@
 ---
 title: this
-date: 2021-02-01 16:57:49
-top_img: https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/cb5b42b73a624a38b10e8e48e00ecfa5~tplv-k3u1fbpfcp-watermark.image
-cover: https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/cb5b42b73a624a38b10e8e48e00ecfa5~tplv-k3u1fbpfcp-watermark.image
+date: 2021-07-10 16:57:49
+top_img: https://static001.geekbang.org/resource/image/4b/8b/4b2db13a5c87e4438146baa0cf0c688b.jpg
+cover: https://static001.geekbang.org/resource/image/4b/8b/4b2db13a5c87e4438146baa0cf0c688b.jpg
 tags:
 - JavaScript
 categories:

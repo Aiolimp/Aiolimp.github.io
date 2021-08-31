@@ -1,8 +1,8 @@
 ---
 title: Vue实现函数防抖和节流
-date: 2021-04-14 16:57:49
-top_img: https://user-gold-cdn.xitu.io/2019/6/13/16b51305d9427161?imageView2/1/w/1304/h/734/q/85/format/webp/interlace/1
-cover: https://user-gold-cdn.xitu.io/2019/6/13/16b51305d9427161?imageView2/1/w/1304/h/734/q/85/format/webp/interlace/1
+date: 2021-06-15 16:57:49
+top_img: https://static001.geekbang.org/resource/image/73/2a/737fb9f94c18a26a875c27169222b82a.jpg
+cover: https://static001.geekbang.org/resource/image/73/2a/737fb9f94c18a26a875c27169222b82a.jpg
 tags:
 - VUE
 categories:
