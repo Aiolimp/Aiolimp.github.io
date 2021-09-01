@@ -307,7 +307,59 @@ let promise = tim.getConversationProfile(conversationID);promise.then(function(i
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/fe9d4a9ec1e8490bb87e052aded2b439.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0Fpb2xpbXA=,size_16,color_FFFFFF,t_70)
 
 ```js
- //头像    avatar() {      if (this.currentConversation.type === "C2C") {        if (this.isMine) {          return this.sessionObj.guestAvatar;        } else {          return this.sessionObj.serviceAvatar;        }      } else if (this.currentConversation.type === "GROUP") {        return this.isMine          ? this.currentUserProfile.avatar          : this.message.avatar;      } else {        return "";      }    },    currentConversationType() {      return this.currentConversation.type;    },    //是否是自己发的消息    isMine() {      // console.log(this.message.from,this.imInfo.userID,this.message.from == this.imInfo.userID)      return this.message.from == this.sessionObj.guestImAccount;    },    //消息位置    messagePosition() {      if (        ["TIMGroupTipElem", "TIMGroupSystemNoticeElem"].includes(          this.message.type        )      ) {        return "position-center";      }      if (this.message.type == "TIMCustomElem") {        if (          this.message.payload.data.subMsgType == "prompts" ||          this.message.payload.data.subMsgType == "transfer" ||          this.message.payload.data.subMsgType == "reception" ||          this.message.payload.data.subMsgType == "stopsession" ||        ) {          return "position-center";        }      }      if (this.message.isRevoked) {        // 撤回消息        return "position-center";      }      if (this.isMine) {        return "position-right";      } else {        return "position-left";      }    },
+  avatar() {
+      if (this.currentConversation.type === "C2C") {
+        if (this.isMine) {
+          return this.sessionObj.guestAvatar;
+        } else {
+          return this.sessionObj.serviceAvatar;
+        }
+      } else if (this.currentConversation.type === "GROUP") {
+        return this.isMine
+          ? this.currentUserProfile.avatar
+          : this.message.avatar;
+      } else {
+        return "";
+      }
+    },
+    currentConversationType() {
+      return this.currentConversation.type;
+    },//头像
+    
+    isMine() {
+      // console.log(this.message.from,this.imInfo.userID,this.message.from == this.imInfo.userID)
+      return this.message.from == this.sessionObj.guestImAccount;
+    },//是否是自己发的消息
+
+    messagePosition() {
+      if (
+        ["TIMGroupTipElem", "TIMGroupSystemNoticeElem"].includes(
+          this.message.type
+        )
+      ) {
+        return "position-center";
+      }
+
+      if (this.message.type == "TIMCustomElem") {
+        if (
+          this.message.payload.data.subMsgType == "prompts" ||
+          this.message.payload.data.subMsgType == "transfer" ||
+          this.message.payload.data.subMsgType == "reception" ||
+          this.message.payload.data.subMsgType == "stopsession" ||
+        ) {
+          return "position-center";
+        }
+      }
+      if (this.message.isRevoked) {
+        // 撤回消息
+        return "position-center";
+      }
+      if (this.isMine) {
+        return "position-right";
+      } else {
+        return "position-left";
+      }
+    },    //消息位置
 ```
 
 ### 智能客服会话
@@ -315,7 +367,27 @@ let promise = tim.getConversationProfile(conversationID);promise.then(function(i
 在`message-item`中定义定义自定义消息。
 
 ```js
- <!-- 智能客服自定义热度问题 -->            <custom-heatquestion              v-else-if="message.subMsgType === 'heatquestion'"              :isMine="isMine"              :payload="message.msgContent"              :message="message"            />            <!-- 智能客服自定义相似问题 -->            <custom-similarquestion              v-else-if="message.subMsgType === 'similarquestion'"              :isMine="isMine"              :payload="message.msgContent"              :message="message"            />            <!-- 智能客服自定义查看指定问题 -->            <custom-specifiedquestion              v-else-if="message.subMsgType === 'specifiedquestion'"              :isMine="isMine"              :payload="message.msgContent"              :message="message"            />
+            <!-- 智能客服自定义热度问题 -->
+            <custom-heatquestion
+              v-else-if="message.subMsgType === 'heatquestion'"
+              :isMine="isMine"
+              :payload="message.msgContent"
+              :message="message"
+            />
+            <!-- 智能客服自定义相似问题 -->
+            <custom-similarquestion
+              v-else-if="message.subMsgType === 'similarquestion'"
+              :isMine="isMine"
+              :payload="message.msgContent"
+              :message="message"
+            />
+            <!-- 智能客服自定义查看指定问题 -->
+            <custom-specifiedquestion
+              v-else-if="message.subMsgType === 'specifiedquestion'"
+              :isMine="isMine"
+              :payload="message.msgContent"
+              :message="message"
+            />
 ```
 
 界面上判断是否开启智能客服，通过维护知识库内容实现点击问题进行回答：
