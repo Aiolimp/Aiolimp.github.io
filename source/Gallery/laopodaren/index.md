@@ -1,6 +1,6 @@
 ---
 title: 老婆大人
-top_img: https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/cb5b42b73a624a38b10e8e48e00ecfa5~tplv-k3u1fbpfcp-watermark.image
+top_img: /Gallery/laopodaren/34.JPG
 ---
 
 {% gallery %}
