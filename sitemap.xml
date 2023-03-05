@@ -2,6 +2,55 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://aiolimp.com/2022/07/11/JavaScript%E5%AE%9E%E7%8E%B0%E6%A0%88%E7%BB%93%E6%9E%84%EF%BC%88Stack%EF%BC%89/</loc>
+    
+    <lastmod>2023-03-05</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://aiolimp.com/2022/07/10/JavaScript%E5%AE%9E%E7%8E%B0%E6%A0%91%E7%BB%93%E6%9E%84/</loc>
+    
+    <lastmod>2023-03-05</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://aiolimp.com/2022/07/09/JavaScript%E5%AE%9E%E7%8E%B0%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</loc>
+    
+    <lastmod>2023-03-05</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://aiolimp.com/2022/07/08/JavaScript%E5%AE%9E%E7%8E%B0%E9%98%9F%E5%88%97%E7%BB%93%E6%9E%84%EF%BC%88Queue%EF%BC%89/</loc>
+    
+    <lastmod>2023-03-05</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://aiolimp.com/2022/07/07/JavaScript%E5%AE%9E%E7%8E%B0%E5%8D%95%E5%90%91%E9%93%BE%E8%A1%A8/</loc>
+    
+    <lastmod>2023-03-05</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://aiolimp.com/2022/10/21/Less/</loc>
+    
+    <lastmod>2023-03-05</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://aiolimp.com/2022/11/01/three/</loc>
+    
+    <lastmod>2023-03-05</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://aiolimp.com/link/index.html</loc>
     
     <lastmod>2023-03-05</lastmod>
@@ -633,6 +682,20 @@
     <priority>0.6</priority>
   </url>
   
+  <url>
+    <loc>http://aiolimp.com/tags/Three-js/</loc>
+    <lastmod>2023-03-05</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://aiolimp.com/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</loc>
+    <lastmod>2023-03-05</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
 
   
   <url>
@@ -721,6 +784,20 @@
   
   <url>
     <loc>http://aiolimp.com/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/</loc>
+    <lastmod>2023-03-05</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://aiolimp.com/categories/Three-js/</loc>
+    <lastmod>2023-03-05</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://aiolimp.com/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</loc>
     <lastmod>2023-03-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
