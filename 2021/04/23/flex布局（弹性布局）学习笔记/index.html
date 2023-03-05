@@ -1,0 +1,217 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>flex布局（弹性布局）学习笔记 | Aiolimp</title><meta name="author" content="Aiolimp"><meta name="copyright" content="Aiolimp"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="flex布局（弹性布局）学习笔记弹性容器： 设置了display：flex;这个元素为弹性容器，弹性容器中的子元素会按照弹性布局进行排列。弹性子元素：设置了display:flex;元素的子容器即为弹性子元素，但不包括孙子元素。 flex容器属性：1.display属性：  display:flex  将对象作为弹性伸缩盒展示，相当于块级属性，有默认宽度100% display:inline-fl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="flex布局（弹性布局）学习笔记">
+<meta property="og:url" content="http://aiolimp.com/2021/04/23/flex%E5%B8%83%E5%B1%80%EF%BC%88%E5%BC%B9%E6%80%A7%E5%B8%83%E5%B1%80%EF%BC%89%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Aiolimp">
+<meta property="og:description" content="flex布局（弹性布局）学习笔记弹性容器： 设置了display：flex;这个元素为弹性容器，弹性容器中的子元素会按照弹性布局进行排列。弹性子元素：设置了display:flex;元素的子容器即为弹性子元素，但不包括孙子元素。 flex容器属性：1.display属性：  display:flex  将对象作为弹性伸缩盒展示，相当于块级属性，有默认宽度100% display:inline-fl">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://static001.geekbang.org/resource/image/61/3a/61fa339e781c1e6e6668f94dd6ccc53a.jpg">
+<meta property="article:published_time" content="2021-04-23T08:57:49.000Z">
+<meta property="article:modified_time" content="2023-03-05T13:32:12.212Z">
+<meta property="article:author" content="Aiolimp">
+<meta property="article:tag" content="CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://static001.geekbang.org/resource/image/61/3a/61fa339e781c1e6e6668f94dd6ccc53a.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://aiolimp.com/2021/04/23/flex%E5%B8%83%E5%B1%80%EF%BC%88%E5%BC%B9%E6%80%A7%E5%B8%83%E5%B1%80%EF%BC%89%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'flex布局（弹性布局）学习笔记',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-03-05 21:32:12'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Aiolimp" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">67</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://static001.geekbang.org/resource/image/61/3a/61fa339e781c1e6e6668f94dd6ccc53a.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Aiolimp"><span class="site-name">Aiolimp</span></a></span><div id="menus"><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">flex布局（弹性布局）学习笔记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-04-23T08:57:49.000Z" title="发表于 2021-04-23 16:57:49">2021-04-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-03-05T13:32:12.212Z" title="更新于 2023-03-05 21:32:12">2023-03-05</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/CSS/">CSS</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="flex布局（弹性布局）学习笔记"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="flex布局（弹性布局）学习笔记"><a href="#flex布局（弹性布局）学习笔记" class="headerlink" title="flex布局（弹性布局）学习笔记"></a>flex布局（弹性布局）学习笔记</h1><p><strong>弹性容器：</strong> 设置了display：flex;这个元素为弹性容器，弹性容器中的子元素会按照弹性布局进行排列。<br><strong>弹性子元素</strong>：设置了display:flex;元素的子容器即为弹性子元素，但不包括孙子元素。</p>
+<h2 id="flex容器属性："><a href="#flex容器属性：" class="headerlink" title="flex容器属性："></a>flex容器属性：</h2><p><strong>1.display属性</strong>：</p>
+<ul>
+<li>display:flex  将对象作为弹性伸缩盒展示，相当于块级属性，有默认宽度100%</li>
+<li>display:inline-flex  将对象作为内联块级弹性伸缩盒展示，即行级元素，没有默认宽度</li>
+</ul>
+<p><strong>2.flex-direction:指定容器的主轴方向，主轴默认为水平向右方向，项目排列的方向</strong></p>
+<ul>
+<li>flex-direction:row  默认值，主轴横向往右排列</li>
+<li>flex-direction:row-reverse  主轴横向往左排列</li>
+<li>flex-direction:column  垂直方向排列</li>
+<li>flex-direction:column-reverse 垂直方向反向排列</li>
+</ul>
+<p><strong>3.flex-wrap:当容器子元素在容器中排列不下时，如何进行换行</strong></p>
+<ul>
+<li>flex-wrap:nowarp  默认不换行，压缩子元素</li>
+<li>flex-warp:warp  子元素换行，从上往下</li>
+<li>flex-warp:warp-reverse   子元素换行，从上往下</li>
+</ul>
+<p><strong>4.justify-content：定义子元素在主轴上的对齐方式</strong></p>
+<ul>
+<li>justify-conten:flex-start  默认的是从主轴开始位置对齐</li>
+<li>justify-conten:flex-end  向主轴结束位置对齐</li>
+<li>justify-conten:center  向主轴的中心位置靠拢</li>
+<li>justify-conten:space-between  两端没有间距，中间间隔宽度一样平均分布</li>
+<li>justify-conten:space-around  平均分布，两端有间距，间距为中间间距的一半</li>
+<li>justify-conten:space-evenly 平均分布，两边有间距，间距和中间间距一样</li>
+</ul>
+<p><strong>5.align-item：定义子元素在侧轴上的堆砌方式</strong></p>
+<ul>
+<li>align-item:flex-start  向侧轴开始位置靠拢</li>
+<li>align-item:flex-end 向侧轴结束位置靠拢</li>
+<li>align-item:center  向侧轴中心位置靠拢</li>
+<li>align-item:stretch  拉伸占满整个高度(默认,如果设置高度默认则无效)</li>
+</ul>
+<p><strong>6.align-content：设置侧轴的多行分布</strong></p>
+<ul>
+<li>align-content: flex-start   多行内容往侧轴开端靠拢</li>
+<li>align-content: flex-end   多行内容往侧轴结束段靠拢</li>
+<li>align-content: center  多行内容居中</li>
+<li>align-content: space-between  平均分布,两边没有间距</li>
+<li>align-content: space-around  平均分布,两边间距为中间间距的一半</li>
+<li>align-content:spece-evenly  平均分布,两边间距和中间间距相等</li>
+<li>注意：如果项目只有一行，该属性不起作用，只有使用了wrap后才起作用</li>
+</ul>
+<p><strong>7.弹性布局剩余空间分布设置</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flex:<span class="number">1</span>;<span class="comment">//剩余空间分布设置，flex:1 则占用剩余空间整体一份</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20200825223804852.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0Fpb2xpbXA=,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<h2 id="flex项目属性："><a href="#flex项目属性：" class="headerlink" title="flex项目属性："></a>flex项目属性：</h2><p><strong>1.order 定义项目的排列顺序，取值为Interger，设置在子元素上，按照从小到大进行排序</strong></p>
+<p><strong>2.align-self 单独设置子元素侧轴排布(可以覆盖父元素的align-items属性)</strong></p>
+<p>-align-self：center  居中<br>-align-self：flex-start   靠近侧轴开端<br>-align-self：flex-end   靠近侧轴结束端<br>-align-self：stretch  拉伸<br><img src="https://img-blog.csdnimg.cn/20200825223828824.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0Fpb2xpbXA=,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://Aiolimp.com">Aiolimp</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://aiolimp.com/2021/04/23/flex%E5%B8%83%E5%B1%80%EF%BC%88%E5%BC%B9%E6%80%A7%E5%B8%83%E5%B1%80%EF%BC%89%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">http://aiolimp.com/2021/04/23/flex%E5%B8%83%E5%B1%80%EF%BC%88%E5%BC%B9%E6%80%A7%E5%B8%83%E5%B1%80%EF%BC%89%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://Aiolimp.com" target="_blank">Aiolimp</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/CSS/">CSS</a></div><div class="post_share"><div class="social-share" data-image="https://static001.geekbang.org/resource/image/61/3a/61fa339e781c1e6e6668f94dd6ccc53a.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/04/23/BFC_IFC_GFC_FFC/" title="BFC_IFC_GFC_FFC"><img class="cover" src="https://static001.geekbang.org/resource/image/bd/47/bdce168820c080adbcbee78b02292f47.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">BFC_IFC_GFC_FFC</div></div></a></div><div class="next-post pull-right"><a href="/2021/04/23/base64%E6%A0%BC%E5%BC%8F%E7%9A%84%E6%95%B0%E6%8D%AE%E6%98%AF%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%9A%84/" title="base64格式的数据是如何实现的"><img class="cover" src="https://static001.geekbang.org/resource/image/73/e4/730ea9c393def7975deceb48b3eb6fe4.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">base64格式的数据是如何实现的</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/04/23/BFC_IFC_GFC_FFC/" title="BFC_IFC_GFC_FFC"><img class="cover" src="https://static001.geekbang.org/resource/image/bd/47/bdce168820c080adbcbee78b02292f47.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-23</div><div class="title">BFC_IFC_GFC_FFC</div></div></a></div><div><a href="/2021/04/13/CSS%E5%85%83%E7%B4%A0%E9%9A%90%E8%97%8F/" title="CSS元素隐藏"><img class="cover" src="https://static001.geekbang.org/resource/image/cb/8d/cb4a6ded3cdc7c0eb6a7e3879567f08d.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-13</div><div class="title">CSS元素隐藏</div></div></a></div><div><a href="/2021/04/13/CSS%E6%8A%80%E5%B7%A7%E7%AF%87(2)%EF%BC%9A%E9%98%B4%E5%BD%B1%E4%B8%8E%E6%BB%A4%E9%95%9C/" title="CSS技巧篇(二)：阴影和滤镜"><img class="cover" src="/images/CSS.gif" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-13</div><div class="title">CSS技巧篇(二)：阴影和滤镜</div></div></a></div><div><a href="/2021/04/13/CSS%E6%8A%80%E5%B7%A7%E7%AF%87(%E4%B8%89)%EF%BC%9A%E5%8F%98%E6%8D%A2%E4%B8%8E%E5%8A%A8%E7%94%BB/" title="CSS技巧篇(三)：变换与动画"><img class="cover" src="/images/CSS.gif" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-13</div><div class="title">CSS技巧篇(三)：变换与动画</div></div></a></div><div><a href="/2021/04/12/CSS%E6%B5%AE%E5%8A%A8%E4%B8%8E%E6%B8%85%E9%99%A4%E6%B5%AE%E5%8A%A8/" title="CSS浮动与清除浮动"><img class="cover" src="https://static001.geekbang.org/resource/image/bd/47/bdce168820c080adbcbee78b02292f47.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-12</div><div class="title">CSS浮动与清除浮动</div></div></a></div><div><a href="/2021/04/11/CSS%E6%8A%80%E5%B7%A7%E7%AF%87(%E4%B8%80)%EF%BC%9A%E8%83%8C%E6%99%AF%E4%B8%8E%E9%81%AE%E7%BD%A9/" title="CSS技巧篇(一)：背景与遮罩"><img class="cover" src="/images/CSS.gif" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-11</div><div class="title">CSS技巧篇(一)：背景与遮罩</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Aiolimp</div><div class="author-info__description">生如长河,渡船千艘</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">67</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#flex%E5%B8%83%E5%B1%80%EF%BC%88%E5%BC%B9%E6%80%A7%E5%B8%83%E5%B1%80%EF%BC%89%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0"><span class="toc-number">1.</span> <span class="toc-text">flex布局（弹性布局）学习笔记</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#flex%E5%AE%B9%E5%99%A8%E5%B1%9E%E6%80%A7%EF%BC%9A"><span class="toc-number">1.1.</span> <span class="toc-text">flex容器属性：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#flex%E9%A1%B9%E7%9B%AE%E5%B1%9E%E6%80%A7%EF%BC%9A"><span class="toc-number">1.2.</span> <span class="toc-text">flex项目属性：</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/03/05/JS%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" title="JavaScript数据类型"><img src="https://static001.geekbang.org/resource/image/13/6b/13daccec5e12c89ea63e8c51dd20cb6b.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JavaScript数据类型"/></a><div class="content"><a class="title" href="/2023/03/05/JS%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" title="JavaScript数据类型">JavaScript数据类型</a><time datetime="2023-03-05T13:32:12.207Z" title="发表于 2023-03-05 21:32:12">2023-03-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/03/05/FirstBlog/" title="Aiolimp的第一篇blog"><img src="/images/bg.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Aiolimp的第一篇blog"/></a><div class="content"><a class="title" href="/2023/03/05/FirstBlog/" title="Aiolimp的第一篇blog">Aiolimp的第一篇blog</a><time datetime="2023-03-05T13:32:12.205Z" title="发表于 2023-03-05 21:32:12">2023-03-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/21/IM%E8%81%8A%E5%A4%A9/" title="IM聊天"><img src="https://static001.geekbang.org/resource/image/88/f1/8807661ef5b82fcb75e8b8f2dbd71ef1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="IM聊天"/></a><div class="content"><a class="title" href="/2021/08/21/IM%E8%81%8A%E5%A4%A9/" title="IM聊天">IM聊天</a><time datetime="2021-08-21T08:57:49.000Z" title="发表于 2021-08-21 16:57:49">2021-08-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/12/module%E3%80%81chunk%E5%92%8Cbundle/" title="module、chunk和bundle"><img src="https://static001.geekbang.org/resource/image/bd/2e/bddfad3dc8fb2f7c4942a0dc1286c92e.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="module、chunk和bundle"/></a><div class="content"><a class="title" href="/2021/08/12/module%E3%80%81chunk%E5%92%8Cbundle/" title="module、chunk和bundle">module、chunk和bundle</a><time datetime="2021-08-12T08:57:49.000Z" title="发表于 2021-08-12 16:57:49">2021-08-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/12/%E5%A6%82%E4%BD%95%E9%98%B2%E6%AD%A2CSRF%E6%94%BB%E5%87%BB/" title="CSRF攻击"><img src="https://static001.geekbang.org/resource/image/ee/70/ee7627bac9defb7621c2489fbacb3a70.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CSRF攻击"/></a><div class="content"><a class="title" href="/2021/08/12/%E5%A6%82%E4%BD%95%E9%98%B2%E6%AD%A2CSRF%E6%94%BB%E5%87%BB/" title="CSRF攻击">CSRF攻击</a><time datetime="2021-08-12T08:57:49.000Z" title="发表于 2021-08-12 16:57:49">2021-08-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Aiolimp</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

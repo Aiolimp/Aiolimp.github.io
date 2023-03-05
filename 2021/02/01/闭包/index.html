@@ -1,0 +1,269 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>闭包 | Aiolimp</title><meta name="author" content="Aiolimp"><meta name="copyright" content="Aiolimp"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="闭包什么是闭包？ 闭包是指有权访问另一个函数作用域中的变量的函数。 MDN 对闭包的定义为：闭包是指那些能够访问自由变量的函数。  什么是自由变量呢？  自由变量是指在函数中使用的，但既不是函数参数也不是函数的局部变量的变量。  由此，我们可以看出闭包共有两部分组成  闭包 &#x3D; 函数 + 函数能够访问的自由变量  闭包产生的原因?首先要明白作用域链的概念，其实很简单，在ES5中只存在两种作用域——">
+<meta property="og:type" content="article">
+<meta property="og:title" content="闭包">
+<meta property="og:url" content="http://aiolimp.com/2021/02/01/%E9%97%AD%E5%8C%85/index.html">
+<meta property="og:site_name" content="Aiolimp">
+<meta property="og:description" content="闭包什么是闭包？ 闭包是指有权访问另一个函数作用域中的变量的函数。 MDN 对闭包的定义为：闭包是指那些能够访问自由变量的函数。  什么是自由变量呢？  自由变量是指在函数中使用的，但既不是函数参数也不是函数的局部变量的变量。  由此，我们可以看出闭包共有两部分组成  闭包 &#x3D; 函数 + 函数能够访问的自由变量  闭包产生的原因?首先要明白作用域链的概念，其实很简单，在ES5中只存在两种作用域——">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://static001.geekbang.org/resource/image/37/e4/37fbe168a471e8ee1267fd741d096fe4.jpg">
+<meta property="article:published_time" content="2021-02-01T08:57:49.000Z">
+<meta property="article:modified_time" content="2023-03-05T13:32:12.217Z">
+<meta property="article:author" content="Aiolimp">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://static001.geekbang.org/resource/image/37/e4/37fbe168a471e8ee1267fd741d096fe4.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://aiolimp.com/2021/02/01/%E9%97%AD%E5%8C%85/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '闭包',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-03-05 21:32:12'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Aiolimp" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">67</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://static001.geekbang.org/resource/image/37/e4/37fbe168a471e8ee1267fd741d096fe4.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Aiolimp"><span class="site-name">Aiolimp</span></a></span><div id="menus"><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">闭包</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-02-01T08:57:49.000Z" title="发表于 2021-02-01 16:57:49">2021-02-01</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-03-05T13:32:12.217Z" title="更新于 2023-03-05 21:32:12">2023-03-05</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/JavaScript/">JavaScript</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="闭包"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h2><h3 id="什么是闭包？"><a href="#什么是闭包？" class="headerlink" title="什么是闭包？"></a>什么是闭包？</h3><blockquote>
+<p>闭包是指有权访问另一个函数作用域中的变量的函数。</p>
+<p>MDN 对闭包的定义为：闭包是指那些能够访问自由变量的函数。</p>
+</blockquote>
+<p>什么是自由变量呢？</p>
+<blockquote>
+<p>自由变量是指在函数中使用的，但既不是函数参数也不是函数的局部变量的变量。</p>
+</blockquote>
+<p>由此，我们可以看出闭包共有两部分组成</p>
+<blockquote>
+<p>闭包 = 函数 + 函数能够访问的自由变量</p>
+</blockquote>
+<h3 id="闭包产生的原因"><a href="#闭包产生的原因" class="headerlink" title="闭包产生的原因?"></a>闭包产生的原因?</h3><p>首先要明白作用域链的概念，其实很简单，在ES5中只存在两种作用域————全局作用域和函数作用域，</p>
+<blockquote>
+<p>当代码在JavaScript中运行时，执行代码的环境非常重要，并将概括为以下几点：</p>
+<p><strong>全局作用域</strong>——第一次执行代码的默认环境。</p>
+<p><strong>函数作用域</strong>——当执行流进入函数体时。</p>
+</blockquote>
+<p>换句话说，当我们启动程序时，我们从全局执行上下文中开始。一些变量是在全局执行上下文中声明的。我们称之为全局变量。当程序调用一个函数时，会发生什么?</p>
+<p>以下几个步骤：</p>
+<ol>
+<li>JavaScript创建一个新的执行上下文，我们叫作本地执行上下文。</li>
+<li>这个本地执行上下文将有它自己的一组变量，这些变量将是这个执行上下文的本地变量。</li>
+<li>新的执行上下文被推到到执行堆栈中。可以将执行堆栈看作是一种保存程序在其执行中的位置的容器。</li>
+</ol>
+<p>函数什么时候结束?当它遇到一个<code>return</code>语句或一个结束括号<code>&#125;</code>。</p>
+<p>当一个函数结束时，会发生以下情况:</p>
+<ol>
+<li>这个本地执行上下文从执行堆栈中弹出。</li>
+<li>函数将返回值返回调用上下文。调用上下文是调用这个本地的执行上下文，它可以是全局执行上下文，也可以是另外一个本地的执行上下文。这取决于调用执行上下文来处理此时的返回值，返回的值可以是一个对象、一个数组、一个函数、一个布尔值等等，如果函数没有<code>return</code>语句，则返回<code>undefined</code>。</li>
+<li>这个本地执行上下文被销毁，销毁是很重要，这个本地执行上下文中声明的所有变量都将被删除，不在有变量，这个就是为什么 称为本地执行上下文中自有的变量。</li>
+</ol>
+<p><code>当访问一个变量时，解释器会首先在当前作用域查找标示符，如果没有找到，就去父作用域找，直到找到该变量的标示符或者不在父作用域中，这就是作用域链</code>，值得注意的是，每一个子函数都会拷贝上级的作用域，形成一个作用域的链条。 比如:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">2</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">f2</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">3</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(a);<span class="comment">//3</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这段代码中，f1的作用域指向有全局作用域(window)和它本身，而f2的作用域指向全局作用域(window)、f1和它本身。而且作用域是从最底层向上找，直到找到全局作用域window为止，如果全局还没有的话就会报错。就这么简单一件事情！</p>
+<p>闭包产生的本质就是，当前环境中存在指向父级作用域的引用。还是举上面的例子:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">2</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">f2</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(a);<span class="comment">//2</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> f2;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> x = f1();</span><br><span class="line">x();</span><br></pre></td></tr></table></figure>
+
+<p>这里x会拿到父级作用域中的变量，输出2。因为在当前环境中，含有对f2的引用，f2恰恰引用了window、f1和f2的作用域。因此f2可以访问到f1的作用域的变量。</p>
+<p>那是不是只有返回函数才算是产生了闭包呢？、</p>
+<p>回到闭包的本质，我们只需要让父级作用域的引用存在即可，因此我们还可以这么做：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> f3;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">2</span></span><br><span class="line">  f3 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(a);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">f1();</span><br><span class="line">f3();</span><br></pre></td></tr></table></figure>
+
+<p>让f1执行，给f3赋值后，等于说现在<code>f3拥有了window、f1和f3本身这几个作用域的访问权限</code>，还是自底向上查找，<code>最近是在f1</code>中找到了a,因此输出2。</p>
+<p>在这里是外面的变量<code>f3存在着父级作用域的引用</code>，因此产生了闭包，形式变了，本质没有改变。</p>
+<h3 id="闭包有哪些表现形式"><a href="#闭包有哪些表现形式" class="headerlink" title="闭包有哪些表现形式?"></a>闭包有哪些表现形式?</h3><p>明白了本质之后，我们就来看看，在真实的场景中，究竟在哪些地方能体现闭包的存在？</p>
+<ol>
+<li>返回一个函数。刚刚已经举例。</li>
+<li>作为函数参数传递</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">2</span>;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">baz</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(a);</span><br><span class="line">  &#125;</span><br><span class="line">  bar(baz);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params">fn</span>)</span>&#123;</span><br><span class="line">  <span class="comment">// 这就是闭包</span></span><br><span class="line">  fn();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 输出2，而不是1</span></span><br><span class="line">foo();</span><br></pre></td></tr></table></figure>
+
+<p>3.在定时器、事件监听、Ajax请求、跨窗口通信、Web Workers或者任何异步中，只要使用了回调函数，实际上就是在使用闭包。</p>
+<h3 id="闭包的应用"><a href="#闭包的应用" class="headerlink" title="闭包的应用"></a>闭包的应用</h3><p>闭包可以使代码组织方式的自由度大大提升，在日常使用中有非常广泛的用途。</p>
+<p><strong>简单的有：</strong></p>
+<ul>
+<li>ajax请求的成功回调</li>
+<li>事件绑定的回调方法</li>
+<li>setTimeout的延时回调</li>
+<li>函数内部返回另一个匿名函数</li>
+</ul>
+<p>我们详细讲下以下几个应用场景：</p>
+<ul>
+<li>构造函数的私有属性</li>
+<li>计算缓存</li>
+<li>函数节流、防抖</li>
+</ul>
+<h4 id="构造函数的私有属"><a href="#构造函数的私有属" class="headerlink" title="构造函数的私有属"></a>构造函数的私有属</h4><ul>
+<li>由于javascript中天然没有类的实现，某些不希望被外部修改的<code>私有属性</code>可以通过闭包的方式实现。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">param</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> name = param.name; <span class="comment">// 私有属性</span></span><br><span class="line">    <span class="built_in">this</span>.age = <span class="number">18</span>; <span class="comment">// 共有属性</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">this</span>.sayName = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> tom = <span class="keyword">new</span> Person(&#123;<span class="attr">name</span>: <span class="string">&#x27;tom&#x27;</span>&#125;);</span><br><span class="line">tom.age += <span class="number">1</span>; <span class="comment">// 共有属性，外部可以更改</span></span><br><span class="line">tom.sayName(); <span class="comment">// tom</span></span><br><span class="line">tom.name = <span class="string">&#x27;jerry&#x27;</span>;<span class="comment">// 共有属性，外部不可更改</span></span><br><span class="line">tom.sayName(); <span class="comment">// tom</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="计算缓存"><a href="#计算缓存" class="headerlink" title="计算缓存"></a>计算缓存</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 平方计算</span></span><br><span class="line"><span class="keyword">var</span> square = (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> cache = &#123;&#125;;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">n</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!cache[n]) &#123;</span><br><span class="line">            cache[n] = n * n;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> cache[n];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+
+<h4 id="函数节流、防抖"><a href="#函数节流、防抖" class="headerlink" title="函数节流、防抖"></a>函数节流、防抖</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 节流</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">throttle</span>(<span class="params">fn, delay</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> timer = <span class="literal">null</span>, firstTime = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (timer) &#123; <span class="keyword">return</span> <span class="literal">false</span>;&#125;</span><br><span class="line">        <span class="keyword">var</span> that = <span class="built_in">this</span>;</span><br><span class="line">        <span class="keyword">var</span> args = <span class="built_in">arguments</span>;</span><br><span class="line">        fn.apply(that, args);</span><br><span class="line">        timer = <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="built_in">clearTimeout</span>(timer);</span><br><span class="line">            timer = <span class="literal">null</span>;</span><br><span class="line">        &#125;, delay || <span class="number">500</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 防抖</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">debounce</span>(<span class="params">fn, delay</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> timer = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> that = <span class="built_in">this</span>;</span><br><span class="line">        <span class="keyword">var</span> args = <span class="built_in">arguments</span>;</span><br><span class="line">        <span class="built_in">clearTimeout</span>(timer);<span class="comment">// 清除重新计时</span></span><br><span class="line">        timer = <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            fn.apply(that, args);</span><br><span class="line">        &#125;, delay || <span class="number">500</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="闭包高频面试题（代码理解）"><a href="#闭包高频面试题（代码理解）" class="headerlink" title="闭包高频面试题（代码理解）"></a>闭包高频面试题（代码理解）</h3><p>如何解决下面的循环输出问题？</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">1</span>; i &lt;= <span class="number">5</span>; i ++)&#123;</span><br><span class="line">  <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> <span class="title">timer</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(i)</span><br><span class="line">  &#125;, <span class="number">0</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>为什么会全部输出6？如何改进，让它输出1，2，3，4，5？(方法越多越好)</p>
+<p>因为setTimeout为宏任务，由于JS中单线程eventLoop机制，在主线程同步任务执行完后才去执行宏任务，因此循环结束后setTimeout中的回调才依次执行，但输出i的时候当前作用域没有，往上一级再找，发现了i,此时循环已经结束，i变成了6。因此会全部输出6。</p>
+<p>解决方法：</p>
+<p>1、利用IIFE(立即执行函数表达式)当每次for循环时，把此时的i变量传递到定时器中</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">1</span>;i &lt;= <span class="number">5</span>;i++)&#123;</span><br><span class="line">  (<span class="function"><span class="keyword">function</span>(<span class="params">j</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> <span class="title">timer</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(j)</span><br><span class="line">    &#125;, <span class="number">0</span>)</span><br><span class="line">  &#125;)(i)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>2、给定时器传入第三个参数, 作为timer函数的第一个函数参数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">1</span>;i&lt;=<span class="number">5</span>;i++)&#123;</span><br><span class="line">  <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> <span class="title">timer</span>(<span class="params">j</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(j)</span><br><span class="line">  &#125;, <span class="number">0</span>, i)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>3、使用ES6中的let</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">1</span>; i &lt;= <span class="number">5</span>; i++)&#123;</span><br><span class="line">  <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> <span class="title">timer</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(i)</span><br><span class="line">  &#125;,<span class="number">0</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>let使JS发生革命性的变化，让JS有函数作用域变为了块级作用域，用let后作用域链不复存在。代码的作用域以块级为单位，以上面代码为例:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// i = 1</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> <span class="title">timer</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">1</span>)</span><br><span class="line">  &#125;,<span class="number">0</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// i = 2</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> <span class="title">timer</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">2</span>)</span><br><span class="line">  &#125;,<span class="number">0</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// i = 3</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>因此能输出正确的结果。</p>
+<h3 id="闭包总结"><a href="#闭包总结" class="headerlink" title="闭包总结"></a>闭包总结</h3><ul>
+<li><strong>形成：</strong> 函数中嵌套函数</li>
+<li><strong>作用：</strong> 函数内部调用外部变量、构造函数的私有属性、延长变量生命周期</li>
+<li><strong>优点：</strong> 希望一个变量长期存在内存中、模块化代码避免全局变量的污染、私有属性</li>
+<li><strong>缺点：</strong> 无法回收闭包中引用变量，容易造成内存泄漏</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://Aiolimp.com">Aiolimp</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://aiolimp.com/2021/02/01/%E9%97%AD%E5%8C%85/">http://aiolimp.com/2021/02/01/%E9%97%AD%E5%8C%85/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://Aiolimp.com" target="_blank">Aiolimp</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/JavaScript/">JavaScript</a></div><div class="post_share"><div class="social-share" data-image="https://static001.geekbang.org/resource/image/37/e4/37fbe168a471e8ee1267fd741d096fe4.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-full"><a href="/2021/02/01/%E4%B8%80%E4%B8%AA%E4%BA%BA%E8%B5%B0%E4%B8%8A%E5%9D%A1%E8%B7%AF%E7%9A%84%E5%9B%9B%E5%A4%A7%E5%AE%9A%E5%BE%8B/" title="一个人走上坡路的四大定律"><img class="cover" src="https://static001.geekbang.org/resource/image/1b/21/1b809d9a2bdf3ecc481322d7c9223c21.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">一个人走上坡路的四大定律</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/07/26/DOM%E7%AE%80%E4%BB%8B%E5%92%8CDOM%E6%93%8D%E4%BD%9C/" title="DOM简介和DOM操作"><img class="cover" src="https://static001.geekbang.org/resource/image/cb/8d/cb4a6ded3cdc7c0eb6a7e3879567f08d.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-26</div><div class="title">DOM简介和DOM操作</div></div></a></div><div><a href="/2021/07/28/ES6-ES12%E6%80%BB%E6%B1%87/" title="ES6-ES12总汇"><img class="cover" src="https://static001.geekbang.org/resource/image/cb/8d/cb4a6ded3cdc7c0eb6a7e3879567f08d.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-28</div><div class="title">ES6-ES12总汇</div></div></a></div><div><a href="/2021/07/08/Generator/" title="生成器(Generator)"><img class="cover" src="https://static001.geekbang.org/resource/image/9f/28/9f68cbdfd275739a1cd3a4dfa85ead28.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-08</div><div class="title">生成器(Generator)</div></div></a></div><div><a href="/2021/07/03/JS%E4%B8%AD%E7%9A%84%E6%B7%B1%E6%8B%B7%E8%B4%9D%E5%92%8C%E6%B5%85%E6%8B%B7%E8%B4%9D/" title="JS中的深拷贝和浅拷贝"><img class="cover" src="https://static001.geekbang.org/resource/image/f7/f8/f7c1822abb4382896b9b4d3530b02ff8.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-03</div><div class="title">JS中的深拷贝和浅拷贝</div></div></a></div><div><a href="/2021/07/11/JS%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%93%BE/" title="JS作用域和作用域链"><img class="cover" src="https://static001.geekbang.org/resource/image/bd/2e/bddfad3dc8fb2f7c4942a0dc1286c92e.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-11</div><div class="title">JS作用域和作用域链</div></div></a></div><div><a href="/2021/07/10/JS%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/" title="JS原型和原型链"><img class="cover" src="https://static001.geekbang.org/resource/image/f7/f8/f7c1822abb4382896b9b4d3530b02ff8.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-10</div><div class="title">JS原型和原型链</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Aiolimp</div><div class="author-info__description">生如长河,渡船千艘</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">67</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AD%E5%8C%85"><span class="toc-number">1.</span> <span class="toc-text">闭包</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E9%97%AD%E5%8C%85%EF%BC%9F"><span class="toc-number">1.1.</span> <span class="toc-text">什么是闭包？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AD%E5%8C%85%E4%BA%A7%E7%94%9F%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="toc-number">1.2.</span> <span class="toc-text">闭包产生的原因?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AD%E5%8C%85%E6%9C%89%E5%93%AA%E4%BA%9B%E8%A1%A8%E7%8E%B0%E5%BD%A2%E5%BC%8F"><span class="toc-number">1.3.</span> <span class="toc-text">闭包有哪些表现形式?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AD%E5%8C%85%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-number">1.4.</span> <span class="toc-text">闭包的应用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E7%9A%84%E7%A7%81%E6%9C%89%E5%B1%9E"><span class="toc-number">1.4.1.</span> <span class="toc-text">构造函数的私有属</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E7%BC%93%E5%AD%98"><span class="toc-number">1.4.2.</span> <span class="toc-text">计算缓存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E8%8A%82%E6%B5%81%E3%80%81%E9%98%B2%E6%8A%96"><span class="toc-number">1.4.3.</span> <span class="toc-text">函数节流、防抖</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AD%E5%8C%85%E9%AB%98%E9%A2%91%E9%9D%A2%E8%AF%95%E9%A2%98%EF%BC%88%E4%BB%A3%E7%A0%81%E7%90%86%E8%A7%A3%EF%BC%89"><span class="toc-number">1.5.</span> <span class="toc-text">闭包高频面试题（代码理解）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AD%E5%8C%85%E6%80%BB%E7%BB%93"><span class="toc-number">1.6.</span> <span class="toc-text">闭包总结</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/03/05/JS%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" title="JavaScript数据类型"><img src="https://static001.geekbang.org/resource/image/13/6b/13daccec5e12c89ea63e8c51dd20cb6b.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JavaScript数据类型"/></a><div class="content"><a class="title" href="/2023/03/05/JS%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" title="JavaScript数据类型">JavaScript数据类型</a><time datetime="2023-03-05T13:32:12.207Z" title="发表于 2023-03-05 21:32:12">2023-03-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/03/05/FirstBlog/" title="Aiolimp的第一篇blog"><img src="/images/bg.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Aiolimp的第一篇blog"/></a><div class="content"><a class="title" href="/2023/03/05/FirstBlog/" title="Aiolimp的第一篇blog">Aiolimp的第一篇blog</a><time datetime="2023-03-05T13:32:12.205Z" title="发表于 2023-03-05 21:32:12">2023-03-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/21/IM%E8%81%8A%E5%A4%A9/" title="IM聊天"><img src="https://static001.geekbang.org/resource/image/88/f1/8807661ef5b82fcb75e8b8f2dbd71ef1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="IM聊天"/></a><div class="content"><a class="title" href="/2021/08/21/IM%E8%81%8A%E5%A4%A9/" title="IM聊天">IM聊天</a><time datetime="2021-08-21T08:57:49.000Z" title="发表于 2021-08-21 16:57:49">2021-08-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/12/module%E3%80%81chunk%E5%92%8Cbundle/" title="module、chunk和bundle"><img src="https://static001.geekbang.org/resource/image/bd/2e/bddfad3dc8fb2f7c4942a0dc1286c92e.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="module、chunk和bundle"/></a><div class="content"><a class="title" href="/2021/08/12/module%E3%80%81chunk%E5%92%8Cbundle/" title="module、chunk和bundle">module、chunk和bundle</a><time datetime="2021-08-12T08:57:49.000Z" title="发表于 2021-08-12 16:57:49">2021-08-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/12/%E5%A6%82%E4%BD%95%E9%98%B2%E6%AD%A2CSRF%E6%94%BB%E5%87%BB/" title="CSRF攻击"><img src="https://static001.geekbang.org/resource/image/ee/70/ee7627bac9defb7621c2489fbacb3a70.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CSRF攻击"/></a><div class="content"><a class="title" href="/2021/08/12/%E5%A6%82%E4%BD%95%E9%98%B2%E6%AD%A2CSRF%E6%94%BB%E5%87%BB/" title="CSRF攻击">CSRF攻击</a><time datetime="2021-08-12T08:57:49.000Z" title="发表于 2021-08-12 16:57:49">2021-08-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Aiolimp</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

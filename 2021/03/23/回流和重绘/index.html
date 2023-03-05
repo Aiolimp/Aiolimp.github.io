@@ -1,0 +1,245 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>回流和重绘 | Aiolimp</title><meta name="author" content="Aiolimp"><meta name="copyright" content="Aiolimp"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="回流和重绘在浏览器的渲染过程里的回流和重绘是CSS中很重要的概念。了解和认识它们，可编写出性能更好的CSS代码。  回流回流又名重排，指几何属性需改变的渲染。但感觉回流这个词比较高大上，后续统称回流吧。 可理解成，将整个网页填白，对内容重新渲染一次。只不过以人眼的感官速度去看浏览器回流是不会有任何变化的，若你拥有闪电侠的感官速度去看浏览器回流(实质是将时间调慢)，就会发现每次回流都会将页面清空，再">
+<meta property="og:type" content="article">
+<meta property="og:title" content="回流和重绘">
+<meta property="og:url" content="http://aiolimp.com/2021/03/23/%E5%9B%9E%E6%B5%81%E5%92%8C%E9%87%8D%E7%BB%98/index.html">
+<meta property="og:site_name" content="Aiolimp">
+<meta property="og:description" content="回流和重绘在浏览器的渲染过程里的回流和重绘是CSS中很重要的概念。了解和认识它们，可编写出性能更好的CSS代码。  回流回流又名重排，指几何属性需改变的渲染。但感觉回流这个词比较高大上，后续统称回流吧。 可理解成，将整个网页填白，对内容重新渲染一次。只不过以人眼的感官速度去看浏览器回流是不会有任何变化的，若你拥有闪电侠的感官速度去看浏览器回流(实质是将时间调慢)，就会发现每次回流都会将页面清空，再">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://static001.geekbang.org/resource/image/7a/30/7a9547384cffa039f063db1fc7669a30.jpg">
+<meta property="article:published_time" content="2021-03-23T08:57:49.000Z">
+<meta property="article:modified_time" content="2023-03-05T13:32:12.215Z">
+<meta property="article:author" content="Aiolimp">
+<meta property="article:tag" content="CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://static001.geekbang.org/resource/image/7a/30/7a9547384cffa039f063db1fc7669a30.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://aiolimp.com/2021/03/23/%E5%9B%9E%E6%B5%81%E5%92%8C%E9%87%8D%E7%BB%98/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '回流和重绘',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-03-05 21:32:12'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Aiolimp" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">67</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://static001.geekbang.org/resource/image/7a/30/7a9547384cffa039f063db1fc7669a30.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Aiolimp"><span class="site-name">Aiolimp</span></a></span><div id="menus"><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">回流和重绘</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-03-23T08:57:49.000Z" title="发表于 2021-03-23 16:57:49">2021-03-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-03-05T13:32:12.215Z" title="更新于 2023-03-05 21:32:12">2023-03-05</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/CSS/">CSS</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="回流和重绘"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="回流和重绘"><a href="#回流和重绘" class="headerlink" title="回流和重绘"></a>回流和重绘</h1><p>在浏览器的渲染过程里的<strong>回流</strong>和<strong>重绘</strong>是CSS中很重要的概念。了解和认识它们，可编写出性能更好的CSS代码。 </p>
+<h3 id="回流"><a href="#回流" class="headerlink" title="回流"></a>回流</h3><p><strong>回流</strong>又名<strong>重排</strong>，指<code>几何属性</code>需改变的渲染。但感觉回流这个词比较高大上，后续统称回流吧。</p>
+<p>可理解成，将整个网页填白，对内容重新渲染一次。只不过以人眼的感官速度去看浏览器回流是不会有任何变化的，若你拥有<code>闪电侠</code>的感官速度去看浏览器回流(<code>实质是将时间调慢</code>)，就会发现每次回流都会将页面清空，再从左上角第一个像素点从左到右从上到下这样一点一点渲染，直至右下角最后一个像素点。每次回流都会呈现该过程，只是感受不到而已。</p>
+<p>渲染树的节点发生改变，影响了该节点的几何属性，导致该节点位置发生变化，此时就会触发浏览器回流并重新生成渲染树。回流意味着节点的几何属性改变，需重新计算并生成渲染树，导致渲染树的全部或部分发生变化。</p>
+<h3 id="重绘"><a href="#重绘" class="headerlink" title="重绘"></a>重绘</h3><p><strong>重绘</strong>指更改<code>外观属性</code>而不影响<code>几何属性</code>的渲染。相比回流，重绘在两者中会温和一些，后续谈到的CSS性能优化就会基于该特点展开。</p>
+<p>渲染树的节点发生改变，但不影响该节点的几何属性。由此可见，回流对浏览器性能的消耗是高于重绘的，而且回流一定会伴随重绘，重绘却不一定伴随回流。</p>
+<p>为何回流一定会伴随重绘呢？整个节点的位置都变了，肯定要重新渲染它的外观属性啊！</p>
+<h3 id="属性分类"><a href="#属性分类" class="headerlink" title="属性分类"></a>属性分类</h3><ul>
+<li>几何属性：包括布局、尺寸等可用数学几何衡量的属性<ul>
+<li>布局：<code>display</code>、<code>float</code>、<code>position</code>、<code>list</code>、<code>table</code>、<code>flex</code>、<code>columns</code>、<code>grid</code></li>
+<li>尺寸：<code>margin</code>、<code>padding</code>、<code>border</code>、<code>width</code>、<code>height</code></li>
+</ul>
+</li>
+<li>外观属性：包括界面、文字等可用状态向量描述的属性<ul>
+<li>界面：<code>appearance</code>、<code>outline</code>、<code>background</code>、<code>mask</code>、<code>box-shadow</code>、<code>box-reflect</code>、<code>filter</code>、<code>opacity</code>、<code>clip</code></li>
+<li>文字：<code>text</code>、<code>font</code>、<code>word</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h3><p> <strong>回流重绘</strong>在操作节点样式时频繁出现，同时也存在很大程度上的性能问题。<code>回流成本比重绘成本高得多</code>，一个节点的回流很有可能导致子节点、兄弟节点或祖先节点的回流。在一些高性能电脑上也许无什么影响，但回流发生在手机上，就会<code>减缓加载速度</code>和<code>增加电量消耗</code>。 </p>
+<p> <strong>回流必定引发重绘，重绘不一定引发回流</strong>，可利用该法则解决一些因为回流重绘而引发的性能问题。 </p>
+<ul>
+<li>改变窗口大小</li>
+<li>修改盒模型</li>
+<li>增删样式</li>
+<li>重构布局</li>
+<li>重设尺寸</li>
+<li>改变字体</li>
+<li>改动文字</li>
+</ul>
+<p> 回流重绘其实与浏览器的<strong>事件循环</strong>有关。</p>
+<ul>
+<li>浏览器刷新频率为<code>60Hz</code>，即每<code>16.6ms</code>更新一次</li>
+<li><code>事件循环</code>执行完成<code>微任务</code></li>
+<li>判断<code>document</code>是否需更新</li>
+<li>判断<code>resize/scroll</code>事件是否存在，存在则触发事件</li>
+<li>判断<code>Media Query</code>是否触发</li>
+<li>更新动作并发送事件</li>
+<li>判断<code>document.isFullScreen</code>是否为<code>true</code>(全屏)</li>
+<li>执行<code>requestAnimationFrame</code>回调</li>
+<li>执行<code>IntersectionObserver</code>回调</li>
+<li>更新界面</li>
+</ul>
+<p>上述就是浏览器每一帧中可能会做到的事情，若在一帧中有空闲时间，就会执行<code>requestIdleCallback</code>回调。</p>
+<p> 通过定向法则<strong>回流必定引发重绘，重绘不一定引发回流</strong>可知道，尽量减少回流重绘，就是CSS性能优化中一个很好的指标。 </p>
+<h3 id="如何减少和避免回流重绘"><a href="#如何减少和避免回流重绘" class="headerlink" title="如何减少和避免回流重绘"></a>如何减少和避免回流重绘</h3><h4 id="使用visibility-hidden替换display-none"><a href="#使用visibility-hidden替换display-none" class="headerlink" title="使用visibility:hidden替换display:none"></a>使用visibility:hidden替换display:none</h4><p>对比<code>display:none</code>和<code>visibility:hidden</code>：</p>
+<ul>
+<li>占位表现<ul>
+<li><code>display:none</code>不占据空间</li>
+<li><code>visibility:hidden</code>占据空间</li>
+</ul>
+</li>
+<li>触发影响<ul>
+<li><code>display:none</code>触发回流重绘</li>
+<li><code>visibility:hidden</code>触发重绘</li>
+</ul>
+</li>
+<li>过渡影响<ul>
+<li><code>display:none</code>影响过渡不影响动画</li>
+<li><code>visibility:hidden</code>不影响过渡不影响动画</li>
+</ul>
+</li>
+<li>株连效果<ul>
+<li><code>display:none</code>后自身及其子节点全都不可见</li>
+<li><code>visibility:hidden</code>后自身及其子节点全都不可见但可声明子节点<code>visibility:visible</code>单独显示</li>
+</ul>
+</li>
+</ul>
+<p>两者的<code>占位表现</code>、<code>触发影响</code>和<code>株连效果</code>就能说明<code>visibility:hidden</code>代替<code>display:none</code>的好处，从两者区别中就能找出恰当的答案了。</p>
+<h4 id="使用transform代替top"><a href="#使用transform代替top" class="headerlink" title="使用transform代替top"></a>使用transform代替top</h4><p><code>top</code>是几何属性，操作<code>top</code>会改变节点位置从而引发回流，使用<code>transform:translate3d(x,0,0)</code>代替<code>top</code>，只会引发图层重绘，还会间接启动GPU加速。</p>
+<h4 id="避免使用Table布局"><a href="#避免使用Table布局" class="headerlink" title="避免使用Table布局"></a>避免使用Table布局</h4><p><code>牵一发而动全身</code>用在Table布局身上就很适合了，可能很小的一个改动就会造成整个回流，</p>
+<p>通常可用<code>、</code>和<code>等标签取代</code>系列标签生成表格。</p>
+<h4 id="避免规则层级过多"><a href="#避免规则层级过多" class="headerlink" title="避免规则层级过多"></a>避免规则层级过多</h4><p>浏览器的<code>CSS解析器</code>解析<code>css文件</code>时，对CSS规则是从右到左匹配查找，样式层级过多会影响回流重绘效率，建议保持CSS规则在<code>3层</code>左右。</p>
+<h4 id="避免节点属性值放在循环里当成循环变量"><a href="#避免节点属性值放在循环里当成循环变量" class="headerlink" title="避免节点属性值放在循环里当成循环变量"></a>避免节点属性值放在循环里当成循环变量</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">10000</span>; i++) &#123;</span><br><span class="line">    <span class="keyword">const</span> top = <span class="built_in">document</span>.getElementById(<span class="string">&quot;css&quot;</span>).style.top;</span><br><span class="line">    <span class="built_in">console</span>.log(top);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> 每次循环操作DOM都会发生回流，应该在循环外使用变量保存一些不会变化的DOM映射值。 </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> top = <span class="built_in">document</span>.getElementById(<span class="string">&quot;css&quot;</span>).style.top;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">10000</span>; i++) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(top);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="动态改变类而不改变样式"><a href="#动态改变类而不改变样式" class="headerlink" title="动态改变类而不改变样式"></a>动态改变类而不改变样式</h4><p>不要尝试每次操作DOM去改变节点样式，这样会频繁触发回流。</p>
+<p>更好的方式是使用新的类名预定义节点样式，在执行逻辑操作时收集并确认最终更换的类名集合，在适合时机一次性动态替换原来的类名集合。（可以使用方法<a target="_blank" rel="noopener" href="https://www.runoob.com/jsref/prop-element-classlist.html">classList</a>）</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://Aiolimp.com">Aiolimp</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://aiolimp.com/2021/03/23/%E5%9B%9E%E6%B5%81%E5%92%8C%E9%87%8D%E7%BB%98/">http://aiolimp.com/2021/03/23/%E5%9B%9E%E6%B5%81%E5%92%8C%E9%87%8D%E7%BB%98/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://Aiolimp.com" target="_blank">Aiolimp</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/CSS/">CSS</a></div><div class="post_share"><div class="social-share" data-image="https://static001.geekbang.org/resource/image/7a/30/7a9547384cffa039f063db1fc7669a30.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/04/11/CSS%E6%8A%80%E5%B7%A7%E7%AF%87(%E4%B8%80)%EF%BC%9A%E8%83%8C%E6%99%AF%E4%B8%8E%E9%81%AE%E7%BD%A9/" title="CSS技巧篇(一)：背景与遮罩"><img class="cover" src="/images/CSS.gif" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">CSS技巧篇(一)：背景与遮罩</div></div></a></div><div class="next-post pull-right"><a href="/2021/03/15/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E4%B8%8E%E5%93%8D%E5%BA%94%E5%BC%8F%20Viewport/" title="移动端与响应式 Viewport"><img class="cover" src="https://static001.geekbang.org/resource/image/73/e4/730ea9c393def7975deceb48b3eb6fe4.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">移动端与响应式 Viewport</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/04/23/BFC_IFC_GFC_FFC/" title="BFC_IFC_GFC_FFC"><img class="cover" src="https://static001.geekbang.org/resource/image/bd/47/bdce168820c080adbcbee78b02292f47.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-23</div><div class="title">BFC_IFC_GFC_FFC</div></div></a></div><div><a href="/2021/04/13/CSS%E5%85%83%E7%B4%A0%E9%9A%90%E8%97%8F/" title="CSS元素隐藏"><img class="cover" src="https://static001.geekbang.org/resource/image/cb/8d/cb4a6ded3cdc7c0eb6a7e3879567f08d.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-13</div><div class="title">CSS元素隐藏</div></div></a></div><div><a href="/2021/04/13/CSS%E6%8A%80%E5%B7%A7%E7%AF%87(2)%EF%BC%9A%E9%98%B4%E5%BD%B1%E4%B8%8E%E6%BB%A4%E9%95%9C/" title="CSS技巧篇(二)：阴影和滤镜"><img class="cover" src="/images/CSS.gif" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-13</div><div class="title">CSS技巧篇(二)：阴影和滤镜</div></div></a></div><div><a href="/2021/04/13/CSS%E6%8A%80%E5%B7%A7%E7%AF%87(%E4%B8%89)%EF%BC%9A%E5%8F%98%E6%8D%A2%E4%B8%8E%E5%8A%A8%E7%94%BB/" title="CSS技巧篇(三)：变换与动画"><img class="cover" src="/images/CSS.gif" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-13</div><div class="title">CSS技巧篇(三)：变换与动画</div></div></a></div><div><a href="/2021/04/12/CSS%E6%B5%AE%E5%8A%A8%E4%B8%8E%E6%B8%85%E9%99%A4%E6%B5%AE%E5%8A%A8/" title="CSS浮动与清除浮动"><img class="cover" src="https://static001.geekbang.org/resource/image/bd/47/bdce168820c080adbcbee78b02292f47.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-12</div><div class="title">CSS浮动与清除浮动</div></div></a></div><div><a href="/2021/04/11/CSS%E6%8A%80%E5%B7%A7%E7%AF%87(%E4%B8%80)%EF%BC%9A%E8%83%8C%E6%99%AF%E4%B8%8E%E9%81%AE%E7%BD%A9/" title="CSS技巧篇(一)：背景与遮罩"><img class="cover" src="/images/CSS.gif" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-11</div><div class="title">CSS技巧篇(一)：背景与遮罩</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Aiolimp</div><div class="author-info__description">生如长河,渡船千艘</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">67</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9E%E6%B5%81%E5%92%8C%E9%87%8D%E7%BB%98"><span class="toc-number">1.</span> <span class="toc-text">回流和重绘</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9E%E6%B5%81"><span class="toc-number">1.0.1.</span> <span class="toc-text">回流</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E7%BB%98"><span class="toc-number">1.0.2.</span> <span class="toc-text">重绘</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%9E%E6%80%A7%E5%88%86%E7%B1%BB"><span class="toc-number">1.0.3.</span> <span class="toc-text">属性分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96"><span class="toc-number">1.0.4.</span> <span class="toc-text">性能优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%87%8F%E5%B0%91%E5%92%8C%E9%81%BF%E5%85%8D%E5%9B%9E%E6%B5%81%E9%87%8D%E7%BB%98"><span class="toc-number">1.0.5.</span> <span class="toc-text">如何减少和避免回流重绘</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8visibility-hidden%E6%9B%BF%E6%8D%A2display-none"><span class="toc-number">1.0.5.1.</span> <span class="toc-text">使用visibility:hidden替换display:none</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8transform%E4%BB%A3%E6%9B%BFtop"><span class="toc-number">1.0.5.2.</span> <span class="toc-text">使用transform代替top</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%81%BF%E5%85%8D%E4%BD%BF%E7%94%A8Table%E5%B8%83%E5%B1%80"><span class="toc-number">1.0.5.3.</span> <span class="toc-text">避免使用Table布局</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%81%BF%E5%85%8D%E8%A7%84%E5%88%99%E5%B1%82%E7%BA%A7%E8%BF%87%E5%A4%9A"><span class="toc-number">1.0.5.4.</span> <span class="toc-text">避免规则层级过多</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%81%BF%E5%85%8D%E8%8A%82%E7%82%B9%E5%B1%9E%E6%80%A7%E5%80%BC%E6%94%BE%E5%9C%A8%E5%BE%AA%E7%8E%AF%E9%87%8C%E5%BD%93%E6%88%90%E5%BE%AA%E7%8E%AF%E5%8F%98%E9%87%8F"><span class="toc-number">1.0.5.5.</span> <span class="toc-text">避免节点属性值放在循环里当成循环变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E6%94%B9%E5%8F%98%E7%B1%BB%E8%80%8C%E4%B8%8D%E6%94%B9%E5%8F%98%E6%A0%B7%E5%BC%8F"><span class="toc-number">1.0.5.6.</span> <span class="toc-text">动态改变类而不改变样式</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/03/05/JS%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" title="JavaScript数据类型"><img src="https://static001.geekbang.org/resource/image/13/6b/13daccec5e12c89ea63e8c51dd20cb6b.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JavaScript数据类型"/></a><div class="content"><a class="title" href="/2023/03/05/JS%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" title="JavaScript数据类型">JavaScript数据类型</a><time datetime="2023-03-05T13:32:12.207Z" title="发表于 2023-03-05 21:32:12">2023-03-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/03/05/FirstBlog/" title="Aiolimp的第一篇blog"><img src="/images/bg.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Aiolimp的第一篇blog"/></a><div class="content"><a class="title" href="/2023/03/05/FirstBlog/" title="Aiolimp的第一篇blog">Aiolimp的第一篇blog</a><time datetime="2023-03-05T13:32:12.205Z" title="发表于 2023-03-05 21:32:12">2023-03-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/21/IM%E8%81%8A%E5%A4%A9/" title="IM聊天"><img src="https://static001.geekbang.org/resource/image/88/f1/8807661ef5b82fcb75e8b8f2dbd71ef1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="IM聊天"/></a><div class="content"><a class="title" href="/2021/08/21/IM%E8%81%8A%E5%A4%A9/" title="IM聊天">IM聊天</a><time datetime="2021-08-21T08:57:49.000Z" title="发表于 2021-08-21 16:57:49">2021-08-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/12/module%E3%80%81chunk%E5%92%8Cbundle/" title="module、chunk和bundle"><img src="https://static001.geekbang.org/resource/image/bd/2e/bddfad3dc8fb2f7c4942a0dc1286c92e.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="module、chunk和bundle"/></a><div class="content"><a class="title" href="/2021/08/12/module%E3%80%81chunk%E5%92%8Cbundle/" title="module、chunk和bundle">module、chunk和bundle</a><time datetime="2021-08-12T08:57:49.000Z" title="发表于 2021-08-12 16:57:49">2021-08-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/12/%E5%A6%82%E4%BD%95%E9%98%B2%E6%AD%A2CSRF%E6%94%BB%E5%87%BB/" title="CSRF攻击"><img src="https://static001.geekbang.org/resource/image/ee/70/ee7627bac9defb7621c2489fbacb3a70.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CSRF攻击"/></a><div class="content"><a class="title" href="/2021/08/12/%E5%A6%82%E4%BD%95%E9%98%B2%E6%AD%A2CSRF%E6%94%BB%E5%87%BB/" title="CSRF攻击">CSRF攻击</a><time datetime="2021-08-12T08:57:49.000Z" title="发表于 2021-08-12 16:57:49">2021-08-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Aiolimp</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

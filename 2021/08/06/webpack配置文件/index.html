@@ -1,0 +1,243 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>webpack配置文件 | Aiolimp</title><meta name="author" content="Aiolimp"><meta name="copyright" content="Aiolimp"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Webpack配置文件webpack的配置文件主要是webpack.config.js。 如果没有此配置文件，它默认会使用自己的默认配置。 12345678910const path &#x3D; require(&amp;#x27;path&amp;#x27;);module.exports &#x3D; &amp;#123;  entry: &amp;#x27;.&#x2F;src&#x2F;index.js&amp;#x27;,  output: &amp;#123;    p">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webpack配置文件">
+<meta property="og:url" content="http://aiolimp.com/2021/08/06/webpack%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/index.html">
+<meta property="og:site_name" content="Aiolimp">
+<meta property="og:description" content="Webpack配置文件webpack的配置文件主要是webpack.config.js。 如果没有此配置文件，它默认会使用自己的默认配置。 12345678910const path &#x3D; require(&amp;#x27;path&amp;#x27;);module.exports &#x3D; &amp;#123;  entry: &amp;#x27;.&#x2F;src&#x2F;index.js&amp;#x27;,  output: &amp;#123;    p">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/cb5b42b73a624a38b10e8e48e00ecfa5~tplv-k3u1fbpfcp-watermark.image">
+<meta property="article:published_time" content="2021-08-06T08:57:49.000Z">
+<meta property="article:modified_time" content="2023-03-05T13:32:12.213Z">
+<meta property="article:author" content="Aiolimp">
+<meta property="article:tag" content="webpack">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/cb5b42b73a624a38b10e8e48e00ecfa5~tplv-k3u1fbpfcp-watermark.image"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://aiolimp.com/2021/08/06/webpack%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'webpack配置文件',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-03-05 21:32:12'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Aiolimp" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">67</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/cb5b42b73a624a38b10e8e48e00ecfa5~tplv-k3u1fbpfcp-watermark.image')"><nav id="nav"><span id="blog-info"><a href="/" title="Aiolimp"><span class="site-name">Aiolimp</span></a></span><div id="menus"><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">webpack配置文件</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-08-06T08:57:49.000Z" title="发表于 2021-08-06 16:57:49">2021-08-06</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-03-05T13:32:12.213Z" title="更新于 2023-03-05 21:32:12">2023-03-05</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/webpack/">webpack</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="webpack配置文件"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Webpack配置文件"><a href="#Webpack配置文件" class="headerlink" title="Webpack配置文件"></a>Webpack配置文件</h1><p>webpack的配置文件主要是<code>webpack.config.js</code>。</p>
+<p>如果没有此配置文件，它默认会使用自己的默认配置。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  entry: <span class="string">&#x27;./src/index.js&#x27;</span>,</span><br><span class="line">  output: &#123;</span><br><span class="line">    path: path.resolve(__dirname, <span class="string">&#x27;dist&#x27;</span>),</span><br><span class="line">    filename: <span class="string">&#x27;main.js&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="entry和output"><a href="#entry和output" class="headerlink" title="entry和output"></a>entry和output</h2><p><code>entry</code>选项是用来配置入口文件的，它可以是字符串、数组或者对象类型。<code>webpack</code>默认只支持<code>js</code>和<code>json</code>文件作为入口文件，因此如果引入其他类型文件会保存。</p>
+<p><code>output</code>选项是设置输出配置，<strong>该选项必须是对象类型</strong>，不能是其它类型格式。在<code>output</code>对象中，必填的两个选项就是导出路径<code>path</code>和导出<code>bundle</code>文件名称<code>filename</code>。其中<code>path</code>选项必须为绝对路径。</p>
+<p><code>entry</code>和<code>output</code>的配置，对于不同的应用场景的配置也会有所不同。</p>
+<h3 id="单入口单输出"><a href="#单入口单输出" class="headerlink" title="单入口单输出"></a>单入口单输出</h3><p>我们最普遍的就是单个入口文件，然后打包成单个<code>bundle</code>文件。这种应用场景下，<code>entry</code>可以使用字符串的形式，则跟默认配置文件类似：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">entry: <span class="string">&#x27;./src/index.js&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="多入口单输出"><a href="#多入口单输出" class="headerlink" title="多入口单输出"></a>多入口单输出</h3><p>当我们的项目需要有多个入口文件，但只需要一个输出<code>bundle</code>的时候，这时候<code>entry</code>可以使用数组的形式：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">entry: [<span class="string">&#x27;./src/index_1.js&#x27;</span>, <span class="string">&#x27;./src/index_2.js&#x27;</span>]</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>注意：此时其实只有一个chunk</strong></p>
+</blockquote>
+<h3 id="多入口多输出"><a href="#多入口多输出" class="headerlink" title="多入口多输出"></a>多入口多输出</h3><p>当我们的项目同时多个入口文件，并且它们需要单独打包，也就是意味着会有多个<code>bundle</code>文件输出，此时我们的<code>entry</code>需要使用对象形式，并且对象<code>key</code>对应的对应<code>chunk</code>的名称。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">entry: &#123;</span><br><span class="line">  index: <span class="string">&quot;./src/index.js&quot;</span>,  <span class="comment">// chunkName为index</span></span><br><span class="line">  main: <span class="string">&quot;./src/main.js&quot;</span>     <span class="comment">// chunkName为main</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此时，我们的<code>output.filename</code>也不能写死了，这时候<code>webpack</code>提供了一个占位符<code>[name]</code>给我们使用，它会自动替换为对应的<code>chunkName</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">output: &#123;</span><br><span class="line">   path: path.resolve(__dirname, <span class="string">&#x27;dist&#x27;</span>),</span><br><span class="line">   filename: <span class="string">&#x27;[name].js&#x27;</span>  <span class="comment">// [name]占位符会自动替换为chunkName</span></span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>根据上面的配置，最后会打包出<code>index.js</code>和<code>main.js</code>。</p>
+<h3 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h3><p>在单入口单输出的应用场景下，<code>entry</code>也可以使用对象的形式，从而来自定义<code>chunkName</code>，然后<code>output.filename</code>也使用<code>[name]</code>占位符来自动匹配。当然也可以使用数组，但是不太大必要。</p>
+<p>当<code>entry</code>使用数组或字符串的时候，<code>chunkName</code>默认为<code>main</code>，因此如果<code>output.filename</code>使用<code>[name]</code>占位符的时候，会自动替换为<code>main</code>。</p>
+<h2 id="mode"><a href="#mode" class="headerlink" title="mode"></a>mode</h2><p>在前面的打包测试的时候，命令行都会报一个警告：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">WARNING in configuration</span><br><span class="line">The &#x27;mode&#x27; option has not been set, webpack will fallback to &#x27;production&#x27; for this value.</span><br><span class="line">Set &#x27;mode&#x27; option to &#x27;development&#x27; or &#x27;production&#x27; to enable defaults for each environment.</span><br></pre></td></tr></table></figure>
+
+<p>这是因为<code>webpack</code>需要我们配置<code>mode</code>选项。</p>
+<p>wepack给我们提供了三个选项，即<code>none</code>、<code>development</code>和<code>production</code>，而默认就是<code>production</code>。</p>
+<p>三者的区别呢，在于<code>webpack</code>自带的代码压缩和优化插件使用。</p>
+<ul>
+<li>**<code>none</code>**：不使用任何默认优化选项；</li>
+<li>**<code>development</code>**：指的是开发环境，会默认开启一些有利于开发调试的选项，比如<code>NamedModulesPlugin</code>和<code>NamedChunksPlugin</code>，分别是给<code>module</code>和<code>chunk</code>命名的，而默认是一个数组，对应的<code>chunkName</code>也只是下标，不利于开发调试；</li>
+<li>**<code>production</code>**：指的是生产环境，则会开启代码压缩和代码性能优化的插件，从而打包出来的文件也相对<code>none</code>和<code>development</code>小很多。</li>
+</ul>
+<blockquote>
+<p>当我们设置mode之后，我们可以在<code>process.env.NODE_ENV</code>获取到当前的环境</p>
+</blockquote>
+<p>因此我们可以在配置文件上文件上配置<code>mode</code>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    mode:<span class="string">&#x27;development&#x27;</span>, <span class="comment">// 开发模式</span></span><br><span class="line">    entry: <span class="string">&#x27;./src/index.js&#x27;</span>,</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: path.resolve(__dirname, <span class="string">&#x27;dist&#x27;</span>),</span><br><span class="line">        filename: <span class="string">&#x27;[name].js&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><code>webpack</code>也给我们提供了另一种方式，就是在命令行中配置，也就是加上<code>--mode</code>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// package.json</span></span><br><span class="line"><span class="string">&quot;scripts&quot;</span>: &#123;</span><br><span class="line">  <span class="string">&quot;dev&quot;</span>: <span class="string">&quot;webpack --mode development&quot;</span>,</span><br><span class="line">  <span class="string">&quot;build&quot;</span>: <span class="string">&quot;webpack --mode production&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="devtool"><a href="#devtool" class="headerlink" title="devtool"></a>devtool</h2><p>聊完<code>mode</code>后，说到开发调试，不难想起的就是<code>sourceMap</code>。而我们可以在配置文件中，使用<code>devtool</code>开启它。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry: <span class="string">&#x27;./src/index.js&#x27;</span>,</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: path.resolve(__dirname, <span class="string">&#x27;dist&#x27;</span>),</span><br><span class="line">        filename: <span class="string">&#x27;[name].js&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">  	<span class="comment">// 开启source-map</span></span><br><span class="line">    devtool: <span class="string">&quot;source-map&quot;</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>打包后，你的<code>dist</code>中就会多了一个<code>main.js.map</code>文件。</p>
+<p>当然，官方不止提供这么一个选项，具体的可以去<a href="https://link.juejin.cn/?target=https://webpack.docschina.org/configuration/devtool/%23devtool">官网</a>看看，这里就说其他几个比较常用的选项。</p>
+<ul>
+<li>**<code>none</code>**：不会生成<code>sourceMap</code>；</li>
+<li>**<code>eval</code>**：每个模块都会使用<code>eval()</code>执行，不建议生成环境中使用；</li>
+<li>**<code>cheap-source-map</code>**：生成<code>sourceMap</code>，但是没有列映射，则只会提醒是在代码的第几行，不会提示到第几列；</li>
+<li>**<code>inline-source-map</code>**：会生成<code>sourceMap</code>，但不会生成<code>map</code>文件，而是将<code>sourceMap</code>放在打包文件中。</li>
+</ul>
+<h2 id="module"><a href="#module" class="headerlink" title="module"></a>module</h2><p>前面我们有提到过，就是<code>webpack</code>的入口文件只能接收<code>JavaScript</code>文件和<code>JSON</code>文件。</p>
+<p>但我们通常项目还会有其他类型的文件，比如<code>html</code>、<code>css</code>、图片、字体等等，这时候我们就需要用到第三方<code>loader</code>来帮助<code>webpack</code>来解析这些文件。理论上只要有相应的<code>loader</code>，就可以处理任何类型的文件。</p>
+<blockquote>
+<p>在<code>webpack</code><a href="https://link.juejin.cn/?target=https://webpack.docschina.org/loaders/">官网</a>其实提供了很多<code>loader</code>，已经能满足我们日常使用，当然我们也可以去<code>github</code>找找别人写的<code>loader</code>或者自己手写<code>loader</code>来使用。</p>
+</blockquote>
+<p>而对于<code>loader</code>的配置，是写着<code>module</code>选项里面的。<code>module</code>选项是一个对象，它里面有一个<code>rules</code>属性，是一个数组，在里面我们可以配置多个匹配规则。</p>
+<p>而匹配规则是一个对象，会有<code>test</code>属性和<code>use</code>属性，<code>test</code>属性一般是正则表达式，用来识别文件类型，而<code>use</code>属性是一个数组，里面用来存放对该文件类型使用的<code>loader</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">        &#123;</span><br><span class="line">          test: <span class="regexp">/\.css$/</span>,  <span class="comment">// 识别css文件</span></span><br><span class="line">          use: [<span class="string">&#x27;style-loader&#x27;</span>, <span class="string">&#x27;css-loader&#x27;</span>]  <span class="comment">// 对css文件使用的三个loader</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于<code>use</code>数组的顺序是有要求的，<code>webpack</code>会根据<strong>自后向前</strong>的规则去执行<code>loader</code>。也就是说，上面的例子<code>webpack</code>会先执行<code>css-loader</code>，再执行<code>style-loader</code>。</p>
+<p>其次，当我们需要对对应<code>loader</code>提供配置的时候，我们可以选用对象写法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">        &#123;</span><br><span class="line">          test: <span class="regexp">/\.css$/</span>,  </span><br><span class="line">          use: [</span><br><span class="line">            <span class="string">&#x27;style-loader&#x27;</span>, </span><br><span class="line">            &#123;</span><br><span class="line">              	<span class="comment">// loader名称</span></span><br><span class="line">              	loader: <span class="string">&#x27;css-loader&#x27;</span>,</span><br><span class="line">              	<span class="comment">// loader选项</span></span><br><span class="line">              	options: &#123;</span><br><span class="line">                  	... </span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">          ] </span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在后面我们根据实际应用场景再讲讲<code>module</code>的使用。</p>
+<h2 id="plugins"><a href="#plugins" class="headerlink" title="plugins"></a>plugins</h2><p><code>webpack</code>还提供了一个<code>plugins</code>选项，让我们可以使用一些第三方插件，因此我们可以使用第三方插件来实现打包优化、资源管理、注入环境变量等任务。</p>
+<blockquote>
+<p>同样的，<code>webpack</code><a href="https://link.juejin.cn/?target=https://webpack.docschina.org/plugins/">官方</a>也提供了很多<code>plugin</code>。</p>
+</blockquote>
+<p><code>plugins</code>选项是一个数组，里面可以放入多个<code>plugin</code>插件。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">plugins: [</span><br><span class="line">  <span class="keyword">new</span> htmlWebpackPlugin(),</span><br><span class="line">  <span class="keyword">new</span> CleanWebpackPlugin(),</span><br><span class="line">  <span class="keyword">new</span> miniCssExtractPlugin(),</span><br><span class="line">  <span class="keyword">new</span> TxtWebpackPlugin()</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>而对于<code>plugins</code>数组对排序位置是没有要求，因为在<code>plugin</code>的实现中，<code>webpack</code>会通过打包过程的生命周期钩子，因此在插件逻辑中就已经设置好需要在哪个生命周期执行哪些任务。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://Aiolimp.com">Aiolimp</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://aiolimp.com/2021/08/06/webpack%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/">http://aiolimp.com/2021/08/06/webpack%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://Aiolimp.com" target="_blank">Aiolimp</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/webpack/">webpack</a></div><div class="post_share"><div class="social-share" data-image="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/cb5b42b73a624a38b10e8e48e00ecfa5~tplv-k3u1fbpfcp-watermark.image" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/08/07/webpack%E4%BC%98%E5%8C%96/" title="webpack优化"><img class="cover" src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/cb5b42b73a624a38b10e8e48e00ecfa5~tplv-k3u1fbpfcp-watermark.image" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">webpack优化</div></div></a></div><div class="next-post pull-right"><a href="/2021/08/06/webpack%E5%B8%B8%E8%A7%81%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/" title="webpack常见应用场景"><img class="cover" src="https://static001.geekbang.org/resource/image/73/2a/737fb9f94c18a26a875c27169222b82a.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">webpack常见应用场景</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/08/12/module%E3%80%81chunk%E5%92%8Cbundle/" title="module、chunk和bundle"><img class="cover" src="https://static001.geekbang.org/resource/image/bd/2e/bddfad3dc8fb2f7c4942a0dc1286c92e.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-08-12</div><div class="title">module、chunk和bundle</div></div></a></div><div><a href="/2021/08/07/webpack%E4%BC%98%E5%8C%96/" title="webpack优化"><img class="cover" src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/cb5b42b73a624a38b10e8e48e00ecfa5~tplv-k3u1fbpfcp-watermark.image" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-08-07</div><div class="title">webpack优化</div></div></a></div><div><a href="/2021/08/06/webpack%E5%B8%B8%E8%A7%81%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/" title="webpack常见应用场景"><img class="cover" src="https://static001.geekbang.org/resource/image/73/2a/737fb9f94c18a26a875c27169222b82a.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-08-06</div><div class="title">webpack常见应用场景</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Aiolimp</div><div class="author-info__description">生如长河,渡船千艘</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">67</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Webpack%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">1.</span> <span class="toc-text">Webpack配置文件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#entry%E5%92%8Coutput"><span class="toc-number">1.1.</span> <span class="toc-text">entry和output</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E5%85%A5%E5%8F%A3%E5%8D%95%E8%BE%93%E5%87%BA"><span class="toc-number">1.1.1.</span> <span class="toc-text">单入口单输出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E5%85%A5%E5%8F%A3%E5%8D%95%E8%BE%93%E5%87%BA"><span class="toc-number">1.1.2.</span> <span class="toc-text">多入口单输出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E5%85%A5%E5%8F%A3%E5%A4%9A%E8%BE%93%E5%87%BA"><span class="toc-number">1.1.3.</span> <span class="toc-text">多入口多输出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%85"><span class="toc-number">1.1.4.</span> <span class="toc-text">补充</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mode"><span class="toc-number">1.2.</span> <span class="toc-text">mode</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#devtool"><span class="toc-number">1.3.</span> <span class="toc-text">devtool</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#module"><span class="toc-number">1.4.</span> <span class="toc-text">module</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#plugins"><span class="toc-number">1.5.</span> <span class="toc-text">plugins</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/03/05/JS%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" title="JavaScript数据类型"><img src="https://static001.geekbang.org/resource/image/13/6b/13daccec5e12c89ea63e8c51dd20cb6b.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JavaScript数据类型"/></a><div class="content"><a class="title" href="/2023/03/05/JS%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" title="JavaScript数据类型">JavaScript数据类型</a><time datetime="2023-03-05T13:32:12.207Z" title="发表于 2023-03-05 21:32:12">2023-03-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/03/05/FirstBlog/" title="Aiolimp的第一篇blog"><img src="/images/bg.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Aiolimp的第一篇blog"/></a><div class="content"><a class="title" href="/2023/03/05/FirstBlog/" title="Aiolimp的第一篇blog">Aiolimp的第一篇blog</a><time datetime="2023-03-05T13:32:12.205Z" title="发表于 2023-03-05 21:32:12">2023-03-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/21/IM%E8%81%8A%E5%A4%A9/" title="IM聊天"><img src="https://static001.geekbang.org/resource/image/88/f1/8807661ef5b82fcb75e8b8f2dbd71ef1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="IM聊天"/></a><div class="content"><a class="title" href="/2021/08/21/IM%E8%81%8A%E5%A4%A9/" title="IM聊天">IM聊天</a><time datetime="2021-08-21T08:57:49.000Z" title="发表于 2021-08-21 16:57:49">2021-08-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/12/module%E3%80%81chunk%E5%92%8Cbundle/" title="module、chunk和bundle"><img src="https://static001.geekbang.org/resource/image/bd/2e/bddfad3dc8fb2f7c4942a0dc1286c92e.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="module、chunk和bundle"/></a><div class="content"><a class="title" href="/2021/08/12/module%E3%80%81chunk%E5%92%8Cbundle/" title="module、chunk和bundle">module、chunk和bundle</a><time datetime="2021-08-12T08:57:49.000Z" title="发表于 2021-08-12 16:57:49">2021-08-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/12/%E5%A6%82%E4%BD%95%E9%98%B2%E6%AD%A2CSRF%E6%94%BB%E5%87%BB/" title="CSRF攻击"><img src="https://static001.geekbang.org/resource/image/ee/70/ee7627bac9defb7621c2489fbacb3a70.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CSRF攻击"/></a><div class="content"><a class="title" href="/2021/08/12/%E5%A6%82%E4%BD%95%E9%98%B2%E6%AD%A2CSRF%E6%94%BB%E5%87%BB/" title="CSRF攻击">CSRF攻击</a><time datetime="2021-08-12T08:57:49.000Z" title="发表于 2021-08-12 16:57:49">2021-08-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Aiolimp</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>v8 执行 js 的过程 | Aiolimp</title><meta name="author" content="Aiolimp"><meta name="copyright" content="Aiolimp"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="v8 执行 js 的过程前言本文意在简单的介绍一下 V8 执行 JS 的过程，通过了解 V8 执行 JS 的过程，知道 JS 代码呈现在浏览器上到底做了什么。当然本人也是在陆续探索 V8 ，文章中如有不当之处，还望不吝指正，理性交流。 众所周知，机器（CPU）只能识别机器码（二进制码），对于 JS 代码，它是识别不了的，所以当代码成为页面出现在屏幕上的时候，必然是做了很多的转译工作。 V8 执行">
+<meta property="og:type" content="article">
+<meta property="og:title" content="v8 执行 js 的过程">
+<meta property="og:url" content="http://aiolimp.com/2021/08/10/v8%E6%89%A7%E8%A1%8Cjs%E7%9A%84%E8%BF%87%E7%A8%8B/index.html">
+<meta property="og:site_name" content="Aiolimp">
+<meta property="og:description" content="v8 执行 js 的过程前言本文意在简单的介绍一下 V8 执行 JS 的过程，通过了解 V8 执行 JS 的过程，知道 JS 代码呈现在浏览器上到底做了什么。当然本人也是在陆续探索 V8 ，文章中如有不当之处，还望不吝指正，理性交流。 众所周知，机器（CPU）只能识别机器码（二进制码），对于 JS 代码，它是识别不了的，所以当代码成为页面出现在屏幕上的时候，必然是做了很多的转译工作。 V8 执行">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://static001.geekbang.org/resource/image/fb/c0/fb4e210a483a7892433331082f5f09c0.jpg">
+<meta property="article:published_time" content="2021-08-10T08:57:49.000Z">
+<meta property="article:modified_time" content="2023-03-05T13:32:12.213Z">
+<meta property="article:author" content="Aiolimp">
+<meta property="article:tag" content="V8引擎">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://static001.geekbang.org/resource/image/fb/c0/fb4e210a483a7892433331082f5f09c0.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://aiolimp.com/2021/08/10/v8%E6%89%A7%E8%A1%8Cjs%E7%9A%84%E8%BF%87%E7%A8%8B/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'v8 执行 js 的过程',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-03-05 21:32:12'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Aiolimp" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">67</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://static001.geekbang.org/resource/image/fb/c0/fb4e210a483a7892433331082f5f09c0.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Aiolimp"><span class="site-name">Aiolimp</span></a></span><div id="menus"><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">v8 执行 js 的过程</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-08-10T08:57:49.000Z" title="发表于 2021-08-10 16:57:49">2021-08-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-03-05T13:32:12.213Z" title="更新于 2023-03-05 21:32:12">2023-03-05</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/V8%E5%BC%95%E6%93%8E/">V8引擎</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="v8 执行 js 的过程"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="v8-执行-js-的过程"><a href="#v8-执行-js-的过程" class="headerlink" title="v8 执行 js 的过程"></a>v8 执行 js 的过程</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文意在简单的介绍一下 V8 执行 JS 的过程，通过了解 V8 执行 JS 的过程，知道 JS 代码呈现在浏览器上到底做了什么。当然本人也是在陆续探索 V8 ，文章中如有不当之处，还望不吝指正，理性交流。</p>
+<p>众所周知，机器（CPU）只能识别机器码（二进制码），对于 JS 代码，它是识别不了的，所以当代码成为页面出现在屏幕上的时候，必然是做了很多的转译工作。</p>
+<h2 id="V8-执行-Javascript-过程"><a href="#V8-执行-Javascript-过程" class="headerlink" title="V8 执行 Javascript 过程"></a>V8 执行 Javascript 过程</h2><p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c22fdb3bf7c6441091d97e4808918ef3~tplv-k3u1fbpfcp-zoom-1.image" alt="img"></p>
+<p>如上图所示，我们将一步步进行拆分分析：</p>
+<h3 id="JS-TO-AST"><a href="#JS-TO-AST" class="headerlink" title="JS TO AST"></a>JS TO AST</h3><p>在 V8 引擎拿到 JS 代码之后，<strong>解析器</strong>（Parser）会对其进行词法分析和语法分析。</p>
+<h4 id="词法分析"><a href="#词法分析" class="headerlink" title="词法分析"></a>词法分析</h4><p>将 JS 代码拆分成对应的 Token，Token 是能拆分的最小单位，固定 type 表述类型/属性，value 表示对应的值，如下图 Token。</p>
+<h4 id="语法分析"><a href="#语法分析" class="headerlink" title="语法分析"></a>语法分析</h4><p>在进行词法分析转为 Token 之后，解析器继续根据生成的 Token 生成对应的 AST，AST 相信前端同学并不陌生，也是热词之一，无论是在 Vue、React 中虚拟 DOM 的表示，或者 Babel 对 JS 转译的表示都是先将其转化为对应的 AST，解析器解析之后的 AST 结构如下图所示：</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/43af5a528db34860901cbb5c03d1fc10~tplv-k3u1fbpfcp-zoom-1.image" alt="img"></p>
+<p>可以看到，一段极小的代码片段，被解析成 AST 之后复杂了很多，在图中的 AST 还仅仅是简化后的数据，全部的 AST 其实还有很多参数，将会更复杂。</p>
+<h3 id="字节码"><a href="#字节码" class="headerlink" title="字节码"></a>字节码</h3><p>在解析器（Parser）将 JS 代码解析成 AST 之后，<strong>解释器</strong>（Ignition）根据 AST 来生成字节码（也称中间码）。前文提到 CPU 只能识别机器码，对字节码是识别不了的，这里就衍生出一个问题，如果 CPU 识别不了字节码，那为什么还要在中间插一步来耗费资源转字节码呢？效率不是很更低吗？</p>
+<p>在计算机学科里聊效率，都逃避不了时间和空间这两个概念，绝大部分的优化都是空间换时间和时间换空间，两者的平衡，效率如何达到最高，是一个很值得深入研究的问题。</p>
+<p>拿之前版本的 V8 引擎执行 JS 来说，是没有转字节码这一步骤的，直接从 AST 转成机器码，这个过程称为编译过程，所以每次拿到 JS 文件的时候，首先都会编译，而这个过程还是比较浪费时间的，这是一件比较头疼的事情，需要一个解决办法。</p>
+<p>一个网页第一次打开，关闭再次去打开，大部分情况下，还是和原来 JS 文件一致的，除非开发者修改了代码，但这个可以暂时不考虑，毕竟哪个网站也不会一天闲的无聊，不停的修改，上传替换。</p>
+<h4 id="缓存机器码"><a href="#缓存机器码" class="headerlink" title="缓存机器码"></a>缓存机器码</h4><p>按照这个思路，既然绝大多数情况下，文件不会修改，那编译后的机器码可以考虑缓存下来，这样一来，下次再打开或者刷新页面的时候就省去编译的过程了，可以直接执行了，存储机器码被分成了两种情况，一个是浏览器未关闭时候，直接存储到浏览器本地的内存中，一个是浏览器关闭了，直接存储在磁盘上，而早期的 V8 也确实是这么做的，典型的牺牲空间换时间。</p>
+<h4 id="缓存带来的问题"><a href="#缓存带来的问题" class="headerlink" title="缓存带来的问题"></a>缓存带来的问题</h4><p>思考一个问题，从上面的图中可以看到，一个很小的代码片段，转换成 AST 之后，变大了很多，文件大了导致一个问题就是需要更大的内存来存储，而 JS 文件转成机器码（即二进制文件），会比原来的 JS 文件大几百甚至几千倍，这就意味这一个几十 KB 的 JS 文件将会达到几十 MB，这就很可怕，本来 Chrome 多进程架构就已经很占用内存了，再来这一出，配置再好的电脑，也怕是无福消受 Chrome 了，毕竟使用者体验的好坏，直接决定了一个产品在市场上是否能生存下去，尽管 V8 缓存了编译后的代码，减少了编译的时间，提高了时间上的效率，但代价是内存占用太大了，所以 Chrome 团队是有必要优化这个问题的。</p>
+<h4 id="惰性编译"><a href="#惰性编译" class="headerlink" title="惰性编译"></a>惰性编译</h4><p>当然，引进其他技术是需要时间去开发和优化的，在一个技术架构产生的同时，必然会有劣势方面的弥补，而早期版本的 V8 为了解决占用内存和启动速度，引进了<strong>惰性编译</strong>，那么问题来了，<strong>惰性编译</strong>做了什么去提高效率的呢？</p>
+<p><strong>惰性编译</strong>还是比较容易理解的，从作用域的角度思考，ES6 之前之只有全局作用域和函数作用域，而<strong>惰性编译</strong>的思路就是 V8 启动的时候只编译和缓存全局作用域的代码，而函数作用域中的代码，会在调用的时候去编译，同样函数内部编译后的代码一样不会被缓存下来。</p>
+<h4 id="惰性编译存在的问题"><a href="#惰性编译存在的问题" class="headerlink" title="惰性编译存在的问题"></a>惰性编译存在的问题</h4><p>引入<strong>惰性编译</strong>之后，在编译速度和缓存上看来，都得到了提升，一切看起来似乎很完美了，对，是看起来，但是设计出来的东西，你永远不知道使用者会怎么使用，在 ES6 和 Vue、React 等这些没有普及之前，绝大部分开发者都使用的是 jQuery，以及 RequireJS 等类似产品，JQ 插件各种引用，各种插件或者开发者自己封装的方法，为了不污染其他使用者的变量，一般都封装成一个函数，这样问题就来了，<strong>惰性编译</strong>不会保存函数编译后的机器码和理解编译函数，如果一个插件太大那等到使用函数再去编译，编译的时间上就会变得很慢，这相当于是开发者将<strong>惰性编译</strong>给玩完了，路给封死了。</p>
+<h4 id="引入字节码"><a href="#引入字节码" class="headerlink" title="引入字节码"></a>引入字节码</h4><p>好吧，玩不过开发者了，那 V8 团队只好换个思路，就引入字节码吧。首先要理解什么是字节码，字节码其实是机器码的抽象，各种字节码的相互构成，可以实现 JS 所需的所有功能，当然首先一点，字节码比机器码占用的内存要小很多很多，基本是机器码所在内存的几十甚至几百分之一，这样一来字节码缓存下来所消耗的内存还是可以接受的。</p>
+<p>这里会有一个疑问，既然 CPU 不能识别字节码，那是不是还需要将字节码转成机器码呢？不然怎么执行，答案是肯定。解释在将 AST 转为字节码之后，会在执行的时候将字节码转成机器码，这个执行过程肯定是比直接执行机器码要慢的，所以在执行方面，速度上会比较慢，但是 JS 源码通过解析器转 AST，然后再通过解释器转字节码，这个过程是比编译器直接将 JS 源码转机器码要快很多的，全流程看来，整个时间上是差不了多少的，但是却减小了大量的内存占用，何乐而不为。</p>
+<h3 id="编译器"><a href="#编译器" class="headerlink" title="编译器"></a>编译器</h3><h4 id="热代码"><a href="#热代码" class="headerlink" title="热代码"></a>热代码</h4><p>在代码中，常常会有同一部分代码，被多次调用，同一部分代码如果每次都需要解释器转二进制代码再去执行，效率上来说，会有些浪费，所以在 V8 模块中会有专门的监控模块，来监控同一代码是否多次被调用，如果被多次调用，那么就会被标记为<strong>热代码</strong>，这有什么作用呢？</p>
+<h4 id="优化编译器"><a href="#优化编译器" class="headerlink" title="优化编译器"></a>优化编译器</h4><p><strong>TurboFan</strong> (优化编译器) 这个词相信关注手机界的同学并不陌生，华为、小米等这些品牌，在近几年产品发布会上都会出现这个词，主要的能力是通过软件计算能力来优化一系列的功能，使得效率更优。</p>
+<p>接着热代码继续说，当存在热代码的时候，V8 会借着 TurboFan 将为热代码的字节码转为机器码并缓存下来，这样一来，当再次调用热代码时，就不在需要将字节码转机器码，当然热代码相对来说还是少部分的，所以缓存也并不会占用太大内存，并且提升了执行效率，同样此处也是牺牲空间换时间。</p>
+<h4 id="反优化"><a href="#反优化" class="headerlink" title="反优化"></a>反优化</h4><p>JS 语言是动态语言，非常之灵活，对象的结构和属性在运行时是可以发生改变的，设想一个问题，如果热代码在某次执行的时候，突然其中的某个属性被修改了，那么编译成机器码的热代码还能继续执行吗？答案是肯定不能。这个时候就要使用到优化编译器的<strong>反优化</strong>了，他会将热代码退回到 AST 这一步，这个时候解释器会重新解释执行被修改的代码，如果代码再次被标记为热代码，那么会重复执行优化编译器的这个步骤。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>从分析的过程来看，V8 对 JS 执行的过程，不仅使用到了解释器，还用到了优化编译器。这种两者结合去处理的方式，业界称为 JIT (Just-In-Time)。使用这种结合的方式来处理 JS，主要是利用了 AST 形成的文件较小，而通过优化编译器编译后的热代码执行效率高，两者结合，各自发挥各自的优势，将效率尽量提升到最大。</p>
+<p>V8 所做的事情，远远不止这些，这里也仅仅是简单概况和分析一下主流程上所做的一些事情，如果细化到每个点，还有很多概念，比如内联缓存、隐藏类、快属性、慢属性、创建对象，以及笔者之前写的<a target="_blank" rel="noopener" href="https://juejin.cn/post/6909239354418266119">垃圾回收</a>等等，所做的事情实在太多，就不一一例举了。</p>
+<p>转载至<a target="_blank" rel="noopener" href="https://juejin.cn/post/6971586506011967519">https://juejin.cn/post/6971586506011967519</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://Aiolimp.com">Aiolimp</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://aiolimp.com/2021/08/10/v8%E6%89%A7%E8%A1%8Cjs%E7%9A%84%E8%BF%87%E7%A8%8B/">http://aiolimp.com/2021/08/10/v8%E6%89%A7%E8%A1%8Cjs%E7%9A%84%E8%BF%87%E7%A8%8B/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://Aiolimp.com" target="_blank">Aiolimp</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/V8%E5%BC%95%E6%93%8E/">V8引擎</a></div><div class="post_share"><div class="social-share" data-image="https://static001.geekbang.org/resource/image/fb/c0/fb4e210a483a7892433331082f5f09c0.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/08/10/HTTP&amp;&amp;HTTPS/" title="HTTP&amp;&amp;HTTPS"><img class="cover" src="https://static001.geekbang.org/resource/image/9f/28/9f68cbdfd275739a1cd3a4dfa85ead28.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">HTTP&amp;&amp;HTTPS</div></div></a></div><div class="next-post pull-right"><a href="/2021/08/10/web%E4%B8%AD%E7%9A%84%E5%87%A0%E7%A7%8D%E2%80%9C%E6%8F%A1%E6%89%8B%E2%80%9D/" title="web中的几种“握手”"><img class="cover" src="https://static001.geekbang.org/resource/image/73/2a/737fb9f94c18a26a875c27169222b82a.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">web中的几种“握手”</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/08/11/%E8%AE%A4%E8%AF%86V8%E5%BC%95%E6%93%8E/" title="认识 V8 引擎"><img class="cover" src="https://static001.geekbang.org/resource/image/ee/70/ee7627bac9defb7621c2489fbacb3a70.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-08-11</div><div class="title">认识 V8 引擎</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Aiolimp</div><div class="author-info__description">生如长河,渡船千艘</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">67</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#v8-%E6%89%A7%E8%A1%8C-js-%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">v8 执行 js 的过程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#V8-%E6%89%A7%E8%A1%8C-Javascript-%E8%BF%87%E7%A8%8B"><span class="toc-number">1.2.</span> <span class="toc-text">V8 执行 Javascript 过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JS-TO-AST"><span class="toc-number">1.2.1.</span> <span class="toc-text">JS TO AST</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">词法分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">语法分析</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E8%8A%82%E7%A0%81"><span class="toc-number">1.2.2.</span> <span class="toc-text">字节码</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E6%9C%BA%E5%99%A8%E7%A0%81"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">缓存机器码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E5%B8%A6%E6%9D%A5%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">缓存带来的问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%83%B0%E6%80%A7%E7%BC%96%E8%AF%91"><span class="toc-number">1.2.2.3.</span> <span class="toc-text">惰性编译</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%83%B0%E6%80%A7%E7%BC%96%E8%AF%91%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">1.2.2.4.</span> <span class="toc-text">惰性编译存在的问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%95%E5%85%A5%E5%AD%97%E8%8A%82%E7%A0%81"><span class="toc-number">1.2.2.5.</span> <span class="toc-text">引入字节码</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E5%99%A8"><span class="toc-number">1.2.3.</span> <span class="toc-text">编译器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%83%AD%E4%BB%A3%E7%A0%81"><span class="toc-number">1.2.3.1.</span> <span class="toc-text">热代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E7%BC%96%E8%AF%91%E5%99%A8"><span class="toc-number">1.2.3.2.</span> <span class="toc-text">优化编译器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8D%E4%BC%98%E5%8C%96"><span class="toc-number">1.2.3.3.</span> <span class="toc-text">反优化</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">1.3.</span> <span class="toc-text">总结</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/03/05/JS%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" title="JavaScript数据类型"><img src="https://static001.geekbang.org/resource/image/13/6b/13daccec5e12c89ea63e8c51dd20cb6b.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JavaScript数据类型"/></a><div class="content"><a class="title" href="/2023/03/05/JS%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" title="JavaScript数据类型">JavaScript数据类型</a><time datetime="2023-03-05T13:32:12.207Z" title="发表于 2023-03-05 21:32:12">2023-03-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/03/05/FirstBlog/" title="Aiolimp的第一篇blog"><img src="/images/bg.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Aiolimp的第一篇blog"/></a><div class="content"><a class="title" href="/2023/03/05/FirstBlog/" title="Aiolimp的第一篇blog">Aiolimp的第一篇blog</a><time datetime="2023-03-05T13:32:12.205Z" title="发表于 2023-03-05 21:32:12">2023-03-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/21/IM%E8%81%8A%E5%A4%A9/" title="IM聊天"><img src="https://static001.geekbang.org/resource/image/88/f1/8807661ef5b82fcb75e8b8f2dbd71ef1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="IM聊天"/></a><div class="content"><a class="title" href="/2021/08/21/IM%E8%81%8A%E5%A4%A9/" title="IM聊天">IM聊天</a><time datetime="2021-08-21T08:57:49.000Z" title="发表于 2021-08-21 16:57:49">2021-08-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/12/module%E3%80%81chunk%E5%92%8Cbundle/" title="module、chunk和bundle"><img src="https://static001.geekbang.org/resource/image/bd/2e/bddfad3dc8fb2f7c4942a0dc1286c92e.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="module、chunk和bundle"/></a><div class="content"><a class="title" href="/2021/08/12/module%E3%80%81chunk%E5%92%8Cbundle/" title="module、chunk和bundle">module、chunk和bundle</a><time datetime="2021-08-12T08:57:49.000Z" title="发表于 2021-08-12 16:57:49">2021-08-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/12/%E5%A6%82%E4%BD%95%E9%98%B2%E6%AD%A2CSRF%E6%94%BB%E5%87%BB/" title="CSRF攻击"><img src="https://static001.geekbang.org/resource/image/ee/70/ee7627bac9defb7621c2489fbacb3a70.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CSRF攻击"/></a><div class="content"><a class="title" href="/2021/08/12/%E5%A6%82%E4%BD%95%E9%98%B2%E6%AD%A2CSRF%E6%94%BB%E5%87%BB/" title="CSRF攻击">CSRF攻击</a><time datetime="2021-08-12T08:57:49.000Z" title="发表于 2021-08-12 16:57:49">2021-08-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Aiolimp</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

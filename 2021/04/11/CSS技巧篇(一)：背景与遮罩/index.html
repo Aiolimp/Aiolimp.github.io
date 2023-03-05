@@ -1,0 +1,571 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>CSS技巧篇(一)：背景与遮罩 | Aiolimp</title><meta name="author" content="Aiolimp"><meta name="copyright" content="Aiolimp"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="CSS技巧篇(一)：背景与遮罩属性连写background是一个大家庭，包含着众多子属性，这些子属性可拆开声明也可合并声明。拆开与合并也是看个人编码习惯，无特别的标准说一定要怎样处理。合并声明有一个标准称呼，叫做属性连写。 background包含以下子属性，而mask子属性也大部分与background一致。   background-color：背景颜色  background-image：背">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSS技巧篇(一)：背景与遮罩">
+<meta property="og:url" content="http://aiolimp.com/2021/04/11/CSS%E6%8A%80%E5%B7%A7%E7%AF%87(%E4%B8%80)%EF%BC%9A%E8%83%8C%E6%99%AF%E4%B8%8E%E9%81%AE%E7%BD%A9/index.html">
+<meta property="og:site_name" content="Aiolimp">
+<meta property="og:description" content="CSS技巧篇(一)：背景与遮罩属性连写background是一个大家庭，包含着众多子属性，这些子属性可拆开声明也可合并声明。拆开与合并也是看个人编码习惯，无特别的标准说一定要怎样处理。合并声明有一个标准称呼，叫做属性连写。 background包含以下子属性，而mask子属性也大部分与background一致。   background-color：背景颜色  background-image：背">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://aiolimp.com/images/CSS.gif">
+<meta property="article:published_time" content="2021-04-11T08:57:49.000Z">
+<meta property="article:modified_time" content="2023-03-05T13:32:12.204Z">
+<meta property="article:author" content="Aiolimp">
+<meta property="article:tag" content="CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://aiolimp.com/images/CSS.gif"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://aiolimp.com/2021/04/11/CSS%E6%8A%80%E5%B7%A7%E7%AF%87(%E4%B8%80)%EF%BC%9A%E8%83%8C%E6%99%AF%E4%B8%8E%E9%81%AE%E7%BD%A9/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'CSS技巧篇(一)：背景与遮罩',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-03-05 21:32:12'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Aiolimp" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">67</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/images/CSS.gif')"><nav id="nav"><span id="blog-info"><a href="/" title="Aiolimp"><span class="site-name">Aiolimp</span></a></span><div id="menus"><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">CSS技巧篇(一)：背景与遮罩</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-04-11T08:57:49.000Z" title="发表于 2021-04-11 16:57:49">2021-04-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-03-05T13:32:12.204Z" title="更新于 2023-03-05 21:32:12">2023-03-05</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/CSS/">CSS</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="CSS技巧篇(一)：背景与遮罩"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="CSS技巧篇-一-：背景与遮罩"><a href="#CSS技巧篇-一-：背景与遮罩" class="headerlink" title="CSS技巧篇(一)：背景与遮罩"></a>CSS技巧篇(一)：背景与遮罩</h1><h3 id="属性连写"><a href="#属性连写" class="headerlink" title="属性连写"></a>属性连写</h3><p><code>background</code>是一个大家庭，包含着众多子属性，这些子属性可拆开声明也可合并声明。拆开与合并也是看个人编码习惯，无特别的标准说一定要怎样处理。合并声明有一个标准称呼，叫做<strong>属性连写</strong>。</p>
+<p><code>background</code>包含以下子属性，而<code>mask</code>子属性也大部分与<code>background</code>一致。</p>
+<ul>
+<li> <strong>background-color</strong>：背景颜色</li>
+<li> <strong>background-image</strong>：背景图像</li>
+<li> <strong>background-repeat</strong>：背景图像平铺方式</li>
+<li> <strong>background-attachment</strong>：背景图像依附方式</li>
+<li> <strong>background-position</strong>：背景图像起始位置</li>
+<li> <strong>background-size</strong>：背景图像尺寸模式</li>
+<li> <strong>background-origin</strong>：定位区域</li>
+<li> <strong>background-clip</strong>：绘制区域</li>
+<li> <strong>background-blend-mode</strong>：混合模式</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 简写 */</span></span><br><span class="line">.elem &#123;</span><br><span class="line">    background-color: #f66;</span><br><span class="line">    background-image: url(<span class="string">&quot;./img.png&quot;</span>);</span><br><span class="line">    background-repeat: no-repeat;</span><br><span class="line">    background-position: center;</span><br><span class="line">    background-size: 100px 100px;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 连写 */</span></span><br><span class="line">.elem &#123;</span><br><span class="line">    background: #f66 url(<span class="string">&quot;./img.png&quot;</span>) no-repeat center/100px 100px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p><code>background</code>子属性众多，其属性取值也很多。</p>
+<ul>
+<li><p>background-color</p>
+<p>：颜色</p>
+<ul>
+<li><code>transparent</code>：透明(<code>默认</code>)</li>
+<li><code>Keyword</code>：颜色关键字</li>
+<li><code>HEX</code>：十六进制色彩模式</li>
+<li><code>RGB</code>或<code>RGBA</code>：RGB/A色彩模式</li>
+<li><code>HSL</code>或<code>HSLA</code>：HSL/A色彩模式</li>
+<li><code>Color1/Color2</code>：覆盖颜色，背景颜色可能是<code>Color1</code>，若背景图像无效则使用<code>Color2</code>代替<code>Color1</code></li>
+</ul>
+</li>
+<li><p>background-image</p>
+<p>：图像</p>
+<ul>
+<li><code>none</code>：无图像(<code>默认</code>)</li>
+<li><code>url()</code>：图像路径</li>
+</ul>
+</li>
+<li><p>background-repeat</p>
+<p>：图像平铺方式</p>
+<ul>
+<li><code>repeat</code>：图像在水平方向和垂直方向重复(<code>默认</code>)</li>
+<li><code>repeat-x</code>：图像在水平方向重复</li>
+<li><code>repeat-y</code>：图像在垂直方向重复</li>
+<li><code>no-repeat</code>：图像仅重复一次</li>
+<li><code>space</code>：图像以相同间距平铺且填充整个节点</li>
+<li><code>round</code>：图像自动缩放直到适应且填充整个节点</li>
+</ul>
+</li>
+<li><p>background-attachment</p>
+<p>：图像依附方式</p>
+<ul>
+<li><code>scroll</code>：图像随页面滚动而移动(<code>默认</code>)</li>
+<li><code>fixed</code>：图像不会随页面滚动而移动</li>
+</ul>
+</li>
+<li><p>background-position</p>
+<p>：图像起始位置</p>
+<ul>
+<li><code>Position</code>：位置，可用任何长度单位，第二个位置(Y轴)不声明默认是<code>50%</code>(默认<code>0% 0%</code>)</li>
+<li><code>Keyword</code>：位置关键字<code>left、right、top、bottom、center</code>，可单双使用，第二个关键字不声明默认是<code>center</code></li>
+</ul>
+</li>
+<li><p>background-size</p>
+<p>：图像尺寸模式</p>
+<ul>
+<li><code>auto</code>：自动设置尺寸(<code>默认</code>)</li>
+<li><code>cover</code>：图像扩展至足够大，使其完全覆盖整个区域，图像某些部分也许无法显示在区域中</li>
+<li><code>contain</code>：图像扩展至最大尺寸，使其宽度和高度完全适应整个区域</li>
+<li><code>Size</code>：尺寸，可用任何长度单位，第二个尺寸(高)不声明默认是<code>auto</code></li>
+</ul>
+</li>
+<li><p>background-origin</p>
+<p>：定位区域(与</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">background-position</span><br></pre></td></tr></table></figure>
+
+<p>结合使用)</p>
+<ul>
+<li><code>padding-box</code>：图像相对填充定位(<code>默认</code>)</li>
+<li><code>border-box</code>：图像相对边框定位</li>
+<li><code>content-box</code>：图像相对内容定位</li>
+</ul>
+</li>
+<li><p>background-clip</p>
+<p>：绘制区域</p>
+<ul>
+<li><code>border-box</code>：图像被裁剪到边框与边距的交界处(<code>默认</code>)</li>
+<li><code>padding-box</code>：图像被裁剪到填充与边框的的交界处</li>
+<li><code>content-box</code>：图像被裁剪到内容与填充的交界处</li>
+</ul>
+</li>
+<li><p>background-blend-mode</p>
+<p>：混合模式</p>
+<ul>
+<li><code>normal</code>：正常(<code>默认</code>)</li>
+<li><code>color-burn</code>：颜色加深</li>
+<li><code>color-dodge</code>：颜色减淡</li>
+<li><code>color</code>：颜色</li>
+<li><code>darken</code>：变暗</li>
+<li><code>difference</code>：差值</li>
+<li><code>exclusion</code>：排除</li>
+<li><code>hard-light</code>：强光</li>
+<li><code>hue</code>：色相</li>
+<li><code>lighten</code>：变亮</li>
+<li><code>luminosity</code>：亮度</li>
+<li><code>multiply</code>：正片叠底</li>
+<li><code>overlay</code>：叠加</li>
+<li><code>saturation</code>：饱和度</li>
+<li><code>screen</code>：滤色</li>
+<li><code>soft-light</code>：柔光</li>
+</ul>
+</li>
+</ul>
+<p>总体来说，<code>background</code>简单易用，以下三点可能需加注意。</p>
+<ul>
+<li><p><code>repeat</code>和<code>position</code>包含后缀为<code>-x</code>和<code>-y</code>这两个子属性，若单独声明使用<code>x</code>或<code>y</code>即可</p>
+</li>
+<li><p><code>position</code>的<code>x</code>和<code>y</code>允许负值，当赋值<code>x</code>时正值向右负值向左，当赋值<code>y</code>时正值向下负值向上</p>
+</li>
+<li><p><code>background</code>声明多个图像路径时，若不声明<code>position</code>，那么首个图像定位在节点最顶部，剩余图像依次顺序显示</p>
+</li>
+<li><p>对于兼容性比较低的浏览器，<code>size</code>不能在<code>background</code>中连写，需单独编写</p>
+</li>
+<li><p>像依次顺序显示</p>
+</li>
+<li><p>对于兼容性比较低的浏览器，<code>size</code>不能在<code>background</code>中连写，需单独编写</p>
+</li>
+</ul>
+<blockquote>
+<p>贴顶背景</p>
+</blockquote>
+<p>这个需求可能是使用<code>background</code>最多的场景，没有之一。需求的定位很简单，就是背景图像贴着最顶部且水平居中显示，不管屏幕怎么拉伸都始终保持在最顶部最中间。</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ed44641801694db1a3468840c885369f~tplv-k3u1fbpfcp-zoom-1.image" alt="贴顶背景"></p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$bg</span>: <span class="string">&quot;https://static.yangzw.vip/codepen/mountain.jpg&quot;</span>;</span><br><span class="line"><span class="selector-class">.pasted-bg</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: flex;</span><br><span class="line">    <span class="attribute">justify-content</span>: center;</span><br><span class="line">    <span class="attribute">align-items</span>: center;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">300px</span>;</span><br><span class="line">    <span class="attribute">background</span>: <span class="number">#000</span> url(<span class="variable">$bg</span>) no-repeat center top/auto <span class="number">300px</span>;</span><br><span class="line">    <span class="attribute">text-shadow</span>: <span class="number">2px</span> <span class="number">2px</span> <span class="number">5px</span> rgba(<span class="number">#000</span>, .<span class="number">5</span>);</span><br><span class="line">    <span class="attribute">font-weight</span>: bold;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">50px</span>;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>该需求通常都会定死高度，声明<code>background-size:auto 300px</code>让背景图像高度跟节点高度一致但宽度自适应，千万别写死<code>100%</code>，这样在浏览器窗口变化过程中就会让背景图像变形了。声明<code>background-position:center top</code>是为了让背景图像水平居中且贴着最顶部，无论浏览器窗口怎样变化都始终保持这个定位。</p>
+<blockquote>
+<p>镂空文本</p>
+</blockquote>
+<p><code>background-clip</code>是一个很巧妙的属性，除了专有的三个取值，在<code>Webkit内核</code>中还可裁剪到文本与内容的交界处，也就是说背景只作用于文本中。</p>
+<p>有了<code>background-clip:text</code>，再结合<code>text-shadow</code>描绘文本阴影，让文字变得更立体更动感。</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c0169de2fcf140dfb5c1d0e9cc98a5e9~tplv-k3u1fbpfcp-zoom-1.image" alt="镂空文本"></p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$bg</span>: <span class="string">&quot;https://static.yangzw.vip/codepen/mountain.jpg&quot;</span>;</span><br><span class="line"><span class="selector-class">.hollow-text</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: flex;</span><br><span class="line">    <span class="attribute">justify-content</span>: center;</span><br><span class="line">    <span class="attribute">align-items</span>: center;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">    <span class="attribute">background</span>: <span class="number">#000</span> url(<span class="variable">$bg</span>) no-repeat center top/auto <span class="number">300px</span>;</span><br><span class="line">    <span class="attribute">background-clip</span>: text;</span><br><span class="line">    <span class="attribute">text-shadow</span>: <span class="number">2px</span> <span class="number">2px</span> <span class="number">5px</span> rgba(<span class="number">#000</span>, .<span class="number">5</span>);</span><br><span class="line">    <span class="attribute">font-weight</span>: bold;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">80px</span>;</span><br><span class="line">    <span class="attribute">color</span>: transparent;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="渐变"><a href="#渐变" class="headerlink" title="渐变"></a>渐变</h3><p>渐变一直以来在页面中都是一种常见的视觉元素。设计师都是通过<code>图形软件</code>设计这些渐变效果，然后以图像的形式被前端开发者运用到页面中。</p>
+<p><strong>渐变</strong>指两种或多种颜色在特定区域内平滑过渡的效果。曾经渲染带有渐变的背景只能使用图像实现。如今CSS3增加了以下几个<code>渐变函数</code>，让代码渲染渐变成为了可能。</p>
+<ul>
+<li> **linear-gradient()**：线性渐变</li>
+<li> **radial-gradient()**：径向渐变</li>
+<li> **conic-gradient()**：锥形渐变</li>
+<li> **repeating-linear-gradient()**：重复线性渐变</li>
+<li> **repeating-radial-gradient()**：重复径向渐变</li>
+<li> **repeating-conic-gradient()**：重复锥形渐变</li>
+</ul>
+<p>重点讲解<code>linear-gradient()</code>、<code>radial-gradient()</code>和<code>conic-gradient()</code>，<code>repeating-*</code>也是在原有函数的基础上延伸，就不再啰嗦了。</p>
+<p>CSS渐变分为三种，每一种都有自身的特点。</p>
+<ul>
+<li> <strong>线性渐变</strong>：沿着指定方向从起点到终点逐渐改变颜色，渐变形状是一条<code>直线</code></li>
+<li> <strong>径向渐变</strong>：沿着任意方向从圆心往外面逐渐改变颜色，渐变形状是一个<code>圆形</code>或<code>椭圆形</code></li>
+<li> <strong>锥形渐变</strong>：沿着顺时针方向从圆心往外面逐渐改变颜色，渐变形状是一个<code>圆锥体</code></li>
+</ul>
+<p>每个<code>渐变函数</code>都必须在<code>background</code>或<code>background-image</code>上使用，可认为<code>gradient()</code>就是一个图像，只不过是通过函数产生的图像。</p>
+<blockquote>
+<p>线性渐变</p>
+</blockquote>
+<p><code>线性渐变</code>是三种渐变效果里最简单的一种，以<code>直线</code>的方式向指定方向扩散，使用频率很高，是渐变函数里最好用的一个函数。掌握它几乎能应付大部分需求，其使用语法如下。</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">background-image: linear-gradient(direction, color-stop)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>Direction</p>
+<p>：方向</p>
+<ul>
+<li><code>Keyword</code>：方向关键字<code>to left/right/top/bottom/top left/top right/bottom left/bottom right</code>(默认<code>to bottom</code>)</li>
+<li><code>Angle</code>：角度，以顺时针方向的垂直线和渐变线的夹角计算，超出N圈则计算剩余角度</li>
+</ul>
+</li>
+<li><p>ColorStop</p>
+<p>：色标</p>
+<ul>
+<li><code>Color</code>：颜色，可参考<code>background-color</code>取值，在指定位置产生渐变效果所使用的颜色</li>
+<li><code>Position</code>：位置，可参考<code>background-position</code>的<code>Position</code>取值，在指定位置产生渐变效果</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f6aba72ceef0489ea457cf65775e06c9~tplv-k3u1fbpfcp-zoom-1.image" alt="线性渐变"></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.elem</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">400px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">    <span class="attribute">background-image</span>: <span class="built_in">linear-gradient</span>(to bottom, <span class="number">#f66</span>, <span class="number">#66f</span>);</span><br><span class="line">    <span class="comment">/* 等价于 */</span></span><br><span class="line">    <span class="attribute">background-image</span>: <span class="built_in">linear-gradient</span>(to bottom, <span class="number">#f66</span> <span class="number">0</span>, <span class="number">#66f</span> <span class="number">100%</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>color-stop()</code>在指定位置使用指定颜色，可用多个色标，其连写方式如下。第一个值为<code>Color</code>，第二个值为<code>Position</code>，编写形式为<code>#f66 30%</code>，若第二个值不声明则浏览器会自动分配位置。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.elem</span> &#123;</span><br><span class="line">    <span class="attribute">background-image</span>: <span class="built_in">linear-gradient</span>(to bottom, <span class="number">#f66</span> <span class="number">0</span>, <span class="number">#66f</span> <span class="number">20%</span>, <span class="number">#f90</span>, <span class="number">40%</span>, <span class="number">#09f</span> <span class="number">60%</span>, <span class="number">#9c3</span> <span class="number">80%</span>, <span class="number">#3c9</span> <span class="number">100%</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>很多同学对线性渐变的方向搞不清，若<code>Direction</code>缺省则默认<code>从上到下</code>，也就是参数默认值<code>to bottom</code>。</p>
+<p>可能使用方向关键字比较容易理解，<code>to xxx</code>就知道是什么意思了。千万不要使用单独的方向关键字，例如<code>left</code>、<code>right</code>、<code>top</code>和<code>bottom</code>等，因为<code>Sarafi</code>相对其他浏览器对这些单独的方向关键字的解释可能是不同的。</p>
+<p>若以角度声明方向，上述角度解析可能有点拗口，可参考以下的角度演示图。</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9683a510a7b44982b0d51923c91edaa2~tplv-k3u1fbpfcp-zoom-1.image" alt="线性渐变角度"></p>
+<ul>
+<li><strong>0deg</strong>：<code>to top</code></li>
+<li><strong>90deg</strong>：<code>to right</code></li>
+<li><strong>180deg</strong>：<code>to bottom</code></li>
+<li><strong>270deg</strong>：<code>to left</code></li>
+</ul>
+<p>从形式上可联想到<code>盒模型</code>的<code>margin</code>、<code>padding</code>和<code>border</code>。<code>padding:10px 20px 30px 40px</code>可拆分为以下形式</p>
+<ul>
+<li><strong>padding-top</strong>：<code>10px</code></li>
+<li><strong>padding-right</strong>：<code>20px</code></li>
+<li><strong>padding-bottom</strong>：<code>30px</code></li>
+<li><strong>padding-left</strong>：<code>40px</code></li>
+</ul>
+<p>其实CSS的方向顺序都是符合<code>上右下左</code>这个规则，若跟方向有关的声明都可联想到这个规则。</p>
+<blockquote>
+<p>径向渐变</p>
+</blockquote>
+<p><code>径向渐变</code>是一个很奇妙的渐变效果，以<code>圆形</code>或<code>椭圆形</code>的方式向任意方向扩散。参数有点奇葩，但是解构其参数后用起来也很方便，其使用语法如下。</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">background-image: radial-gradient(shape size at position, color-stop)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>Shape</p>
+<p>：形状</p>
+<ul>
+<li><code>ellipse</code>：椭圆形(<code>默认</code>)</li>
+<li><code>circle</code>：圆形</li>
+</ul>
+</li>
+<li><p>Size</p>
+<p>：尺寸</p>
+<ul>
+<li><code>farthest-corner</code>：从圆心到离圆心最远的角为半径(<code>默认</code>)</li>
+<li><code>farthest-side</code>：从圆心到离圆心最远的边为半径</li>
+<li><code>closest-corner</code>：从圆心到离圆心最近的角为半径</li>
+<li><code>closest-side</code>：从圆心到离圆心最近的边为半径</li>
+<li><code>Size</code>：尺寸，可用任何长度单位，宽和高必须同时声明</li>
+</ul>
+</li>
+<li><p>Position</p>
+<p>：位置</p>
+<ul>
+<li><code>Keyword</code>：位置关键字<code>left、right、top、bottom、center</code>(默认<code>center</code>)</li>
+<li><code>Position</code>：位置，可用任何长度单位</li>
+</ul>
+</li>
+<li><p>ColorStop</p>
+<p>：色标</p>
+<ul>
+<li><code>Color</code>：颜色，可参考<code>background-color</code>取值，在指定位置产生渐变效果所使用的颜色</li>
+<li><code>Position</code>：位置，可参考<code>background-position</code>的<code>Position</code>取值，在指定位置产生渐变效果</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e9fa3daf68f04aa2a9fe6ab27562375e~tplv-k3u1fbpfcp-zoom-1.image" alt="径向渐变"></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.elem</span> &#123;    <span class="attribute">width</span>: <span class="number">400px</span>;    <span class="attribute">height</span>: <span class="number">200px</span>;    <span class="attribute">background-image</span>: <span class="built_in">radial-gradient</span>(<span class="number">100px</span> <span class="number">100px</span>, <span class="number">#f66</span>, <span class="number">#66f</span>);    <span class="comment">/* 等价于 */</span>    <span class="attribute">background-image</span>: <span class="built_in">radial-gradient</span>(ellipse <span class="number">100px</span> <span class="number">100px</span> at center, <span class="number">#f66</span>, <span class="number">#66f</span>);&#125;</span><br></pre></td></tr></table></figure>
+
+<p>径向渐变的<code>color-stop()</code>与线性渐变的<code>color-stop()</code>完全一致，其细节可回看上述详情。虽然<code>径向渐变</code>比<code>线性渐变</code>更复杂，只要了解其基本语法以及参数，基本也没什么大问题。</p>
+<blockquote>
+<p>锥形渐变</p>
+</blockquote>
+<p><code>锥形渐变</code>比其他两个渐变效果更新潮，，以<code>圆锥体</code>的方式向顺时针方向扩散，产生的渐变效果就像俯视圆锥体的顶部。由于兼容性比较差也没什么实际应用，不过认识它也是一件很不错的事情，其使用语法如下。</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">background-image: conic-gradient(color-stop)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>ColorStop</p>
+<p>：色标</p>
+<ul>
+<li><code>Color</code>：颜色，可参考<code>background-color</code>取值，在指定位置产生渐变效果所使用的颜色</li>
+<li><code>Position</code>：位置，可参考<code>background-position</code>的<code>Position</code>取值，在指定位置产生渐变效果</li>
+</ul>
+</li>
+</ul>
+<p>细心的同学可能发现锥形渐变无方向感，因为其无参数可声明。锥形渐变确实无参数用于声明方向，其渐变的起始位置是垂直线与向上方向的夹角(可参照上述线性渐变的<code>0deg</code>)，再沿着顺时针方向旋转产生渐变效果。</p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/fdfb590cd6664c21b01e656208da90cf~tplv-k3u1fbpfcp-zoom-1.image" alt="锥形渐变"></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.elem</span> &#123;    <span class="attribute">width</span>: <span class="number">400px</span>;    <span class="attribute">height</span>: <span class="number">200px</span>;    <span class="attribute">background-image</span>: <span class="built_in">conic-gradient</span>(<span class="number">#f66</span>, <span class="number">#66f</span>);    <span class="comment">/* 等价于 */</span>    <span class="attribute">background-image</span>: <span class="built_in">conic-gradient</span>(<span class="number">#f66</span> <span class="number">0</span>, <span class="number">#66f</span> <span class="number">100%</span>);&#125;</span><br></pre></td></tr></table></figure>
+
+<p>锥形渐变的<code>color-stop()</code>与线性渐变的<code>color-stop()</code>完全一致，其细节可回看上述详情。貌似锥形渐变比线性渐变更简单，其参数比线性渐变更少。</p>
+<h5 id="渐变背景"><a href="#渐变背景" class="headerlink" title="渐变背景"></a>渐变背景</h5><p>声明<code>linear-gradient()</code>产生从左上角往右下角的渐变效果，将背景定位在左边，通过<code>animation</code>控制背景定位左右徘徊产生动态的渐变背景。其实这是一种障眼法，好比在电视机前看电视，电视机不动，但镜头却一直在移动。</p>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6c432708fb0541b1974d0fde1aa051c6~tplv-k3u1fbpfcp-zoom-1.image" alt="渐变背景"></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;gradient-bg&quot;</span>&gt;</span>iCSS<span class="tag">&lt;/<span class="name">div</span>&gt;</span>.gradient-bg &#123;    display: flex;    justify-content: center;    align-items: center;    height: 100%;    background: linear-gradient(135deg, #f66, #f90, #3c9, #09f, #66f) left center/400% 400%;    font-weight: bold;    font-size: 100px;    color: #fff;    animation: move 10s infinite;&#125;@keyframes move &#123;    0%,    100% &#123;        background-position-x: left;    &#125;    50% &#123;        background-position-x: right;    &#125;&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="渐变文本"><a href="#渐变文本" class="headerlink" title="渐变文本"></a>渐变文本</h5><p>实现原理与上述<code>镂空文本</code>和<code>渐变背景</code>一致，在声明<code>background-image</code>时由图像路径改成<code>linear-gradient()</code>，再通过<code>filter:hue-rotate()</code>在指定时间内改变背景色相。</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2b6b52dd751f4cbe92a6659586b4262a~tplv-k3u1fbpfcp-zoom-1.image" alt="渐变文本"></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span> <span class="attr">class</span>=<span class="string">&quot;gradient-text&quot;</span>&gt;</span>Full Stack Developer<span class="tag">&lt;/<span class="name">h1</span>&gt;</span>.gradient-text &#123;    background-image: linear-gradient(90deg, #f66, #f90);    background-clip: text;    line-height: 60px;    font-size: 60px;    color: transparent;    animation: hue 5s linear infinite;&#125;@keyframes hue &#123;    from &#123;        filter: hue-rotate(0);    &#125;    to &#123;        filter: hue-rotate(-1turn);    &#125;&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="闪烁文本"><a href="#闪烁文本" class="headerlink" title="闪烁文本"></a>闪烁文本</h5><p>实现原理与上述<code>渐变文本</code>一致，额外声明<code>background-blend-mode</code>为<code>强光模式</code>是为了模拟闪烁效果。</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/34569640603d4a2dac0eeb4d94d35e06~tplv-k3u1fbpfcp-zoom-1.image" alt="闪烁文本"></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">&quot;blink-text tac&quot;</span>&gt;</span>🔥若对CSS技巧很感兴趣，请关注我喔<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">.blink-text &#123;</span><br><span class="line">    width: 100%;</span><br><span class="line">    background-image: linear-gradient(-45deg, #f66 30%, #fff 50%, #f66 70%);</span><br><span class="line">    background-size: 200%;</span><br><span class="line">    background-clip: text;</span><br><span class="line">    background-blend-mode: hard-light;</span><br><span class="line">    font-weight: bold;</span><br><span class="line">    font-size: 20px;</span><br><span class="line">    color: transparent;</span><br><span class="line">    animation: shine 2s infinite;</span><br><span class="line">&#125;</span><br><span class="line">@keyframes shine &#123;</span><br><span class="line">    from &#123;</span><br><span class="line">        background-position: 100%;</span><br><span class="line">    &#125;</span><br><span class="line">    to &#123;</span><br><span class="line">        background-position: 0;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="方格背景"><a href="#方格背景" class="headerlink" title="方格背景"></a>方格背景</h5><p>曾经渲染<code>方格背景</code>需在<code>图形软件</code>下切出重复主体的图层，再声明<code>background-repeat:repeat</code>让该图像重复平铺到整个背景区域。</p>
+<p>其实可用<code>linear-gradient()</code>完成上述效果，减少图像渲染。分析<code>方格背景</code>的特点可知，其主体部分由4个交错的正方形组成，两个白色两个灰色，声明<code>linear-gradient()</code>渲染出这个主体图像，再声明<code>background-repeat:repeat</code>让该主体图像重复平铺到整个背景区域。</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/42170c815bbd4a5cbc051741520a587d~tplv-k3u1fbpfcp-zoom-1.image" alt="方格背景-1"></p>
+<p>首先声明<code>background-image:linear-gradient(45deg,#eee 25%,transparent 25%,transparent 75%,#eee 75%)</code>产生下图。有无发现把该图像复制一份并向上位移<code>20px</code>向右位移<code>20px</code>就得到上图。</p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8e827a1fe2364a3baf715b28a182342c~tplv-k3u1fbpfcp-zoom-1.image" alt="方格背景-2"></p>
+<p>上述有提及<code>background</code>可用多重背景，那么此时就可用上了。声明两个<code>linear-gradient()</code>产生两个图像，声明<code>background-position:0 0, 20px 20px</code>让两个图像错位排列，声明<code>background-size:40px 40px</code>固定两个图像的大小。由于<code>background-repeat</code>的默认值是<code>repeat</code>，因此无需声明重复平铺了。</p>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a1c8e5d8c6da4fbe9c17d80731ace321~tplv-k3u1fbpfcp-zoom-1.image" alt="方格背景"></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;square-bg&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>.square-bg &#123;    width: 500px;    height: 300px;    background-image: linear-gradient(45deg, #eee 25%, transparent 25%, transparent 75%, #eee 75%),        linear-gradient(45deg, #eee 25%, transparent 25%, transparent 75%, #eee 75%);    background-position: 0 0, 20px 20px;    background-size: 40px 40px;&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<ul>
+<li> 在线演示：<a target="_blank" rel="noopener" href="https://codepen.io/JowayYoung/pen/RwboXoV">Here</a></li>
+<li> 在线源码：<a target="_blank" rel="noopener" href="https://github.com/JowayYoung/idea-css/blob/master/icss/src/components/figure/%E4%BD%BF%E7%94%A8linear-gradient()%E6%8F%8F%E7%BB%98%E6%96%B9%E6%A0%BC%E8%83%8C%E6%99%AF.vue">Here</a></li>
+</ul>
+<h5 id="网格背景"><a href="#网格背景" class="headerlink" title="网格背景"></a>网格背景</h5><p>实现原理与上述<code>方格背景</code>一致，各位同学可试试该效果的实现。</p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/91e55821a48948cb949f7c106bcc1afe~tplv-k3u1fbpfcp-zoom-1.image" alt="网格背景"></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;grid-bg&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>.grid-bg &#123;    width: 500px;    height: 300px;    background-color: #3c9;    background-image: linear-gradient(0deg, #fff 5%, transparent 5%, transparent),        linear-gradient(90deg, #fff 5%, transparent 5%, transparent);    background-position: 0 0, 20px 20px;    background-size: 20px 20px;&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="彩色饼图"><a href="#彩色饼图" class="headerlink" title="彩色饼图"></a>彩色饼图</h5><p>平时绘制饼图需引入第三方图表库，仅仅绘制一个饼图而引入一个图表库，岂不是很浪费资源。若要求不高的话，其实CSS也能完成一个常规的饼图。</p>
+<p>上述提及的<code>conic-gradient()</code>能产生锥形渐变，若控制每个颜色的渐变范围就能产生以下效果。该渐变范围指颜色渲染的边界，具体到哪个百分比。以下代码分别声明了<code>0~25%</code>、<code>25~30%</code>、<code>30~55%</code>、<code>55~70%</code>、<code>70~100%</code>这五个区间，每个区间渲染一种指定颜色。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.elem</span> &#123;</span><br><span class="line">    <span class="attribute">background-image</span>: <span class="built_in">conic-gradient</span>(<span class="number">#f66</span> <span class="number">0</span>, <span class="number">#f66</span> <span class="number">25%</span>, <span class="number">#66f</span> <span class="number">25%</span> <span class="number">#66f</span>, <span class="number">30%</span>, <span class="number">#f90</span> <span class="number">30%</span>, <span class="number">#f90</span> <span class="number">55%</span>, <span class="number">#09f</span> <span class="number">55%</span>, <span class="number">#09f</span> <span class="number">70%</span>, <span class="number">#3c9</span> <span class="number">70%</span>, <span class="number">#3c9</span> <span class="number">100%</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/20e8dc4962ae420b882eda7f707b3d2b~tplv-k3u1fbpfcp-zoom-1.image" alt="彩色饼图-1"></p>
+<p>整个饼图在<code>0deg</code>(可参照上述线性渐变的<code>0deg</code>)的位置沿着顺时针方向依次渲染颜色，先定义的颜色先渲染。声明<code>border-radius:100%</code>让节点变成圆形，就能完成一个常规的饼图了。</p>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/eb5274dccd2942a68de16552ea97576b~tplv-k3u1fbpfcp-zoom-1.image" alt="彩色饼图"></p>
+<p>上述写法导致<code>background-image</code>过长，可用<code>color start end</code>代替<code>color start, color end</code>。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;pie-chart&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">.pie-chart &#123;</span><br><span class="line">    border-radius: 100%;</span><br><span class="line">    width: 300px;</span><br><span class="line">    height: 300px;</span><br><span class="line">    background-image: conic-gradient(#f66 0 25%, #66f 25% 30%, #f90 30% 55%, #09f 55% 70%, #3c9 70% 100%);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="遮罩"><a href="#遮罩" class="headerlink" title="遮罩"></a>遮罩</h3><p><code>mask</code>子属性比<code>background</code>子属性还要多，其属性取值也很多，但是总体使用情况和<code>background</code>差不多。</p>
+<ul>
+<li><p>mask-mode</p>
+<p>：模式</p>
+<ul>
+<li><code>match-source</code>：根据图像类型采用合适的遮罩模式(<code>默认</code>)</li>
+<li><code>alpha</code>：根据图像透明度采用合适的遮罩模式</li>
+<li><code>luminance</code>：根据图像亮度采用合适的遮罩模式</li>
+</ul>
+</li>
+<li><p>mask-image</p>
+<p>：图像</p>
+<ul>
+<li><code>none</code>：无图像(<code>默认</code>)</li>
+<li><code>url()</code>：图像路径</li>
+</ul>
+</li>
+<li><p>mask-repeat</p>
+<p>：图像平铺方式</p>
+<ul>
+<li><code>repeat</code>：图像在水平方向和垂直方向重复(<code>默认</code>)</li>
+<li><code>repeat-x</code>：图像在水平方向重复</li>
+<li><code>repeat-y</code>：图像在垂直方向重复</li>
+<li><code>no-repeat</code>：图像仅重复一次</li>
+<li><code>space</code>：图像以相同间距平铺且填充整个节点</li>
+<li><code>round</code>：图像自动缩放直到适应且填充整个节点</li>
+</ul>
+</li>
+<li><p>mask-position</p>
+<p>：图像起始位置</p>
+<ul>
+<li><code>Position</code>：位置，可用任何长度单位，第二个位置(Y轴)不声明默认是<code>50%</code>(默认<code>0% 0%</code>)</li>
+<li><code>Keyword</code>：位置关键字<code>left、right、top、bottom、center</code>，可单双使用，第二个关键字不声明默认是<code>center</code></li>
+</ul>
+</li>
+<li><p>mask-size</p>
+<p>：图像尺寸模式</p>
+<ul>
+<li><code>auto</code>：自动设置尺寸(<code>默认</code>)</li>
+<li><code>cover</code>：图像扩展至足够大，使其完全覆盖整个区域，图像某些部分也许无法显示在区域中</li>
+<li><code>contain</code>：图像扩展至最大尺寸，使其宽度和高度完全适应整个区域</li>
+<li><code>Size</code>：尺寸，可用任何长度单位，第二个尺寸(高)不声明默认是<code>auto</code></li>
+</ul>
+</li>
+<li><p>mask-origin</p>
+<p>：定位区域(与</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">background-position</span><br></pre></td></tr></table></figure>
+
+<p>结合使用)</p>
+<ul>
+<li><code>padding-box</code>：图像相对填充定位(<code>默认</code>)</li>
+<li><code>border-box</code>：图像相对边框定位</li>
+<li><code>content-box</code>：图像相对内容定位</li>
+</ul>
+</li>
+<li><p>mask-clip</p>
+<p>：绘制区域</p>
+<ul>
+<li><code>border-box</code>：图像被裁剪到边框与边距的交界处(<code>默认</code>)</li>
+<li><code>padding-box</code>：图像被裁剪到填充与边框的的交界处</li>
+<li><code>content-box</code>：图像被裁剪到内容与填充的交界处</li>
+</ul>
+</li>
+<li><p>mask-composite</p>
+<p>：混合模式</p>
+<ul>
+<li><code>source-over</code>：叠加，显示遮罩图像合并处</li>
+<li><code>subtract</code>：相减，不显示遮罩图像重合处</li>
+<li><code>intersect</code>：相交，显示遮罩图像重合处</li>
+<li><code>exclude</code>：排除，显示遮罩图像合并处但不显示重合处</li>
+</ul>
+</li>
+</ul>
+<p>总体来说，<code>mask</code>和<code>background</code>的格式和用法大部分相似，作用效果也相似。认识它的难度不大，当作<code>background</code>的另一种效果使用即可。</p>
+<ul>
+<li><code>repeat</code>和<code>position</code>包含后缀为<code>-x</code>和<code>-y</code>这两个子属性，若单独声明使用<code>x</code>或<code>y</code>即可</li>
+<li><code>position</code>的<code>x</code>和<code>y</code>允许负值，当赋值<code>x</code>时正值向右负值向左，当赋值<code>y</code>时正值向下负值向上</li>
+<li><code>mask</code>声明多个图像路径时，若不声明<code>position</code>，那么首个图像定位在节点最顶部，剩余图像依次顺序显示</li>
+<li>若要声明<code>mask</code>生效，节点的<code>background-image</code>必须使用透明格式的图像</li>
+<li>目前多个浏览器还没统一<code>composite</code>的取值，上述取值均为<code>Firefox</code>标准，是极大可能被W3C标准化的取值，<code>Chrome</code>标准请参照<a target="_blank" rel="noopener" href="https://www.canvasapi.cn/CanvasRenderingContext2D/globalCompositeOperation">这里</a></li>
+</ul>
+<h5 id="镂空背景"><a href="#镂空背景" class="headerlink" title="镂空背景"></a>镂空背景</h5><p>实现原理与上述<code>镂空文本</code>一致，只不过是把<code>background-clip</code>改成<code>mask</code>。</p>
+<ul>
+<li><code>background-clip:text</code>针对文本镂空</li>
+<li><code>mask</code>针对图像镂空</li>
+</ul>
+<p>实现镂空背景有两个要点。声明<code>background</code>时可选纯色、图像或渐变，声明<code>mask</code>时必须选择透明格式的图像才能用该图像的透明区域遮挡背景。</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/595b1ac8ca85424c9e608949a6ef3154~tplv-k3u1fbpfcp-zoom-1.image" alt="镂空背景"></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;mask-bg&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">$mask-bg: &quot;https://static.yangzw.vip/codepen/mountain.jpg&quot;;</span><br><span class="line">$mask-text: &quot;https://static.yangzw.vip/codepen/snow.jpg&quot;;</span><br><span class="line">$logo: &quot;https://static.yangzw.vip/codepen/logo.png&quot;;</span><br><span class="line">.mask-bg &#123;</span><br><span class="line">    display: flex;</span><br><span class="line">    overflow: hidden;</span><br><span class="line">    justify-content: center;</span><br><span class="line">    align-items: center;</span><br><span class="line">    position: relative;</span><br><span class="line">    height: 100%;</span><br><span class="line">    &amp;::after &#123;</span><br><span class="line">        position: absolute;</span><br><span class="line">        left: -20px;</span><br><span class="line">        right: -20px;</span><br><span class="line">        top: -20px;</span><br><span class="line">        bottom: -20px;</span><br><span class="line">        background: url($mask-bg) no-repeat center/cover;</span><br><span class="line">        filter: blur(10px);</span><br><span class="line">        content: &quot;&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    div &#123;</span><br><span class="line">        position: relative;</span><br><span class="line">        z-index: 9;</span><br><span class="line">        width: 600px;</span><br><span class="line">        height: 300px;</span><br><span class="line">        background: url($mask-text) left center/150% auto;</span><br><span class="line">        mask: url($logo) center/cover;</span><br><span class="line">        animation: move 10s infinite;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">@keyframes move &#123;</span><br><span class="line">    0% &#123;</span><br><span class="line">        background-position-x: 0;</span><br><span class="line">    &#125;</span><br><span class="line">    50% &#123;</span><br><span class="line">        background-position-x: 100%;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://Aiolimp.com">Aiolimp</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://aiolimp.com/2021/04/11/CSS%E6%8A%80%E5%B7%A7%E7%AF%87(%E4%B8%80)%EF%BC%9A%E8%83%8C%E6%99%AF%E4%B8%8E%E9%81%AE%E7%BD%A9/">http://aiolimp.com/2021/04/11/CSS%E6%8A%80%E5%B7%A7%E7%AF%87(%E4%B8%80)%EF%BC%9A%E8%83%8C%E6%99%AF%E4%B8%8E%E9%81%AE%E7%BD%A9/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://Aiolimp.com" target="_blank">Aiolimp</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/CSS/">CSS</a></div><div class="post_share"><div class="social-share" data-image="/images/CSS.gif" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/04/12/%E4%BA%86%E8%A7%A3%E4%B8%8B%E6%B5%8F%E8%A7%88%E5%99%A8/" title="了解下浏览器"><img class="cover" src="https://static001.geekbang.org/resource/image/82/af/823ef28a64096b4ffce19bca16a573af.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">了解下浏览器</div></div></a></div><div class="next-post pull-right"><a href="/2021/03/23/%E5%9B%9E%E6%B5%81%E5%92%8C%E9%87%8D%E7%BB%98/" title="回流和重绘"><img class="cover" src="https://static001.geekbang.org/resource/image/7a/30/7a9547384cffa039f063db1fc7669a30.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">回流和重绘</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/04/23/BFC_IFC_GFC_FFC/" title="BFC_IFC_GFC_FFC"><img class="cover" src="https://static001.geekbang.org/resource/image/bd/47/bdce168820c080adbcbee78b02292f47.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-23</div><div class="title">BFC_IFC_GFC_FFC</div></div></a></div><div><a href="/2021/04/13/CSS%E5%85%83%E7%B4%A0%E9%9A%90%E8%97%8F/" title="CSS元素隐藏"><img class="cover" src="https://static001.geekbang.org/resource/image/cb/8d/cb4a6ded3cdc7c0eb6a7e3879567f08d.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-13</div><div class="title">CSS元素隐藏</div></div></a></div><div><a href="/2021/04/13/CSS%E6%8A%80%E5%B7%A7%E7%AF%87(2)%EF%BC%9A%E9%98%B4%E5%BD%B1%E4%B8%8E%E6%BB%A4%E9%95%9C/" title="CSS技巧篇(二)：阴影和滤镜"><img class="cover" src="/images/CSS.gif" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-13</div><div class="title">CSS技巧篇(二)：阴影和滤镜</div></div></a></div><div><a href="/2021/04/13/CSS%E6%8A%80%E5%B7%A7%E7%AF%87(%E4%B8%89)%EF%BC%9A%E5%8F%98%E6%8D%A2%E4%B8%8E%E5%8A%A8%E7%94%BB/" title="CSS技巧篇(三)：变换与动画"><img class="cover" src="/images/CSS.gif" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-13</div><div class="title">CSS技巧篇(三)：变换与动画</div></div></a></div><div><a href="/2021/04/12/CSS%E6%B5%AE%E5%8A%A8%E4%B8%8E%E6%B8%85%E9%99%A4%E6%B5%AE%E5%8A%A8/" title="CSS浮动与清除浮动"><img class="cover" src="https://static001.geekbang.org/resource/image/bd/47/bdce168820c080adbcbee78b02292f47.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-12</div><div class="title">CSS浮动与清除浮动</div></div></a></div><div><a href="/2021/04/14/div%E6%B0%B4%E5%B9%B3%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD%E6%96%B9%E6%B3%95%E6%80%BB%E6%B1%87/" title="div水平垂直居中方法总汇"><img class="cover" src="https://static001.geekbang.org/resource/image/cb/8d/cb4a6ded3cdc7c0eb6a7e3879567f08d.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-14</div><div class="title">div水平垂直居中方法总汇</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Aiolimp</div><div class="author-info__description">生如长河,渡船千艘</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">67</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#CSS%E6%8A%80%E5%B7%A7%E7%AF%87-%E4%B8%80-%EF%BC%9A%E8%83%8C%E6%99%AF%E4%B8%8E%E9%81%AE%E7%BD%A9"><span class="toc-number">1.</span> <span class="toc-text">CSS技巧篇(一)：背景与遮罩</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%9E%E6%80%A7%E8%BF%9E%E5%86%99"><span class="toc-number">1.0.1.</span> <span class="toc-text">属性连写</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%83%8C%E6%99%AF"><span class="toc-number">1.0.2.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B8%90%E5%8F%98"><span class="toc-number">1.0.3.</span> <span class="toc-text">渐变</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%B8%90%E5%8F%98%E8%83%8C%E6%99%AF"><span class="toc-number">1.0.3.0.1.</span> <span class="toc-text">渐变背景</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%B8%90%E5%8F%98%E6%96%87%E6%9C%AC"><span class="toc-number">1.0.3.0.2.</span> <span class="toc-text">渐变文本</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%97%AA%E7%83%81%E6%96%87%E6%9C%AC"><span class="toc-number">1.0.3.0.3.</span> <span class="toc-text">闪烁文本</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%96%B9%E6%A0%BC%E8%83%8C%E6%99%AF"><span class="toc-number">1.0.3.0.4.</span> <span class="toc-text">方格背景</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BD%91%E6%A0%BC%E8%83%8C%E6%99%AF"><span class="toc-number">1.0.3.0.5.</span> <span class="toc-text">网格背景</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BD%A9%E8%89%B2%E9%A5%BC%E5%9B%BE"><span class="toc-number">1.0.3.0.6.</span> <span class="toc-text">彩色饼图</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%81%AE%E7%BD%A9"><span class="toc-number">1.0.4.</span> <span class="toc-text">遮罩</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%95%82%E7%A9%BA%E8%83%8C%E6%99%AF"><span class="toc-number">1.0.4.0.1.</span> <span class="toc-text">镂空背景</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/03/05/JS%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" title="JavaScript数据类型"><img src="https://static001.geekbang.org/resource/image/13/6b/13daccec5e12c89ea63e8c51dd20cb6b.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JavaScript数据类型"/></a><div class="content"><a class="title" href="/2023/03/05/JS%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" title="JavaScript数据类型">JavaScript数据类型</a><time datetime="2023-03-05T13:32:12.207Z" title="发表于 2023-03-05 21:32:12">2023-03-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/03/05/FirstBlog/" title="Aiolimp的第一篇blog"><img src="/images/bg.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Aiolimp的第一篇blog"/></a><div class="content"><a class="title" href="/2023/03/05/FirstBlog/" title="Aiolimp的第一篇blog">Aiolimp的第一篇blog</a><time datetime="2023-03-05T13:32:12.205Z" title="发表于 2023-03-05 21:32:12">2023-03-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/21/IM%E8%81%8A%E5%A4%A9/" title="IM聊天"><img src="https://static001.geekbang.org/resource/image/88/f1/8807661ef5b82fcb75e8b8f2dbd71ef1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="IM聊天"/></a><div class="content"><a class="title" href="/2021/08/21/IM%E8%81%8A%E5%A4%A9/" title="IM聊天">IM聊天</a><time datetime="2021-08-21T08:57:49.000Z" title="发表于 2021-08-21 16:57:49">2021-08-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/12/module%E3%80%81chunk%E5%92%8Cbundle/" title="module、chunk和bundle"><img src="https://static001.geekbang.org/resource/image/bd/2e/bddfad3dc8fb2f7c4942a0dc1286c92e.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="module、chunk和bundle"/></a><div class="content"><a class="title" href="/2021/08/12/module%E3%80%81chunk%E5%92%8Cbundle/" title="module、chunk和bundle">module、chunk和bundle</a><time datetime="2021-08-12T08:57:49.000Z" title="发表于 2021-08-12 16:57:49">2021-08-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/12/%E5%A6%82%E4%BD%95%E9%98%B2%E6%AD%A2CSRF%E6%94%BB%E5%87%BB/" title="CSRF攻击"><img src="https://static001.geekbang.org/resource/image/ee/70/ee7627bac9defb7621c2489fbacb3a70.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CSRF攻击"/></a><div class="content"><a class="title" href="/2021/08/12/%E5%A6%82%E4%BD%95%E9%98%B2%E6%AD%A2CSRF%E6%94%BB%E5%87%BB/" title="CSRF攻击">CSRF攻击</a><time datetime="2021-08-12T08:57:49.000Z" title="发表于 2021-08-12 16:57:49">2021-08-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Aiolimp</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

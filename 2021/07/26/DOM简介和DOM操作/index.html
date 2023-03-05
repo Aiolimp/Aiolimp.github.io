@@ -1,0 +1,238 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>DOM简介和DOM操作 | Aiolimp</title><meta name="author" content="Aiolimp"><meta name="copyright" content="Aiolimp"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="DOM简介和DOM操作JavaScript的组成 ECMAScript：JavaScript的语法标准，包括变量、表达式、运算符、函数、if语句、for语句等等。 DOM：文档对象模型(Document object Model)，操作网页上的元素的API，比如让盒子移动、变色、轮播图等。 BOM：浏览器对象模型，操作浏览器部分功能的API，比如让浏览器自动滚动。  节点节点(Node):构成HT">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DOM简介和DOM操作">
+<meta property="og:url" content="http://aiolimp.com/2021/07/26/DOM%E7%AE%80%E4%BB%8B%E5%92%8CDOM%E6%93%8D%E4%BD%9C/index.html">
+<meta property="og:site_name" content="Aiolimp">
+<meta property="og:description" content="DOM简介和DOM操作JavaScript的组成 ECMAScript：JavaScript的语法标准，包括变量、表达式、运算符、函数、if语句、for语句等等。 DOM：文档对象模型(Document object Model)，操作网页上的元素的API，比如让盒子移动、变色、轮播图等。 BOM：浏览器对象模型，操作浏览器部分功能的API，比如让浏览器自动滚动。  节点节点(Node):构成HT">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://static001.geekbang.org/resource/image/cb/8d/cb4a6ded3cdc7c0eb6a7e3879567f08d.jpg">
+<meta property="article:published_time" content="2021-07-26T08:57:49.000Z">
+<meta property="article:modified_time" content="2023-03-05T13:32:12.204Z">
+<meta property="article:author" content="Aiolimp">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://static001.geekbang.org/resource/image/cb/8d/cb4a6ded3cdc7c0eb6a7e3879567f08d.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://aiolimp.com/2021/07/26/DOM%E7%AE%80%E4%BB%8B%E5%92%8CDOM%E6%93%8D%E4%BD%9C/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'DOM简介和DOM操作',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-03-05 21:32:12'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Aiolimp" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">67</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://static001.geekbang.org/resource/image/cb/8d/cb4a6ded3cdc7c0eb6a7e3879567f08d.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Aiolimp"><span class="site-name">Aiolimp</span></a></span><div id="menus"><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">DOM简介和DOM操作</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-07-26T08:57:49.000Z" title="发表于 2021-07-26 16:57:49">2021-07-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-03-05T13:32:12.204Z" title="更新于 2023-03-05 21:32:12">2023-03-05</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/JavaScript/">JavaScript</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="DOM简介和DOM操作"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="DOM简介和DOM操作"><a href="#DOM简介和DOM操作" class="headerlink" title="DOM简介和DOM操作"></a>DOM简介和DOM操作</h1><h3 id="JavaScript的组成"><a href="#JavaScript的组成" class="headerlink" title="JavaScript的组成"></a><strong>JavaScript的组成</strong></h3><ul>
+<li>ECMAScript：JavaScript的语法标准，包括变量、表达式、运算符、函数、if语句、for语句等等。</li>
+<li><strong>DOM</strong>：文档对象模型(Document object Model)，操作网页上的元素的API，比如让盒子移动、变色、轮播图等。</li>
+<li><strong>BOM</strong>：浏览器对象模型，操作浏览器部分功能的API，比如让浏览器自动滚动。</li>
+</ul>
+<h3 id="节点"><a href="#节点" class="headerlink" title="节点"></a><strong>节点</strong></h3><p>节点(Node):构成HTML网页的最基本单元，网页中的每一个部分都可以称为是一个节点，比如：html标签、属性、文本、注释等都是一个节点。常用节点分为四大类：</p>
+<ul>
+<li>文档节点(文档)：整个HTML文档就是一个文档节点。</li>
+<li>元素节点(标签):HTML标签。</li>
+<li>属性节点(属性)：元素的属性。</li>
+<li>文本节点(文本):HTML标签中的文本内容（包括标签之间的空格、换行）。<br>节点的类型不同，属性和方法也都不同，所有的节点都是Object。<br><strong>什么是DOM</strong><br>DOM：Document Object Model，文档对象模型。DOM为文档提供了结构化表示，并定义了如何通过脚本来访问文档结构。目的其实就是为了能让js操作html元素而制定的一个规范。<br>DOM由节点组成。<br><strong>解析过程</strong>：HTML加载完毕，渲染引擎会在内存中吧HTML文档，生成一个DOM树，getElementById是获取DOM上的元素节点，然后操作的时候修改的是改元素的属性。<br><strong>DOM树：</strong>(一切都是节点)<br>结构如下：<br><img src="https://img-blog.csdnimg.cn/20200831232426959.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0Fpb2xpbXA=,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br><strong>DOM元素可以做什么</strong></li>
+<li>找对象(元素节点)</li>
+<li>设置元素的属性值</li>
+<li>设置元素的样式</li>
+<li>动态创建和删除元素</li>
+<li>事件的触发响应：事件源、事件、事件的驱动程序</li>
+</ul>
+<p><strong>1.元素节点的获取</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//2009ES5之前发布的ECMASCRIPT标准</span></span><br><span class="line"><span class="keyword">var</span> div1 = <span class="built_in">document</span>.getElementById(<span class="string">&quot;box1&quot;</span>);<span class="comment">//通过id获取元素节点(因为id是唯一的所以只获取一个)</span></span><br><span class="line"><span class="keyword">var</span> arr1 = <span class="built_in">document</span>.getElementsByClassName(<span class="string">&quot;box2&quot;</span>)<span class="comment">//通过标签名获取元素节点数组</span></span><br><span class="line"><span class="keyword">var</span> arr2 = <span class="built_in">document</span>.getElementsByTagName(<span class="string">&quot;div&quot;</span>)<span class="comment">//通过类名获取元素节点数组</span></span><br><span class="line"> <span class="comment">//ES5之后的ECMASCRIPT标准</span></span><br><span class="line"><span class="comment">//document.querySelector 返回最先匹配的第一个对象</span></span><br><span class="line"><span class="keyword">var</span> abc = <span class="built_in">document</span>.querySelector(<span class="string">&quot;#b&quot;</span>)<span class="comment">//和document.getElementById获取的对象是一样的</span></span><br><span class="line"><span class="keyword">var</span> cba = <span class="built_in">document</span>.querySelector(<span class="string">&quot;.b&quot;</span>)</span><br><span class="line"><span class="comment">//document.querySelectorAll 获取所有匹配到的元素对象</span></span><br><span class="line"><span class="keyword">var</span> aaa = <span class="built_in">document</span>.querySelectorAll(<span class="string">&quot;.b&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>2.DOM中访问关系的获取</strong></p>
+<ul>
+<li>获取父节点：节点.parentNode</li>
+<li>获取兄弟节点：nextSibling    |  nextElementSibling | previousSibling | previousElementSibling</li>
+<li>获取子节点：   firstChild | firstElementChild | lastChild | lastElementChild</li>
+<li>所有子节点： childNodes | children</li>
+</ul>
+<p><strong>3.DOM节点的操作</strong></p>
+<ul>
+<li>创建节点：</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">新的标签 = <span class="built_in">document</span>.createElement(<span class="string">&quot;标签名&quot;</span>)；</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>插入节点</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">方式一： </span><br><span class="line">父节点.appendChild（新的子节点）<span class="comment">//父节点的最后插入一个新的子节点</span></span><br><span class="line">            <span class="comment">//1.创建元素</span></span><br><span class="line">			<span class="keyword">var</span> h1 = <span class="built_in">document</span>.createElement(<span class="string">&quot;h1&quot;</span>)</span><br><span class="line">			<span class="comment">//2.设置元素</span></span><br><span class="line">			h1.innerHTML = <span class="string">&quot;你今天好帅！&quot;</span></span><br><span class="line">			<span class="comment">//3.插入元素，首先找到被插入的元素</span></span><br><span class="line">			<span class="keyword">var</span> d1 = <span class="built_in">document</span>.querySelector(<span class="string">&quot;.d1&quot;</span>)</span><br><span class="line">			<span class="comment">//4.通过appendChild()追加子元素</span></span><br><span class="line">			d1.appendChild(h1)</span><br><span class="line">方式二：</span><br><span class="line">父节点.insertBefore（新的子节点，作为参考的子节点）<span class="comment">//在参考节点前插入一个新节点</span></span><br><span class="line">			<span class="comment">//在什么面前插入元素</span></span><br><span class="line">			<span class="comment">//1.创建img元素</span></span><br><span class="line">			<span class="keyword">var</span> img  = <span class="built_in">document</span>.createElement(<span class="string">&#x27;img&#x27;</span>)</span><br><span class="line">			<span class="comment">//2.设置img的src属性</span></span><br><span class="line">			img.src = <span class="string">&quot;img/123.jpg&quot;</span></span><br><span class="line">			<span class="comment">//3.找到被插入的父元素，&lt;body&gt;</span></span><br><span class="line">			<span class="keyword">var</span> body = <span class="built_in">document</span>.querySelector(<span class="string">&#x27;body&#x27;</span>)</span><br><span class="line">			<span class="comment">//4.在body的d3前面插入内容</span></span><br><span class="line">			<span class="keyword">var</span> d3 = <span class="built_in">document</span>.querySelector(<span class="string">&#x27;.d3&#x27;</span>)</span><br><span class="line">			body.insertBefore(img,d3)</span><br><span class="line">			d3.parentElement.insertBefore(img,d3) <span class="comment">// 通过d3.parentElement直接获取父元素</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>删除节点</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">被删除的父元素.removeChild（删除的元素）</span><br><span class="line"></span><br><span class="line">			<span class="comment">//删除元素</span></span><br><span class="line">			<span class="comment">//1.找到被删除的元素</span></span><br><span class="line">			<span class="keyword">var</span> body = <span class="built_in">document</span>.querySelector(<span class="string">&#x27;body&#x27;</span>)</span><br><span class="line">			<span class="comment">//2.找到要删除的元素</span></span><br><span class="line">			<span class="keyword">var</span> d2 = <span class="built_in">document</span>.querySelector(<span class="string">&#x27;.d2&#x27;</span>)</span><br><span class="line">			<span class="comment">//3.使用removeChild()方法删除元素</span></span><br><span class="line">			body.removeChild(d2)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>复制节点</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">要复制的节点.cloneNode()</span><br><span class="line">要复制的节点.cloneNode(<span class="literal">true</span>)</span><br><span class="line"><span class="comment">//不带参数或者带参数false：只复制节点本身，不复制子节点</span></span><br><span class="line"><span class="comment">//带参数true：即复制节点本身，也复制所有子节点</span></span><br></pre></td></tr></table></figure>
+
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2><p><strong>节点的获取、设置和删除</strong><br>1.获取节点</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">元素节点.getAttribute（属性名）</span><br></pre></td></tr></table></figure>
+
+<p>2.设置节点</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">元素节点.setAttribute（属性名，新的属性值）</span><br></pre></td></tr></table></figure>
+
+<p>3.删除节点</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">元素节点.removeAttribute (属性名)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">		&lt;div id=<span class="string">&quot;d1&quot;</span>&gt;</span><br><span class="line">			helloWorld</span><br><span class="line">		&lt;/div&gt;</span><br><span class="line">		&lt;script type=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><br><span class="line">			<span class="keyword">var</span> d1 = <span class="built_in">document</span>.querySelector(<span class="string">&quot;#d1&quot;</span>)</span><br><span class="line">			<span class="comment">//获取属性值</span></span><br><span class="line">			<span class="built_in">console</span>.log(d1.id)</span><br><span class="line">			<span class="built_in">console</span>.log(d1[<span class="string">&#x27;id&#x27;</span>])</span><br><span class="line">			<span class="built_in">console</span>.log(d1.getAttribute(<span class="string">&#x27;id&#x27;</span>))</span><br><span class="line">			<span class="comment">//设置属性</span></span><br><span class="line">			d1.id = <span class="string">&quot;d2&quot;</span></span><br><span class="line">			d1[<span class="string">&#x27;id&#x27;</span>] = <span class="string">&quot;d3&quot;</span></span><br><span class="line">			<span class="comment">//setAttribute(&quot;属性名称&quot;,&quot;属性值&quot;)</span></span><br><span class="line">			d1.setAttribute(<span class="string">&quot;id&quot;</span>,<span class="string">&quot;d4&quot;</span>)</span><br><span class="line">			</span><br><span class="line">			d1.abc=<span class="string">&quot;789&quot;</span><span class="comment">//默认元素中如果没有此属性，那么此属性只会创建在对象中，不会显示在html上</span></span><br><span class="line">			<span class="built_in">console</span>.log(d1)</span><br><span class="line">			<span class="built_in">console</span>.log([d1])</span><br><span class="line">			</span><br><span class="line">			d1.setAttribute(<span class="string">&quot;aaa&quot;</span>,<span class="string">&quot;666&quot;</span>)<span class="comment">//默认元素中如果没有此属性，那么此属性不会创建在对象中个，会显示在html上</span></span><br><span class="line">			<span class="built_in">console</span>.log(d1)</span><br><span class="line">			<span class="built_in">console</span>.log([d1])</span><br><span class="line">			<span class="comment">//删除子元素</span></span><br><span class="line">			d1.removeAttribute(<span class="string">&quot;abc&quot;</span>)</span><br><span class="line">		&lt;/script&gt;</span><br><span class="line">	&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>innerHtml和innerText的区别</strong></p>
+<ul>
+<li>value：标签的value属性</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=<span class="string">&quot;d1&quot;</span>&gt;</span><br><span class="line">		helloword</span><br><span class="line">		&lt;h1&gt;helloword&lt;/h1&gt;</span><br><span class="line">		&lt;h1&gt;helloword&lt;/h1&gt;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">	&lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;username&quot;</span> id=<span class="string">&quot;username&quot;</span> value=<span class="string">&quot;admin&quot;</span>/&gt;</span><br><span class="line">	&lt;input type=<span class="string">&quot;password&quot;</span> name=<span class="string">&quot;password&quot;</span> id=<span class="string">&quot;password&quot;</span> value=<span class="string">&quot;123456&quot;</span>/&gt;</span><br><span class="line">	&lt;script type=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><br><span class="line">		<span class="keyword">var</span> usernameInput = <span class="built_in">document</span>.querySelector(<span class="string">&#x27;#username&#x27;</span>)</span><br><span class="line">		<span class="keyword">var</span> username = usernameInput.value;</span><br><span class="line">		<span class="built_in">console</span>.log(username)<span class="comment">//admin</span></span><br><span class="line">		<span class="keyword">var</span> passwordInput = <span class="built_in">document</span>.querySelector(<span class="string">&quot;#password&quot;</span>)</span><br><span class="line">		<span class="keyword">var</span> password = passwordInput.value</span><br><span class="line">		<span class="built_in">console</span>.log(password)<span class="comment">//123456</span></span><br><span class="line">	&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>innerHtml：双闭合标签里面的内容（识别标签）</li>
+<li>innerText：双闭合标签里面的内容（不识别标签）</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=<span class="string">&quot;d1&quot;</span>&gt;</span><br><span class="line">			helloword</span><br><span class="line">			&lt;h1&gt;helloword&lt;/h1&gt;</span><br><span class="line">			&lt;h1&gt;helloword&lt;/h1&gt;</span><br><span class="line">		&lt;/div&gt;</span><br><span class="line">		&lt;script type=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><br><span class="line">			<span class="keyword">var</span> d1 = <span class="built_in">document</span>.querySelector(<span class="string">&#x27;#d1&#x27;</span>)</span><br><span class="line">			<span class="comment">//获取的d1内部的html代码</span></span><br><span class="line">			<span class="built_in">console</span>.log(d1.innerHTML)</span><br><span class="line">			<span class="comment">//获取d1内部的文本内容</span></span><br><span class="line">			<span class="built_in">console</span>.log(d1.innerText)</span><br><span class="line">			<span class="comment">//获取包含d1的html代码</span></span><br><span class="line">			<span class="built_in">console</span>.log(d1.outerHTML)</span><br><span class="line">		&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20200901221439591.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0Fpb2xpbXA=,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<h3 id="DOM操作设置元素样式"><a href="#DOM操作设置元素样式" class="headerlink" title="DOM操作设置元素样式"></a><strong>DOM操作设置元素样式</strong></h3><p>1.通过style修改属性样式<br>2.通过className修改属性样式<br>3.通过增加style标签来修改样式</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=<span class="string">&quot;d1&quot;</span>&gt;</span><br><span class="line">			hello</span><br><span class="line">		&lt;/div&gt;</span><br><span class="line">		&lt;div id=<span class="string">&quot;d2&quot;</span> &gt;</span><br><span class="line">			hello</span><br><span class="line">		&lt;/div&gt;</span><br><span class="line">		&lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;d3&quot;</span> &gt;</span><br><span class="line">			hello</span><br><span class="line">		&lt;/div&gt;</span><br><span class="line">		&lt;script type=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><br><span class="line">			<span class="comment">//1.通过style修改属性样式</span></span><br><span class="line">			<span class="keyword">var</span> abc1 = <span class="built_in">document</span>.querySelector(<span class="string">&#x27;#d1&#x27;</span>)</span><br><span class="line">			abc1.style.width= <span class="string">&quot;200px&quot;</span>;</span><br><span class="line">			abc1.style.height= <span class="string">&quot;200px&quot;</span>;</span><br><span class="line">			abc1.style.backgroundColor= <span class="string">&quot;red&quot;</span>;<span class="comment">//设置css属性时，如果css属性是多个单词组成，则采用驼峰命名法</span></span><br><span class="line">			<span class="comment">//注意：通过style属性设置的值，优先级是最高的，因为是直接修改标签的style属性</span></span><br><span class="line">			<span class="comment">//2.通过className修改属性样式</span></span><br><span class="line">			<span class="keyword">var</span> abc2 = <span class="built_in">document</span>.querySelector(<span class="string">&#x27;#d2&#x27;</span>)</span><br><span class="line">			abc2.className = <span class="string">&quot;bg bigFont&quot;</span></span><br><span class="line">			<span class="comment">//类名还可以通过classList属性的add/remove/replace进行修改className</span></span><br><span class="line">			abc2.classList.add(<span class="string">&quot;shaow&quot;</span>)</span><br><span class="line">			abc2.classList.replace(<span class="string">&quot;bigFont&quot;</span>,<span class="string">&quot;smallFont&quot;</span>)</span><br><span class="line">			abc2.classList.remove(<span class="string">&quot;bg&quot;</span>)</span><br><span class="line">			<span class="comment">//3.通过增加style标签来修改样式</span></span><br><span class="line">			<span class="keyword">var</span> style=<span class="built_in">document</span>.createElement(<span class="string">&quot;style&quot;</span>)</span><br><span class="line">			<span class="comment">//反引号``可以包括多行字符串</span></span><br><span class="line">			style.innerHTML= <span class="string">`.d3&#123;</span></span><br><span class="line"><span class="string">				width: 800px;</span></span><br><span class="line"><span class="string">				height: 800px;</span></span><br><span class="line"><span class="string">				background-color: orange;</span></span><br><span class="line"><span class="string">			&#125;</span></span><br><span class="line"><span class="string">			`</span></span><br><span class="line">			<span class="keyword">var</span> body = <span class="built_in">document</span>.querySelector(<span class="string">&quot;body&quot;</span>)</span><br><span class="line">			body.appendChild(style)</span><br></pre></td></tr></table></figure></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://Aiolimp.com">Aiolimp</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://aiolimp.com/2021/07/26/DOM%E7%AE%80%E4%BB%8B%E5%92%8CDOM%E6%93%8D%E4%BD%9C/">http://aiolimp.com/2021/07/26/DOM%E7%AE%80%E4%BB%8B%E5%92%8CDOM%E6%93%8D%E4%BD%9C/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://Aiolimp.com" target="_blank">Aiolimp</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/JavaScript/">JavaScript</a></div><div class="post_share"><div class="social-share" data-image="https://static001.geekbang.org/resource/image/cb/8d/cb4a6ded3cdc7c0eb6a7e3879567f08d.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/07/28/export%E5%92%8Cexport%20default%E7%9A%84%E5%8C%BA%E5%88%AB/" title="export和export default的区别"><img class="cover" src="https://static001.geekbang.org/resource/image/61/3a/61fa339e781c1e6e6668f94dd6ccc53a.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">export和export default的区别</div></div></a></div><div class="next-post pull-right"><a href="/2021/07/18/call%EF%BC%8Capplay%EF%BC%8Cbind/" title="call,apply,bind的基本介绍"><img class="cover" src="https://static001.geekbang.org/resource/image/bd/47/bdce168820c080adbcbee78b02292f47.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">call,apply,bind的基本介绍</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/07/28/ES6-ES12%E6%80%BB%E6%B1%87/" title="ES6-ES12总汇"><img class="cover" src="https://static001.geekbang.org/resource/image/cb/8d/cb4a6ded3cdc7c0eb6a7e3879567f08d.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-28</div><div class="title">ES6-ES12总汇</div></div></a></div><div><a href="/2021/07/08/Generator/" title="生成器(Generator)"><img class="cover" src="https://static001.geekbang.org/resource/image/9f/28/9f68cbdfd275739a1cd3a4dfa85ead28.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-08</div><div class="title">生成器(Generator)</div></div></a></div><div><a href="/2021/07/03/JS%E4%B8%AD%E7%9A%84%E6%B7%B1%E6%8B%B7%E8%B4%9D%E5%92%8C%E6%B5%85%E6%8B%B7%E8%B4%9D/" title="JS中的深拷贝和浅拷贝"><img class="cover" src="https://static001.geekbang.org/resource/image/f7/f8/f7c1822abb4382896b9b4d3530b02ff8.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-03</div><div class="title">JS中的深拷贝和浅拷贝</div></div></a></div><div><a href="/2021/07/11/JS%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%93%BE/" title="JS作用域和作用域链"><img class="cover" src="https://static001.geekbang.org/resource/image/bd/2e/bddfad3dc8fb2f7c4942a0dc1286c92e.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-11</div><div class="title">JS作用域和作用域链</div></div></a></div><div><a href="/2021/07/10/JS%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/" title="JS原型和原型链"><img class="cover" src="https://static001.geekbang.org/resource/image/f7/f8/f7c1822abb4382896b9b4d3530b02ff8.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-10</div><div class="title">JS原型和原型链</div></div></a></div><div><a href="/2021/07/11/JS%E6%89%A7%E8%A1%8C%E4%B8%8A%E4%B8%8B%E6%96%87%E5%92%8C%E6%89%A7%E8%A1%8C%E6%A0%88/" title="JS执行上下文和执行栈"><img class="cover" src="https://static001.geekbang.org/resource/image/f7/f8/f7c1822abb4382896b9b4d3530b02ff8.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-11</div><div class="title">JS执行上下文和执行栈</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Aiolimp</div><div class="author-info__description">生如长河,渡船千艘</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">67</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#DOM%E7%AE%80%E4%BB%8B%E5%92%8CDOM%E6%93%8D%E4%BD%9C"><span class="toc-number">1.</span> <span class="toc-text">DOM简介和DOM操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JavaScript%E7%9A%84%E7%BB%84%E6%88%90"><span class="toc-number">1.0.1.</span> <span class="toc-text">JavaScript的组成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8A%82%E7%82%B9"><span class="toc-number">1.0.2.</span> <span class="toc-text">节点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.1.</span> <span class="toc-text"></span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DOM%E6%93%8D%E4%BD%9C%E8%AE%BE%E7%BD%AE%E5%85%83%E7%B4%A0%E6%A0%B7%E5%BC%8F"><span class="toc-number">1.1.1.</span> <span class="toc-text">DOM操作设置元素样式</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/03/05/JS%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" title="JavaScript数据类型"><img src="https://static001.geekbang.org/resource/image/13/6b/13daccec5e12c89ea63e8c51dd20cb6b.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JavaScript数据类型"/></a><div class="content"><a class="title" href="/2023/03/05/JS%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" title="JavaScript数据类型">JavaScript数据类型</a><time datetime="2023-03-05T13:32:12.207Z" title="发表于 2023-03-05 21:32:12">2023-03-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/03/05/FirstBlog/" title="Aiolimp的第一篇blog"><img src="/images/bg.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Aiolimp的第一篇blog"/></a><div class="content"><a class="title" href="/2023/03/05/FirstBlog/" title="Aiolimp的第一篇blog">Aiolimp的第一篇blog</a><time datetime="2023-03-05T13:32:12.205Z" title="发表于 2023-03-05 21:32:12">2023-03-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/21/IM%E8%81%8A%E5%A4%A9/" title="IM聊天"><img src="https://static001.geekbang.org/resource/image/88/f1/8807661ef5b82fcb75e8b8f2dbd71ef1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="IM聊天"/></a><div class="content"><a class="title" href="/2021/08/21/IM%E8%81%8A%E5%A4%A9/" title="IM聊天">IM聊天</a><time datetime="2021-08-21T08:57:49.000Z" title="发表于 2021-08-21 16:57:49">2021-08-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/12/module%E3%80%81chunk%E5%92%8Cbundle/" title="module、chunk和bundle"><img src="https://static001.geekbang.org/resource/image/bd/2e/bddfad3dc8fb2f7c4942a0dc1286c92e.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="module、chunk和bundle"/></a><div class="content"><a class="title" href="/2021/08/12/module%E3%80%81chunk%E5%92%8Cbundle/" title="module、chunk和bundle">module、chunk和bundle</a><time datetime="2021-08-12T08:57:49.000Z" title="发表于 2021-08-12 16:57:49">2021-08-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/12/%E5%A6%82%E4%BD%95%E9%98%B2%E6%AD%A2CSRF%E6%94%BB%E5%87%BB/" title="CSRF攻击"><img src="https://static001.geekbang.org/resource/image/ee/70/ee7627bac9defb7621c2489fbacb3a70.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CSRF攻击"/></a><div class="content"><a class="title" href="/2021/08/12/%E5%A6%82%E4%BD%95%E9%98%B2%E6%AD%A2CSRF%E6%94%BB%E5%87%BB/" title="CSRF攻击">CSRF攻击</a><time datetime="2021-08-12T08:57:49.000Z" title="发表于 2021-08-12 16:57:49">2021-08-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Aiolimp</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
