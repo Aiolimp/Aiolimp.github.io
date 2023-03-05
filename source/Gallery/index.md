@@ -6,6 +6,5 @@ top_img: (https://static001.geekbang.org/resource/image/67/00/67a1eac2683d27a798
 
 <div class="gallery-group-main">
 {% galleryGroup '思维导图' '思维导图' '/Gallery/swdt' '/Gallery/swdt/变量.gif' %}
-{% galleryGroup '老婆大人' '老婆大人' '/Gallery/laopodaren' '/Gallery/laopodaren/28.JPG' %}
 
 </div>
