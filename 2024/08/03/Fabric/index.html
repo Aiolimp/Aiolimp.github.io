@@ -1,0 +1,311 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>Fabric.js | Aiolimp</title><meta name="author" content="Aiolimp"><meta name="copyright" content="Aiolimp"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Fabric.jsFabric.js 是一个流行的 JavaScript HTML5 canvas 库，它使得在 JavaScript 中处理和操作图形变得更加简单。这个库提供了一组丰富的 API，可以帮助你方便地创建、操作和修改 HTML5 canvas 上的图形对象。 一、安装和设置首先，确保你已经安装了 Node.js 和 npm。然后，你可以使用 npm 来安装 Fabric.js： 1n">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Fabric.js">
+<meta property="og:url" content="http://aiolimp.com/2024/08/03/Fabric/index.html">
+<meta property="og:site_name" content="Aiolimp">
+<meta property="og:description" content="Fabric.jsFabric.js 是一个流行的 JavaScript HTML5 canvas 库，它使得在 JavaScript 中处理和操作图形变得更加简单。这个库提供了一组丰富的 API，可以帮助你方便地创建、操作和修改 HTML5 canvas 上的图形对象。 一、安装和设置首先，确保你已经安装了 Node.js 和 npm。然后，你可以使用 npm 来安装 Fabric.js： 1n">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://static001.geekbang.org/resource/image/ee/70/ee7627bac9defb7621c2489fbacb3a70.jpg">
+<meta property="article:published_time" content="2024-08-03T08:57:49.000Z">
+<meta property="article:modified_time" content="2025-04-12T11:53:19.460Z">
+<meta property="article:author" content="Aiolimp">
+<meta property="article:tag" content="第三方库">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://static001.geekbang.org/resource/image/ee/70/ee7627bac9defb7621c2489fbacb3a70.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://aiolimp.com/2024/08/03/Fabric/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Fabric.js',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-04-12 19:53:19'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Aiolimp" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/touxiang.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">84</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">20</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">20</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-archive"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-folder-open"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-link"></i><span> 相册</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Aiolimp"><span class="site-name">Aiolimp</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-archive"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-folder-open"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-link"></i><span> 相册</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">Fabric.js</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-08-03T08:57:49.000Z" title="发表于 2024-08-03 16:57:49">2024-08-03</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-04-12T11:53:19.460Z" title="更新于 2025-04-12 19:53:19">2025-04-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/">第三方库</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Fabric.js"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><h1 id="Fabric-js"><a href="#Fabric-js" class="headerlink" title="Fabric.js"></a>Fabric.js</h1><p><a href="https://link.juejin.cn/?target=http://fabricjs.com/">Fabric.js</a> 是一个流行的 JavaScript HTML5 canvas 库，它使得在 JavaScript 中处理和操作图形变得更加简单。这个库提供了一组丰富的 API，可以帮助你方便地创建、操作和修改 HTML5 canvas 上的图形对象。</p>
+<h2 id="一、安装和设置"><a href="#一、安装和设置" class="headerlink" title="一、安装和设置"></a>一、安装和设置</h2><p>首先，确保你已经安装了 Node.js 和 npm。然后，你可以使用 npm 来安装 Fabric.js：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install fabric --save</span><br></pre></td></tr></table></figure>
+
+<p>还可以使用cdn的方式引入Fabric.js：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="二、为什么使用Fabric-js"><a href="#二、为什么使用Fabric-js" class="headerlink" title="二、为什么使用Fabric.js"></a>二、为什么使用Fabric.js</h2><p>因为它提供了许多强大的功能和优点，推荐使用它有以下几个原因：</p>
+<ol>
+<li><strong>全面的功能：</strong>  Fabric.js 提供了丰富的图形元素和工具，如矩形、椭圆、多边形、线条、文本等，并允许你在画布上灵活地操作它们。此外，它还支持各种变换和组合模式，如旋转、缩放、倾斜、编组等。</li>
+<li><strong>性能优化：</strong>  Fabric.js 在处理大量对象或复杂图形时，能够提供良好的性能。它使用了一个高效的渲染引擎，能够智能地管理渲染缓存，并在需要时进行优化。</li>
+<li><strong>灵活性和可扩展性：</strong>  Fabric.js 的设计非常灵活，可以通过继承和扩展现有的对象类来轻松地添加新的功能。此外，它还提供了各种事件（例如点击、触摸、双指缩放等），以方便与用户交互。</li>
+<li><strong>社区支持：</strong>  Fabric.js 有一个活跃的社区，提供了大量的教程、示例和插件。这意味着当你遇到问题时，你很容易找到帮助和解决方案。</li>
+<li><strong>兼容性：</strong>  Fabric.js 在各种浏览器上表现良好，包括现代移动设备。这意味着你可以在各种设备上使用 Fabric.js 来创建丰富的交互体验。</li>
+<li><strong>易于使用：</strong>  Fabric.js 的 API 清晰明了，易于学习和使用。即使是没有编程经验的人，也能快速上手并开始创建自己的项目。</li>
+</ol>
+<p>以上这些优点使得 Fabric.js 成为一种强大且全面的 JavaScript 图形库，无论你是创建复杂的游戏、数据可视化应用还是简单的交互式网页元素，Fabric.js 都值得考虑。</p>
+<h2 id="三、Fabric-js对比原生canvas"><a href="#三、Fabric-js对比原生canvas" class="headerlink" title="三、Fabric.js对比原生canvas"></a>三、Fabric.js对比原生canvas</h2><p>Fabric.js 和原生canvas都是用于创建和操作图形的强大工具，但它们在某些方面有所不同。以下是使用这两种库创建矩形的基本示例。</p>
+<p><strong>使用 Fabric.js 创建矩形：</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 引入 Fabric 库  </span></span><br><span class="line"><span class="keyword">import</span> fabric <span class="keyword">from</span> <span class="string">&#x27;fabric&#x27;</span>;</span><br><span class="line"><span class="keyword">const</span> canvas = <span class="keyword">new</span> fabric.Canvas(<span class="string">&#x27;c&#x27;</span>);</span><br><span class="line"><span class="comment">// 创建矩形对象  </span></span><br><span class="line"><span class="keyword">const</span> rect = <span class="keyword">new</span> fabric.Rect(&#123;</span><br><span class="line">  left: <span class="number">100</span>,</span><br><span class="line">  top: <span class="number">100</span>,</span><br><span class="line">  fill: <span class="string">&#x27;red&#x27;</span>,</span><br><span class="line">  width: <span class="number">200</span>,</span><br><span class="line">  height: <span class="number">200</span>,</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 将矩形添加到画布上  </span></span><br><span class="line">canvas.add(rect);</span><br></pre></td></tr></table></figure>
+
+<p><strong>使用原生 canvas 创建矩形：</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取页面中的canvas元素</span></span><br><span class="line"><span class="keyword">const</span> cnv = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;c&#x27;</span>) </span><br><span class="line"><span class="keyword">const</span> ctx = cnv.getContext(<span class="string">&#x27;2d&#x27;</span>)</span><br><span class="line">ctx.moveTo(<span class="number">50</span>, <span class="number">50</span>)</span><br><span class="line">ctx.lineTo(<span class="number">200</span>, <span class="number">50</span>)</span><br><span class="line">ctx.lineTo(<span class="number">200</span>, <span class="number">120</span>)</span><br><span class="line">ctx.lineTo(<span class="number">50</span>, <span class="number">120</span>)</span><br><span class="line">ctx.lineTo(<span class="number">50</span>, <span class="number">50</span>)</span><br><span class="line">ctx.fillStyle = <span class="string">&#x27;red&#x27;</span></span><br><span class="line">ctx.fill()</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这两段代码都会在 HTML 页面中创建一个红色的矩形，但是使用 Fabric.js 可以创建更复杂的图形，并且可以方便地操作它们的属性（例如颜色，位置，大小等）。此外，Fabric.js 还提供了更高级的功能，如事件处理、图层管理、滤镜等。而原生 canvas 在某些情况下可能具有更高的性能。</p>
+</blockquote>
+<blockquote>
+<p>你可以根据需要选择更适合你的项目的库。如果你需要处理复杂的图形或者需要方便地操作图形的属性，那么 Fabric.js 可能更适合你。如果你只需要在画布上绘制简单的形状，并且追求更高的性能，那么原生 canvas 可能更适合你。</p>
+</blockquote>
+<h2 id="四、基本概念"><a href="#四、基本概念" class="headerlink" title="四、基本概念"></a>四、基本概念</h2><p><strong>1. 画布（Canvas）</strong></p>
+<p>在 Fabric.js 中，画布是一个非常重要的元素。你可以将它看作是绘画的“画布”，可以在上面绘制各种形状、图像和文本。Fabric.js 也提供了丰富的交互和动画功能。</p>
+<p><strong>2. 对象（Object）</strong></p>
+<p>Fabric.js 提供了许多内置对象，如矩形、椭圆、线条、文本等，这些对象都有一些通用属性，如 <code>left</code>、<code>top</code>、<code>width</code>、<code>height</code> 等。同时，Fabric.js 也允许你创建自定义对象。</p>
+<p><strong>3. 属性（Properties）</strong></p>
+<p>对象的属性定义了该对象的特点，比如颜色、大小、位置等。在 Fabric.js 中，你可以直接设置或修改对象的属性。</p>
+<p><strong>4. 事件（Events）</strong></p>
+<p>Fabric.js 提供了丰富的事件模型，包括 mouse events，touch events，object events 等。你可以很容易地添加事件监听器到 Fabric.js 对象上，当特定事件发生时，你的回调函数会被调用。</p>
+<p><strong>5. 变换（Transformations）</strong></p>
+<p>Fabric.js 提供了各种变换方法，如旋转（<code>rotate()</code>）、缩放（<code>scale()</code>）、倾斜（<code>skewX()</code> 和 <code>skewY()</code>）等。这些方法可以用来改变对象的位置、大小和形状。</p>
+<p><strong>6. 组合（Composition）</strong></p>
+<p>在 Fabric.js 中，你可以创建复杂的图形组合。一个组合可以包含多个对象，这些对象会作为一个整体进行变换。</p>
+<p><strong>7. 图层（Layers）</strong></p>
+<p>在 Fabric.js 中，你可以创建多个画布，并在这些画布上添加对象。这样，你可以轻松地管理复杂的图形层次结构，每个层次可以包含多个对象。</p>
+<p><strong>8. SVG 支持</strong></p>
+<p>Fabric.js 还支持从 SVG 文件创建对象。这意味着你可以很容易地从 SVG 文件导入图形，然后在 Fabric.js 画布上进行操作。</p>
+<h2 id="五、创建画布"><a href="#五、创建画布" class="headerlink" title="五、创建画布"></a>五、创建画布</h2><p>本文介绍的是在React中使用Fabric.js创建画布，你可以按照以下步骤进行操作：</p>
+<ol>
+<li>首先，确保已经安装了Fabric.js和React。你可以使用npm或yarn来安装它们。</li>
+<li>创建一个React组件，用于包含Fabric画布。例如，创建一个名为<code>Canvas.js</code>的文件，并导入Fabric和React。</li>
+<li>在组件中创建一个<code>ref</code>来引用Fabric画布的DOM元素。可以使用<code>useRef</code>钩子来创建该引用。</li>
+<li>在组件的<code>render</code>函数中，渲染一个<code>&lt;canvas&gt;</code>元素，并将<code>ref</code>附加到它上面。确保导入Fabric的所需对象和函数。</li>
+<li>在组件中创建一个<code>useEffect</code>钩子来初始化Fabric画布，并将其关联到React组件的生命周期。在<code>useEffect</code>中，使用<code>fabric.Canvas</code>创建一个新的画布实例，并将其附加到<code>ref</code>引用的DOM元素上：</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Canvas</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> canvasRef = useRef(<span class="literal">null</span>);</span><br><span class="line">  useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> canvas = <span class="keyword">new</span> fabric.Canvas(canvasRef.current, &#123;</span><br><span class="line">        fireRightClick: <span class="literal">true</span>, <span class="comment">// 启用右键，button的数字为3</span></span><br><span class="line">        stopContextMenu: <span class="literal">true</span>, <span class="comment">// 禁止默认右键菜单</span></span><br><span class="line">        controlsAboveOverlay: <span class="literal">true</span>, <span class="comment">// 超出clipPath后仍然展示控制条</span></span><br><span class="line">        preserveObjectStacking: <span class="literal">true</span></span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="comment">// 在这里可以添加自定义的画布设置和操作...  </span></span><br><span class="line">  &#125;, []);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;canvas ref=&#123;canvasRef&#125; width=&#123;<span class="number">600</span>&#125; height=&#123;<span class="number">400</span>&#125;/&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="六、创建对象"><a href="#六、创建对象" class="headerlink" title="六、创建对象"></a>六、创建对象</h2><p>Fabric.js 提供了多种对象供我们使用，包括矩形、圆形、线、文本等。下面我们分别介绍一下这些对象的创建方法。</p>
+<h3 id="1、矩形"><a href="#1、矩形" class="headerlink" title="1、矩形"></a>1、矩形</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> rect = <span class="keyword">new</span> fabric.Rect(&#123;</span><br><span class="line">  left: <span class="number">100</span>,</span><br><span class="line">  top: <span class="number">100</span>,</span><br><span class="line">  fill: <span class="string">&#x27;red&#x27;</span>,</span><br><span class="line">  width: <span class="number">200</span>,</span><br><span class="line">  height: <span class="number">200</span></span><br><span class="line">&#125;);</span><br><span class="line">canvas.add(rect);</span><br></pre></td></tr></table></figure>
+
+<h3 id="2、圆形"><a href="#2、圆形" class="headerlink" title="2、圆形"></a>2、圆形</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> circle = <span class="keyword">new</span> fabric.Circle(&#123;</span><br><span class="line">  left: <span class="number">100</span>,</span><br><span class="line">  top: <span class="number">100</span>,</span><br><span class="line">  fill: <span class="string">&#x27;blue&#x27;</span>,</span><br><span class="line">  radius: <span class="number">100</span>,</span><br><span class="line">&#125;);</span><br><span class="line">canvas.add(circle);</span><br></pre></td></tr></table></figure>
+
+<h3 id="3、线"><a href="#3、线" class="headerlink" title="3、线"></a>3、线</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> line = <span class="keyword">new</span> fabric.Line([<span class="number">100</span>, <span class="number">100</span>, <span class="number">300</span>, <span class="number">300</span>], &#123;</span><br><span class="line">  stroke: <span class="string">&#x27;green&#x27;</span>,</span><br><span class="line">  strokeWidth: <span class="number">4</span>,</span><br><span class="line">&#125;);</span><br><span class="line">canvas.add(line);</span><br></pre></td></tr></table></figure>
+
+<h3 id="4、文本"><a href="#4、文本" class="headerlink" title="4、文本"></a>4、文本</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> text = <span class="keyword">new</span> fabric.Text(<span class="string">&#x27;今晚吃鸡，大吉大利&#x27;</span>, &#123;</span><br><span class="line">  left: <span class="number">100</span>,</span><br><span class="line">  top: <span class="number">100</span>,</span><br><span class="line">  fill: <span class="string">&#x27;black&#x27;</span>,</span><br><span class="line">  fontSize: <span class="number">30</span>,</span><br><span class="line">&#125;);</span><br><span class="line">canvas.add(text);</span><br></pre></td></tr></table></figure>
+
+<h3 id="5、图片"><a href="#5、图片" class="headerlink" title="5、图片"></a>5、图片</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">fabric.Image.fromURL(<span class="string">&#x27;https://osstest.jrdaimao.com/ac/1692347493428_300x300.jpg&#x27;</span>, <span class="function"><span class="params">img</span> =&gt;</span> &#123;</span><br><span class="line">  img.set(&#123;</span><br><span class="line">    width: <span class="number">300</span>,</span><br><span class="line">    height: <span class="number">300</span>,</span><br><span class="line">    left: <span class="number">100</span>,</span><br><span class="line">    top: <span class="number">100</span>,</span><br><span class="line">    scaleX: <span class="number">0.5</span>,</span><br><span class="line">    scaleY: <span class="number">0.5</span></span><br><span class="line">  &#125;);</span><br><span class="line">  canvas.add(img);</span><br><span class="line">&#125;, &#123;<span class="attr">crossOrigin</span>: <span class="string">&#x27;anonymous&#x27;</span>&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="七、设置对象的属性"><a href="#七、设置对象的属性" class="headerlink" title="七、设置对象的属性"></a>七、设置对象的属性</h2><p>Fabric.js 允许你通过其对象模型来设置和修改对象的属性。</p>
+<p>以下是关于 Rect、Text 和 Image 对象的属性介绍：</p>
+<h3 id="1、Rect-对象属性"><a href="#1、Rect-对象属性" class="headerlink" title="1、Rect 对象属性"></a>1、Rect 对象属性</h3><ul>
+<li><code>left</code>：矩形左边界相对于 canvas 左边框的位置。</li>
+<li><code>top</code>：矩形上边界相对于 canvas 上边框的位置。</li>
+<li><code>fill</code>：矩形的填充颜色。</li>
+<li><code>stroke</code>：矩形的描边颜色。</li>
+<li><code>strokeWidth</code>：矩形的描边宽度。</li>
+<li><code>strokeDashArray</code>：矩形的描边样式，例如虚线。</li>
+<li><code>width</code>：矩形的宽度。</li>
+<li><code>height</code>：矩形的高度。</li>
+<li><code>angle</code>：矩形的旋转角度（以度为单位）。</li>
+<li><code>opacity</code>：矩形的透明度（0-1）。</li>
+<li><code>flipX</code> 和 <code>flipY</code>：矩形的翻转标志。</li>
+</ul>
+<h3 id="2、Text-对象属性"><a href="#2、Text-对象属性" class="headerlink" title="2、Text 对象属性"></a>2、Text 对象属性</h3><ul>
+<li><code>left</code>：文本左边界相对于 canvas 左边框的位置。</li>
+<li><code>top</code>：文本上边界相对于 canvas 上边框的位置。</li>
+<li><code>fill</code>：文本的颜色。</li>
+<li><code>stroke</code>：文本描边的颜色。</li>
+<li><code>strokeWidth</code>：文本描边的宽度。</li>
+<li><code>strokeDashArray</code>：文本描边的样式，例如虚线。</li>
+<li><code>fontFamily</code>：文本的字体。</li>
+<li><code>fontSize</code>：文本的大小（像素）。</li>
+<li><code>fontWeight</code>：文本的粗细，如 ‘normal’, ‘bold’, ‘bolder’, ‘lighter’, 或者数字（0-1000）。</li>
+<li><code>fontStyle</code>：文本的样式，如 ‘normal’, ‘italic’, ‘oblique’。</li>
+<li><code>lineHeight</code>：文本的行高（比率或像素值）。</li>
+<li><code>textDecoration</code>：文本的装饰样式，如 ‘none’, ‘underline’, ‘overline’, ‘line-through’ 或者 ‘blink’。</li>
+<li><code>textAlign</code>：文本的水平对齐方式，如 ‘left’, ‘center’, ‘right’。</li>
+<li><code>textBaseline</code>：文本的垂直对齐方式，如 ‘top’, ‘middle’, ‘bottom’。</li>
+</ul>
+<h3 id="3、Image-对象属性"><a href="#3、Image-对象属性" class="headerlink" title="3、Image 对象属性"></a>3、Image 对象属性</h3><ul>
+<li><code>left</code>：图片左边界相对于 canvas 左边框的位置。</li>
+<li><code>top</code>：图片上边界相对于 canvas 上边框的位置。</li>
+<li><code>src</code>：图片的源 URL。</li>
+<li><code>width</code> 和 <code>height</code>：图片的宽度和高度（如果未指定，则将根据其自然大小缩放）。</li>
+<li><code>scaleX</code> 和 <code>scaleY</code>：图片的水平方向和垂直方向的缩放比例（相对于其自然大小）。</li>
+<li><code>opacity</code>：图片的透明度（0-1）。</li>
+<li><code>angle</code>：图片的旋转角度（以度为单位）。</li>
+<li><code>flipX</code> 和 <code>flipY</code>：图片的翻转标志。</li>
+</ul>
+<p>以下是一些基本示例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> rect = <span class="keyword">new</span> fabric.Rect(&#123;</span><br><span class="line">  left: <span class="number">100</span>,</span><br><span class="line">  top: <span class="number">100</span>,</span><br><span class="line">  fill: <span class="string">&#x27;red&#x27;</span>,</span><br><span class="line">  width: <span class="number">100</span>,</span><br><span class="line">  height: <span class="number">100</span></span><br><span class="line">&#125;);</span><br><span class="line">canvas.add(rect);</span><br><span class="line">canvas.renderAll();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用 set() 方法设置对象的属性，将矩形的 left 属性设置为 300，fill 属性设置为 &#x27;green&#x27;</span></span><br><span class="line">rect.set(&#123;</span><br><span class="line">  left: <span class="number">300</span>,</span><br><span class="line">  fill: <span class="string">&#x27;green&#x27;</span></span><br><span class="line">&#125;); </span><br><span class="line"></span><br><span class="line"><span class="comment">// 你也可以使用 set() 方法同时设置多个属性 </span></span><br><span class="line"><span class="comment">// 将矩形的 left、top、fill、width 和 height 属性进行设置</span></span><br><span class="line">rect.set(&#123;</span><br><span class="line">  left: <span class="number">400</span>,</span><br><span class="line">  top: <span class="number">400</span>,</span><br><span class="line">  fill: <span class="string">&#x27;yellow&#x27;</span>,</span><br><span class="line">  width: <span class="number">50</span>,</span><br><span class="line">  height: <span class="number">50</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置属性后重新更新视图</span></span><br><span class="line">canvas.renderAll();</span><br></pre></td></tr></table></figure>
+
+<h2 id="八、一些常用的事件"><a href="#八、一些常用的事件" class="headerlink" title="八、一些常用的事件"></a>八、一些常用的事件</h2><p>Fabric.js 提供了丰富的事件处理机制，包括鼠标点击、鼠标移动、鼠标释放等。下面我们分别介绍一下这些事件的处理方式。</p>
+<h3 id="1、鼠标移动事件"><a href="#1、鼠标移动事件" class="headerlink" title="1、鼠标移动事件"></a>1、鼠标移动事件</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">canvas.on(<span class="string">&#x27;mouse:move&#x27;</span>, <span class="function"><span class="keyword">function</span>(<span class="params">opt</span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`x <span class="subst">$&#123;opt.pointer.x&#125;</span> | y <span class="subst">$&#123;opt.pointer.y&#125;</span>`</span>);&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="2、鼠标按下和鼠标抬起事件"><a href="#2、鼠标按下和鼠标抬起事件" class="headerlink" title="2、鼠标按下和鼠标抬起事件"></a>2、鼠标按下和鼠标抬起事件</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">canvas.on(<span class="string">&#x27;mouse:down&#x27;</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;鼠标按下&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line">canvas.on(<span class="string">&#x27;mouse:up&#x27;</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;鼠标抬起&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="3、鼠标滚轮事件"><a href="#3、鼠标滚轮事件" class="headerlink" title="3、鼠标滚轮事件"></a>3、鼠标滚轮事件</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">canvas.on(<span class="string">&#x27;mouse:wheel&#x27;</span>, <span class="function"><span class="keyword">function</span>(<span class="params"><span class="built_in">this</span>, opt</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> zoom = <span class="built_in">this</span>.getZoom();</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;当前画布缩放比例&#x27;</span>, zoom);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="4、对象更新后的事件"><a href="#4、对象更新后的事件" class="headerlink" title="4、对象更新后的事件"></a>4、对象更新后的事件</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">canvas.on(<span class="string">&#x27;after:render&#x27;</span>, <span class="function"><span class="keyword">function</span>(<span class="params">options</span>) </span>&#123;  </span><br><span class="line">     <span class="built_in">console</span>.log(<span class="string">&#x27;update&#x27;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="5、一次绑定多个事件"><a href="#5、一次绑定多个事件" class="headerlink" title="5、一次绑定多个事件"></a>5、一次绑定多个事件</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">selected</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;selected&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 绑定多个事件</span></span><br><span class="line">canvas.on(&#123;</span><br><span class="line">   <span class="string">&#x27;selection:created&#x27;</span>: selected,</span><br><span class="line">   <span class="string">&#x27;selection:updated&#x27;</span>: selected,</span><br><span class="line">   <span class="string">&#x27;selection:cleared&#x27;</span>: selected,</span><br><span class="line">   <span class="string">&#x27;mouse:wheel&#x27;</span>: onWheel</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 解绑多个事件</span></span><br><span class="line">canvas.off(&#123;</span><br><span class="line">  <span class="string">&#x27;selection:created&#x27;</span>: selected,</span><br><span class="line">  <span class="string">&#x27;selection:updated&#x27;</span>: selected,</span><br><span class="line">  <span class="string">&#x27;selection:cleared&#x27;</span>: selected,</span><br><span class="line">  <span class="string">&#x27;mouse:wheel&#x27;</span>: onWheel</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="九、变换"><a href="#九、变换" class="headerlink" title="九、变换"></a>九、变换</h2><p>Fabric.js 提供了多种变换操作，包括平移（Translation）、缩放（Scaling）、旋转（Rotation）和倾斜（Shearing）等。具体来说，平移操作可以使用 <code>translate</code> 方法来实现，缩放操作可以使用 <code>scale</code> 方法，旋转操作可以使用 <code>rotate</code> 方法，倾斜操作可以使用 <code>skewX</code> 和 <code>skewY</code> 方法。这些方法都接受一个角度参数，用于指定变换的角度。同时，还可以使用 <code>setCenter</code> 方法来改变图形中心点的位置。此外，还可以通过修改图形的 <code>left</code>、<code>top</code>、<code>width</code> 和 <code>height</code> 属性来直接改变图形的位置和大小。除了这些基本的变换操作，Fabric.js 还提供了更高级的变换方式，例如通过设置变换矩阵来实现复杂的变换操作。可以使用 <code>setTransformMatrix</code> 方法来设置自定义的变换矩阵，该方法接受一个包含六个元素的数组作为参数，这些元素定义了变换矩阵的各个元素。</p>
+<p>以下是一些Fabric.js中rect、text和image的变换方法:</p>
+<p><strong>1. 对于 rect和image</strong></p>
+<ul>
+<li><code>scale(scaleX, scaleY)</code>: 对矩形进行缩放</li>
+<li><code>rotate(angle)</code>: 对矩形进行旋转</li>
+<li><code>translate(x, y)</code>: 对矩形进行平移</li>
+<li><code>set(&#123; left: value, top: value &#125;)</code>: 设置矩形的位置</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> rect = <span class="keyword">new</span> fabric.Rect(&#123; <span class="attr">width</span>: <span class="number">100</span>, <span class="attr">height</span>: <span class="number">100</span> &#125;);  </span><br><span class="line"></span><br><span class="line">rect.scale(<span class="number">2</span>, <span class="number">2</span>);  <span class="comment">// 将矩形放大两倍</span></span><br><span class="line"></span><br><span class="line">rect.rotate(<span class="number">45</span>, <span class="string">&#x27;center&#x27;</span>); <span class="comment">// 将矩形顺时针旋转45度，旋转的中心点是矩形的中心</span></span><br><span class="line"></span><br><span class="line">rect.translate(<span class="number">50</span>, <span class="number">50</span>);  <span class="comment">// 将矩形向右移动50px，向下移动50px</span></span><br><span class="line"></span><br><span class="line">rect.set(&#123; <span class="attr">left</span>: <span class="number">50</span>, <span class="attr">top</span>: <span class="number">50</span> &#125;); <span class="comment">// 将矩形向右移动50px，向下移动50px</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>2. 对于 text</strong></p>
+<ul>
+<li><code>setFontSize(value)</code>: 设置文本的字体大小</li>
+<li><code>setFontFamily(value)</code>: 设置文本的字体类型</li>
+<li><code>setFill(value)</code>: 设置文本的颜色</li>
+<li><code>setStroke(value)</code>: 设置文本的描边颜色</li>
+<li><code>setStrokeWidth(value)</code>: 设置文本的描边宽度</li>
+<li><code>setTransform(value)</code>: 设置文本的变换，如旋转、缩放等</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> text = <span class="keyword">new</span> fabric.Text(<span class="string">&#x27;Hello World&#x27;</span>); </span><br><span class="line"></span><br><span class="line">text.setFontSize(<span class="number">88</span>); <span class="comment">// 将文字的字体大小设置成88px</span></span><br><span class="line"></span><br><span class="line">text.setFontFamily(<span class="string">&#x27;serif&#x27;</span>); <span class="comment">// 将文字的字体类型设置成serif</span></span><br><span class="line"></span><br><span class="line">text.setFill(<span class="string">&#x27;#888888&#x27;</span>); <span class="comment">// 将文字的字体颜色设置成#888888</span></span><br><span class="line"></span><br><span class="line">text.setStroke(<span class="string">&#x27;red&#x27;</span>); <span class="comment">// 将文本的描边颜色设置为红色</span></span><br><span class="line"></span><br><span class="line">text.setStrokeWidth(<span class="number">2</span>); <span class="comment">// 将文本的描边宽度设置为2px</span></span><br></pre></td></tr></table></figure>
+
+
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://Aiolimp.com">Aiolimp</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://aiolimp.com/2024/08/03/Fabric/">http://aiolimp.com/2024/08/03/Fabric/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://Aiolimp.com" target="_blank">Aiolimp</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/">第三方库</a></div><div class="post_share"><div class="social-share" data-image="https://static001.geekbang.org/resource/image/ee/70/ee7627bac9defb7621c2489fbacb3a70.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2024/06/02/MySql/" title="MySql"><img class="cover" src="https://static001.geekbang.org/resource/image/1b/21/1b809d9a2bdf3ecc481322d7c9223c21.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">MySql</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/images/touxiang.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Aiolimp</div><div class="author-info__description">生如长河,渡船千艘</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">84</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">20</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">20</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Aiolimp" target="_blank" title="Github"><i class="fab fa-github"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Fabric-js"><span class="toc-number">1.</span> <span class="toc-text">Fabric.js</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%AE%89%E8%A3%85%E5%92%8C%E8%AE%BE%E7%BD%AE"><span class="toc-number">1.1.</span> <span class="toc-text">一、安装和设置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8Fabric-js"><span class="toc-number">1.2.</span> <span class="toc-text">二、为什么使用Fabric.js</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81Fabric-js%E5%AF%B9%E6%AF%94%E5%8E%9F%E7%94%9Fcanvas"><span class="toc-number">1.3.</span> <span class="toc-text">三、Fabric.js对比原生canvas</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">1.4.</span> <span class="toc-text">四、基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%88%9B%E5%BB%BA%E7%94%BB%E5%B8%83"><span class="toc-number">1.5.</span> <span class="toc-text">五、创建画布</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.6.</span> <span class="toc-text">六、创建对象</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E7%9F%A9%E5%BD%A2"><span class="toc-number">1.6.1.</span> <span class="toc-text">1、矩形</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E5%9C%86%E5%BD%A2"><span class="toc-number">1.6.2.</span> <span class="toc-text">2、圆形</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81%E7%BA%BF"><span class="toc-number">1.6.3.</span> <span class="toc-text">3、线</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E3%80%81%E6%96%87%E6%9C%AC"><span class="toc-number">1.6.4.</span> <span class="toc-text">4、文本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5%E3%80%81%E5%9B%BE%E7%89%87"><span class="toc-number">1.6.5.</span> <span class="toc-text">5、图片</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E8%AE%BE%E7%BD%AE%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%B1%9E%E6%80%A7"><span class="toc-number">1.7.</span> <span class="toc-text">七、设置对象的属性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81Rect-%E5%AF%B9%E8%B1%A1%E5%B1%9E%E6%80%A7"><span class="toc-number">1.7.1.</span> <span class="toc-text">1、Rect 对象属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81Text-%E5%AF%B9%E8%B1%A1%E5%B1%9E%E6%80%A7"><span class="toc-number">1.7.2.</span> <span class="toc-text">2、Text 对象属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81Image-%E5%AF%B9%E8%B1%A1%E5%B1%9E%E6%80%A7"><span class="toc-number">1.7.3.</span> <span class="toc-text">3、Image 对象属性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E7%9A%84%E4%BA%8B%E4%BB%B6"><span class="toc-number">1.8.</span> <span class="toc-text">八、一些常用的事件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E9%BC%A0%E6%A0%87%E7%A7%BB%E5%8A%A8%E4%BA%8B%E4%BB%B6"><span class="toc-number">1.8.1.</span> <span class="toc-text">1、鼠标移动事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E9%BC%A0%E6%A0%87%E6%8C%89%E4%B8%8B%E5%92%8C%E9%BC%A0%E6%A0%87%E6%8A%AC%E8%B5%B7%E4%BA%8B%E4%BB%B6"><span class="toc-number">1.8.2.</span> <span class="toc-text">2、鼠标按下和鼠标抬起事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81%E9%BC%A0%E6%A0%87%E6%BB%9A%E8%BD%AE%E4%BA%8B%E4%BB%B6"><span class="toc-number">1.8.3.</span> <span class="toc-text">3、鼠标滚轮事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E3%80%81%E5%AF%B9%E8%B1%A1%E6%9B%B4%E6%96%B0%E5%90%8E%E7%9A%84%E4%BA%8B%E4%BB%B6"><span class="toc-number">1.8.4.</span> <span class="toc-text">4、对象更新后的事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5%E3%80%81%E4%B8%80%E6%AC%A1%E7%BB%91%E5%AE%9A%E5%A4%9A%E4%B8%AA%E4%BA%8B%E4%BB%B6"><span class="toc-number">1.8.5.</span> <span class="toc-text">5、一次绑定多个事件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E5%8F%98%E6%8D%A2"><span class="toc-number">1.9.</span> <span class="toc-text">九、变换</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/08/03/Fabric/" title="Fabric.js"><img src="https://static001.geekbang.org/resource/image/ee/70/ee7627bac9defb7621c2489fbacb3a70.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Fabric.js"/></a><div class="content"><a class="title" href="/2024/08/03/Fabric/" title="Fabric.js">Fabric.js</a><time datetime="2024-08-03T08:57:49.000Z" title="发表于 2024-08-03 16:57:49">2024-08-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/06/02/MySql/" title="MySql"><img src="https://static001.geekbang.org/resource/image/1b/21/1b809d9a2bdf3ecc481322d7c9223c21.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MySql"/></a><div class="content"><a class="title" href="/2024/06/02/MySql/" title="MySql">MySql</a><time datetime="2024-06-01T16:00:00.000Z" title="发表于 2024-06-02 00:00:00">2024-06-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/04/13/WebWork/" title="Web Worker 基本使用"><img src="https://static001.geekbang.org/resource/image/fb/c0/fb4e210a483a7892433331082f5f09c0.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Web Worker 基本使用"/></a><div class="content"><a class="title" href="/2024/04/13/WebWork/" title="Web Worker 基本使用">Web Worker 基本使用</a><time datetime="2024-04-12T16:00:00.000Z" title="发表于 2024-04-13 00:00:00">2024-04-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/03/11/node/" title="node基础"><img src="https://static001.geekbang.org/resource/image/bd/2e/bddfad3dc8fb2f7c4942a0dc1286c92e.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="node基础"/></a><div class="content"><a class="title" href="/2024/03/11/node/" title="node基础">node基础</a><time datetime="2024-03-10T16:00:00.000Z" title="发表于 2024-03-11 00:00:00">2024-03-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/08/12/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" title="代理模式"><img src="https://static001.geekbang.org/resource/image/bd/2e/bddfad3dc8fb2f7c4942a0dc1286c92e.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="代理模式"/></a><div class="content"><a class="title" href="/2023/08/12/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" title="代理模式">代理模式</a><time datetime="2023-08-12T08:57:49.000Z" title="发表于 2023-08-12 16:57:49">2023-08-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Aiolimp</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

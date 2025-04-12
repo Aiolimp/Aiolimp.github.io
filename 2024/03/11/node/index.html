@@ -1,0 +1,1094 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>node基础 | Aiolimp</title><meta name="author" content="Aiolimp"><meta name="copyright" content="Aiolimp"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="1.介绍 nodejs 并不是JavaScript应用，也不是编程语言，因为编程语言使用的JavaScript,Nodejs是 JavaScript的运行时。  Nodejs是构建在V8引擎之上的，V8引擎是由C&#x2F;C++编写的，因此我们的JavaSCript代码需要由C&#x2F;C++转化后再执行。  NodeJs 使用异步 I&#x2F;O 和事件驱动的设计理念，可以高效地处理大量并发请求，提供了非阻塞式 I&#x2F;O">
+<meta property="og:type" content="article">
+<meta property="og:title" content="node基础">
+<meta property="og:url" content="http://aiolimp.com/2024/03/11/node/index.html">
+<meta property="og:site_name" content="Aiolimp">
+<meta property="og:description" content="1.介绍 nodejs 并不是JavaScript应用，也不是编程语言，因为编程语言使用的JavaScript,Nodejs是 JavaScript的运行时。  Nodejs是构建在V8引擎之上的，V8引擎是由C&#x2F;C++编写的，因此我们的JavaSCript代码需要由C&#x2F;C++转化后再执行。  NodeJs 使用异步 I&#x2F;O 和事件驱动的设计理念，可以高效地处理大量并发请求，提供了非阻塞式 I&#x2F;O">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://static001.geekbang.org/resource/image/bd/2e/bddfad3dc8fb2f7c4942a0dc1286c92e.jpg">
+<meta property="article:published_time" content="2024-03-10T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-04-12T11:51:58.222Z">
+<meta property="article:author" content="Aiolimp">
+<meta property="article:tag" content="Node">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://static001.geekbang.org/resource/image/bd/2e/bddfad3dc8fb2f7c4942a0dc1286c92e.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://aiolimp.com/2024/03/11/node/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'node基础',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-04-12 19:51:58'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Aiolimp" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/touxiang.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">84</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">20</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">20</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-archive"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-folder-open"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-link"></i><span> 相册</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Aiolimp"><span class="site-name">Aiolimp</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-archive"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-folder-open"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-link"></i><span> 相册</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">node基础</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-03-10T16:00:00.000Z" title="发表于 2024-03-11 00:00:00">2024-03-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-04-12T11:51:58.222Z" title="更新于 2025-04-12 19:51:58">2025-04-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Node/">Node</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="node基础"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><h2 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1.介绍"></a>1.介绍</h2><ol>
+<li><p>nodejs 并不是<code>JavaScript</code>应用，也不是编程语言，因为编程语言使用的<code>JavaScript</code>,Nodejs是 <code>JavaScript</code>的运行时。</p>
+</li>
+<li><p>Nodejs是构建在V8引擎之上的，V8引擎是由C/C++编写的，因此我们的JavaSCript代码需要由C/C++转化后再执行。</p>
+</li>
+<li><p>NodeJs 使用异步 I/O 和事件驱动的设计理念，可以高效地处理大量并发请求，提供了非阻塞式 I/O 接口和事件循环机制，使得开发人员可以编写高性能、可扩展的应用程序,异步I/O最终都是由<code>libuv</code> 事件循环库去实现的。</p>
+</li>
+<li><p>NodeJs 使用npm 作为包管理工具类似于python的pip，或者是java的Maven，目前npm拥有上百万个模块。 <a href="https://link.juejin.cn/?target=https://www.npmjs.com/">www.npmjs.com/</a></p>
+</li>
+<li><p>nodejs适合干一些IO密集型应用，不适合CPU密集型应用，nodejsIO依靠libuv有很强的处理能力，而CPU因为nodejs单线程原因，容易造成CPU占用率高，如果非要做CPU密集型应用，可以使用C++插件编写 或者nodejs提供的<code>cluster</code>。(CPU密集型指的是图像的处理 或者音频处理需要大量数据结构 + 算法)</p>
+</li>
+</ol>
+<h2 id="2-NPM"><a href="#2-NPM" class="headerlink" title="2.NPM"></a>2.NPM</h2><h4 id="npm"><a href="#npm" class="headerlink" title="npm"></a>npm</h4><p><code>npm</code>（全称 Node Package Manager）是 Node.js 的包管理工具，它是一个基于命令行的工具，用于帮助开发者在自己的项目中安装、升级、移除和管理依赖项。</p>
+<h4 id="npm命令"><a href="#npm命令" class="headerlink" title="npm命令"></a>npm命令</h4><ol>
+<li><code>npm init</code>：初始化一个新的 npm 项目，创建 package.json 文件。</li>
+<li><code>npm install</code>：安装一个包或一组包，并且会在当前目录存放一个node_modules。</li>
+<li><code>npm install &lt;package-name&gt;</code>：安装指定的包。</li>
+<li><code>npm install &lt;package-name&gt; --save</code>：安装指定的包，并将其添加到 package.json 文件中的依赖列表中。</li>
+<li><code>npm install &lt;package-name&gt; --save-dev</code>：安装指定的包，并将其添加到 package.json 文件中的开发依赖列表中。</li>
+<li><code>npm install -g &lt;package-name&gt;</code>：全局安装指定的包。</li>
+<li><code>npm update &lt;package-name&gt;</code>：更新指定的包。</li>
+<li><code>npm uninstall &lt;package-name&gt;</code>：卸载指定的包。</li>
+<li><code>npm run &lt;script-name&gt;</code>：执行 package.json 文件中定义的脚本命令。</li>
+<li><code>npm search &lt;keyword&gt;</code>：搜索 npm 库中包含指定关键字的包。</li>
+<li><code>npm info &lt;package-name&gt;</code>：查看指定包的详细信息。</li>
+<li><code>npm list</code>：列出当前项目中安装的所有包。</li>
+<li><code>npm outdated</code>：列出当前项目中需要更新的包。</li>
+<li><code>npm audit</code>：检查当前项目中的依赖项是否存在安全漏洞。</li>
+<li><code>npm publish</code>：发布自己开发的包到 npm 库中。</li>
+<li><code>npm login</code>：登录到 npm 账户。</li>
+<li><code>npm logout</code>：注销当前 npm 账户。</li>
+<li><code>npm link</code>: 将本地模块链接到全局的 <code>node_modules</code> 目录下</li>
+<li><code>npm config list</code> 用于列出所有的 npm 配置信息。执行该命令可以查看当前系统和用户级别的所有 npm 配置信息，以及当前项目的配置信息（如果在项目目录下执行该命令）</li>
+<li><code>npm get registry</code> 用于获取当前 npm 配置中的 registry 配置项的值。registry 配置项用于指定 npm 包的下载地址，如果未指定，则默认使用 npm 官方的包注册表地址</li>
+<li><code>npm set registry</code> <code>npm config set registry &lt;registry-url&gt;</code> 命令，将 registry 配置项的值修改为指定的 <code>&lt;registry-url&gt;</code> 地址</li>
+</ol>
+<h4 id="Package-json"><a href="#Package-json" class="headerlink" title="Package json"></a>Package json</h4><p>执行npm init 便可以初始化一个package.json</p>
+<ol>
+<li><code>name</code>：项目名称，必须是唯一的字符串，通常采用小写字母和连字符的组合。</li>
+<li><code>version</code>：项目版本号，通常采用语义化版本号规范。</li>
+<li><code>description</code>：项目描述。</li>
+<li><code>main</code>：项目的主入口文件路径，通常是一个 JavaScript 文件。</li>
+<li><code>keywords</code>：项目的关键字列表，方便他人搜索和发现该项目。</li>
+<li><code>author</code>：项目作者的信息，包括姓名、邮箱、网址等。</li>
+<li><code>license</code>：项目的许可证类型，可以是自定义的许可证类型或者常见的开源许可证（如 MIT、Apache 等）。</li>
+<li><code>dependencies</code>：项目所依赖的包的列表，这些包会在项目运行时自动安装。</li>
+<li><code>devDependencies</code>：项目开发过程中所需要的包的列表，这些包不会随项目一起发布，而是只在开发时使用。</li>
+<li><code>peerDependencies</code>：项目的同级依赖，即项目所需要的模块被其他模块所依赖。</li>
+<li><code>scripts</code>：定义了一些脚本命令，比如启动项目、运行测试等。</li>
+<li><code>repository</code>：项目代码仓库的信息，包括类型、网址等。</li>
+<li><code>bugs</code>：项目的 bug 报告地址。</li>
+<li><code>homepage</code>：项目的官方网站地址或者文档地址。</li>
+</ol>
+<h4 id="Npm-install-原理"><a href="#Npm-install-原理" class="headerlink" title="Npm install 原理"></a>Npm install 原理</h4><h5 id="在执行npm-install-的时候发生了什么？"><a href="#在执行npm-install-的时候发生了什么？" class="headerlink" title="在执行npm install 的时候发生了什么？"></a>在执行npm install 的时候发生了什么？</h5><p>首先安装的依赖都会存放在根目录的node_modules,默认采用扁平化的方式安装，并且排序规则.bin第一个然后@系列，再然后按照首字母排序abcd等，并且使用的算法是广度优先遍历，在遍历依赖树时，npm会首先处理项目根目录下的依赖，然后逐层处理每个依赖包的依赖，直到所有依赖都被处理完毕。在处理每个依赖时，npm会检查该依赖的版本号是否符合依赖树中其他依赖的版本要求，如果不符合，则会尝试安装适合的版本</p>
+<h5 id="npm-install-后续流程"><a href="#npm-install-后续流程" class="headerlink" title="npm install 后续流程"></a>npm install 后续流程</h5><ol>
+<li><p>从**.npmrc**文件中获取npm配置（项目级.npmrc =&gt; 用户级.npmrc =&gt; 全局的.npmrc =&gt; npm内置.npmrc）</p>
+</li>
+<li><p>检查 <strong>package-lock.json</strong>是否存在：</p>
+<ul>
+<li><strong>存在</strong>：对比<strong>package.json</strong> 和 <strong>package-lock.json</strong>，如果一致则检查缓存。如果不一致，则根据<strong>package.json</strong>中的语法和版本号更新依赖包。</li>
+<li><strong>不存在</strong>：根据 package.json 中的依赖，解析依赖树。检查本地缓存，如果包已存在且完整性校验通过，则直接使用缓存中的包。如果包不存在或缓存被禁用，则从远程注册表获取，并存储到本地缓存，最后将包解压并放置到 <strong>node_modules</strong>。</li>
+</ul>
+</li>
+<li><p><strong>package-lock.json</strong>：</p>
+<ul>
+<li>锁定版本记录依赖树详细信息</li>
+<li>生成唯一key，缓存依赖包</li>
+</ul>
+</li>
+</ol>
+<h4 id="Npm-run-原理"><a href="#Npm-run-原理" class="headerlink" title="Npm run 原理"></a>Npm run 原理</h4><h5 id="npm-run-xxx-发生了什么"><a href="#npm-run-xxx-发生了什么" class="headerlink" title="npm run xxx 发生了什么"></a>npm run xxx 发生了什么</h5><p>读取package json 的scripts 对应的脚本命令(dev:vite),vite是个可执行脚本，他的查找规则是：</p>
+<ul>
+<li>先从当前项目的node_modules/.bin去查找可执行命令vite</li>
+<li>如果没找到就去全局的node_modules 去找可执行命令vite</li>
+<li>如果还没找到就去环境变量查找</li>
+<li>再找不到就进行报错</li>
+</ul>
+<p>如果成功找到会发现有三个文件（因为nodejs 是跨平台的所以可执行命令兼容各个平台）</p>
+<ul>
+<li>.sh文件是给Linux unix Macos 使用</li>
+<li>.cmd 给windows的cmd使用</li>
+<li>.ps1 给windows的powerShell 使用</li>
+</ul>
+<h5 id="npm-生命周期"><a href="#npm-生命周期" class="headerlink" title="npm 生命周期"></a>npm 生命周期</h5><p>​    •    在运行指定脚本前后，会自动执行生命周期钩子（如果存在）：</p>
+<p>​    •    pre <code>&lt;script-name&gt;</code>:</p>
+<p>​    •    运行脚本前执行。例如，npm run build 前会执行 prebuild。</p>
+<p>​    •    <code>&lt;script-name&gt;</code>:</p>
+<p>​    •    执行定义的脚本。</p>
+<p>​    •    post<code>&lt;script-name&gt;</code>:</p>
+<p>​    •    运行脚本后执行。例如，npm run build 后会执行 postbuild。</p>
+<h2 id="3-npx"><a href="#3-npx" class="headerlink" title="3.npx"></a>3.npx</h2><p>npx 是一个运行 npm 包的工具，随 Node.js 的 npm 版本 5.2.0 及以上一起发布。它的核心功能是让用户方便地运行本地或远程的 npm 包，而无需手动安装全局包。</p>
+<p>npx的作用是在命令行中运行node包中的可执行文件，而不需要全局安装这些包。这可以使开发人员更轻松地管理包的依赖关系，并且可以避免全局污染的问题。它还可以帮助开发人员在项目中使用不同版本的包，而不会出现版本冲突的问题。</p>
+<p><strong>npx 的优势</strong></p>
+<ol>
+<li>避免全局安装：<code>npx</code>允许你执行npm package，而不需要你先全局安装它。</li>
+<li>总是使用最新版本：如果你没有在本地安装相应的npm package，<code>npx</code>会从npm的package仓库中下载并使用最新版。</li>
+<li>执行任意npm包：<code>npx</code>不仅可以执行在<code>package.json</code>的<code>scripts</code>部分定义的命令，还可以执行任何npm package。</li>
+<li>执行GitHub gist：<code>npx</code>甚至可以执行GitHub gist或者其他公开的JavaScript文件。</li>
+</ol>
+<p><strong>npx和npm区别</strong></p>
+<p><code>npx</code>侧重于执行命令的，执行某个模块命令。虽然会自动安装模块，但是重在执行某个命令</p>
+<p><code>npm</code>侧重于安装或者卸载某个模块的。重在安装，并不具备执行某个模块的功能。</p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>npm</th>
+<th>npx</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>用途</td>
+<td>用于安装和管理 npm 包</td>
+<td>用于直接执行 npm 包中的命令</td>
+</tr>
+<tr>
+<td>全局安装</td>
+<td>默认全局安装使用 npm install -g</td>
+<td>无需全局安装，直接运行</td>
+</tr>
+<tr>
+<td>版本控制</td>
+<td>无法指定临时运行的包版本</td>
+<td>可直接指定运行的版本</td>
+</tr>
+<tr>
+<td>依赖清理</td>
+<td>全局安装后需要手动清理</td>
+<td>使用后自动清理临时文件</td>
+</tr>
+<tr>
+<td>执行本地命令</td>
+<td>需要指定完整路径（如 node_modules/.bin/<command>）</td>
+<td>自动查找本地依赖并执行</td>
+</tr>
+</tbody></table>
+<h2 id="4-nvm和nrm"><a href="#4-nvm和nrm" class="headerlink" title="4.nvm和nrm"></a>4.nvm和nrm</h2><p><strong>1. nvm (Node Version Manager)</strong></p>
+<p>​    •    <strong>功能</strong>：nvm 是用于管理 Node.js 版本的工具。它允许开发者在同一台机器上安装和切换不同版本的 Node.js，避免了全局安装版本冲突的问题。</p>
+<p>​    •    <strong>用途</strong>：用于安装、切换和卸载 Node.js 版本。非常适合需要在不同版本之间切换的开发环境（例如：开发、生产、测试环境）。</p>
+<p>​    •    <strong>安装管理的对象</strong>：管理 Node.js 版本。</p>
+<p>​    •    <strong>常用命令</strong>：</p>
+<p>​    •    nvm install <code> &lt;version&gt;</code>：安装特定版本的 Node.js。</p>
+<p>​    •    nvm use <code>&lt;version&gt;</code>：切换到指定版本的 Node.js。</p>
+<p>​    •    nvm ls：列出已安装的版本。</p>
+<p>​    •    nvm ls-remote：列出可用的 Node.js 版本。</p>
+<p><strong>2. nrm (NPM Registry Manager)</strong></p>
+<p>​    •    <strong>功能</strong>：nrm 是用于管理 NPM 镜像源的工具。它允许你快速切换不同的 NPM 源，尤其是在需要切换到国内源（如淘宝源）时，可以提高安装依赖的速度。</p>
+<p>​    •    <strong>用途</strong>：用于管理和切换 NPM 的 registry 源。特别适用于在中国的开发者，能够方便地切换到如淘宝的 NPM 镜像源，以提高下载速度。</p>
+<p>​    •    <strong>安装管理的对象</strong>：管理 NPM 镜像源。</p>
+<p>​    •    <strong>常用命令</strong>：</p>
+<p>​    •    nrm use<code> &lt;registry&gt;</code>：切换到指定的 NPM 源。</p>
+<p>​    •    nrm ls：列出可用的 NPM 镜像源。</p>
+<p>​    •    nrm add<code> &lt;name&gt; &lt;url&gt;</code>：添加一个自定义的 NPM 镜像源。</p>
+<h2 id="5-模块化"><a href="#5-模块化" class="headerlink" title="5.模块化"></a>5.模块化</h2><h4 id="CommonJS-规范"><a href="#CommonJS-规范" class="headerlink" title="CommonJS 规范"></a>CommonJS 规范</h4><p>引入模块（require）支持四种格式</p>
+<ol>
+<li>支持引入内置模块例如 <code>http</code> <code>os</code> <code>fs</code> <code>child_process</code> 等nodejs内置模块</li>
+<li>支持引入第三方模块<code>express</code> <code>md5</code> <code>koa</code> 等</li>
+<li>支持引入自己编写的模块 ./ ../ 等</li>
+<li>支持引入addon C++扩展模块 .node文件</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;node:fs&#x27;</span>);  <span class="comment">// 导入核心模块</span></span><br><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>);  <span class="comment">// 导入 node_modules 目录下的模块</span></span><br><span class="line"><span class="keyword">const</span> myModule = <span class="built_in">require</span>(<span class="string">&#x27;./myModule.js&#x27;</span>);  <span class="comment">// 导入相对路径下的模块</span></span><br><span class="line"><span class="keyword">const</span> nodeModule = <span class="built_in">require</span>(<span class="string">&#x27;./myModule.node&#x27;</span>);  <span class="comment">// 导入扩展模块</span></span><br></pre></td></tr></table></figure>
+
+<p>导出模块exports 和 module.exports</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  hello: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;Hello, world!&#x27;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>如果不想导出对象直接导出值</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="number">123</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="ESM模块规范"><a href="#ESM模块规范" class="headerlink" title="ESM模块规范"></a>ESM模块规范</h4><p>引入模块 <strong>import</strong> 必须写在头部</p>
+<blockquote>
+<p>注意使用ESM模块的时候必须开启一个选项 打开package.json 设置 type:module</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> fs <span class="keyword">from</span> <span class="string">&#x27;node:fs&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果要引入json文件需要特殊处理 需要增加断言并且指定类型json node低版本不支持</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> data <span class="keyword">from</span> <span class="string">&#x27;./data.json&#x27;</span> assert &#123; <span class="attr">type</span>: <span class="string">&quot;json&quot;</span> &#125;;</span><br><span class="line"><span class="built_in">console</span>.log(data);</span><br></pre></td></tr></table></figure>
+
+<p>加载模块的整体对象</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> all <span class="keyword">from</span> <span class="string">&#x27;xxx.js&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>动态导入模块</p>
+<p>import静态加载不支持掺杂在逻辑中如果想动态加载请使用import函数模式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="literal">true</span>)&#123;</span><br><span class="line">    <span class="keyword">import</span>(<span class="string">&#x27;./test.js&#x27;</span>).then()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>模块导出</p>
+<ul>
+<li>导出一个默认对象 default只能有一个不可重复export default</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    name: <span class="string">&#x27;test&#x27;</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>导出变量</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> a = <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Cjs-和-ESM-的区别"><a href="#Cjs-和-ESM-的区别" class="headerlink" title="Cjs 和 ESM 的区别"></a>Cjs 和 ESM 的区别</h4><ol>
+<li>Cjs是基于运行时的同步加载，esm是基于编译时的异步加载</li>
+<li>Cjs是可以修改值的，esm值并且不可修改（可读的）</li>
+<li>Cjs不可以tree shaking，esm支持tree shaking</li>
+<li>commonjs中顶层的this指向这个模块本身，而ES6中顶层this指向undefined</li>
+</ol>
+<h2 id="6-全局变量"><a href="#6-全局变量" class="headerlink" title="6.全局变量"></a>6.全局变量</h2><h4 id="如何在nodejs定义全局变量"><a href="#如何在nodejs定义全局变量" class="headerlink" title="如何在nodejs定义全局变量"></a>如何在nodejs定义全局变量</h4><p>在nodejs中使用<strong>global</strong>定义全局变量，定义的变量，可以在引入的文件中也可以访问到该变量，例如<code>a.js</code> <code>global.xxx = &#39;xxx&#39;</code> <code>require(&#39;xxx.js&#39;)</code>  xxx.js 也可以访问到该变量，在浏览器中我们定义的全局变量都在window,nodejs在global，不同的环境还需要判断，于是在ECMAScript 2020 出现了一个<code>globalThis</code>全局变量，在nodejs环境会自动切换成global ，浏览器环境自动切换window非常方便</p>
+<h4 id="关于其他全局API"><a href="#关于其他全局API" class="headerlink" title="关于其他全局API"></a>关于其他全局API</h4><blockquote>
+<p>由于nodejs中没有DOM和BOM，除了这些API，其他的ECMAscriptAPI基本都能用</p>
+</blockquote>
+<p>例如</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">setTimeout</span> <span class="built_in">setInterval</span> <span class="built_in">Promise</span> <span class="built_in">Math</span>  <span class="built_in">console</span>  <span class="built_in">Date</span> fetch(node v18) 等...</span><br></pre></td></tr></table></figure>
+
+<p>这些API 都是可以正常用的</p>
+<h4 id="nodejs内置全局API"><a href="#nodejs内置全局API" class="headerlink" title="nodejs内置全局API"></a>nodejs内置全局API</h4><blockquote>
+<p><strong><code>__dirname __filename 只能在cjs使用 esm规范没有这两个全局变量</code></strong></p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">__dirname</span><br></pre></td></tr></table></figure>
+
+<p>它表示当前模块的所在<code>目录</code>的绝对路径</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">__filename</span><br></pre></td></tr></table></figure>
+
+<p>它表示当前模块<code>文件</code>的绝对路径，包括文件名和文件扩展名</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span> <span class="built_in">module</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="process"><a href="#process" class="headerlink" title="process"></a><strong>process</strong></h4><ol>
+<li><code>process.argv</code>: 这是一个包含命令行参数的数组。第一个元素是Node.js的执行路径，第二个元素是当前执行的JavaScript文件的路径，之后的元素是传递给脚本的命令行参数。</li>
+<li><code>process.env</code>: 这是一个包含当前环境变量的对象。您可以通过<code>process.env</code>访问并操作环境变量。</li>
+<li><code>process.cwd()</code>: 这个方法返回当前工作目录的路径。</li>
+<li><code>process.on(event, listener)</code>: 用于注册事件监听器。您可以使用<code>process.on</code>监听诸如<code>exit</code>、<code>uncaughtException</code>等事件，并在事件发生时执行相应的回调函数。</li>
+<li><code>process.exit([code])</code>: 用于退出当前的Node.js进程。您可以提供一个可选的退出码作为参数。</li>
+<li><code>process.pid</code>: 这个属性返回当前进程的PID（进程ID）。</li>
+</ol>
+<p>这些只是<code>process</code>对象的一些常用属性和方法，还有其他许多属性和方法可用于监控进程、设置信号处理、发送IPC消息等。</p>
+<p>需要注意的是，<code>process</code>对象是一个全局对象，可以在任何模块中直接访问，无需导入或定义。</p>
+<h4 id="Buffer"><a href="#Buffer" class="headerlink" title="Buffer"></a><strong>Buffer</strong></h4><ol>
+<li>创建 <code>Buffer</code> 实例：<ul>
+<li><code>Buffer.alloc(size[, fill[, encoding]])</code>: 创建一个指定大小的新的<code>Buffer</code>实例，初始内容为零。<code>fill</code>参数可用于填充缓冲区，<code>encoding</code>参数指定填充的字符编码。</li>
+<li><code>Buffer.from(array)</code>: 创建一个包含给定数组的<code>Buffer</code>实例。</li>
+<li><code>Buffer.from(string[, encoding])</code>: 创建一个包含给定字符串的<code>Buffer</code>实例。</li>
+</ul>
+</li>
+<li>读取和写入数据：<ul>
+<li><code>buffer[index]</code>: 通过索引读取或写入<code>Buffer</code>实例中的特定字节。</li>
+<li><code>buffer.length</code>: 获取<code>Buffer</code>实例的字节长度。</li>
+<li><code>buffer.toString([encoding[, start[, end]]])</code>: 将<code>Buffer</code>实例转换为字符串。</li>
+</ul>
+</li>
+<li>转换数据：<ul>
+<li><code>buffer.toJSON()</code>: 将<code>Buffer</code>实例转换为JSON对象。</li>
+<li><code>buffer.slice([start[, end]])</code>: 返回一个新的<code>Buffer</code>实例，其中包含原始<code>Buffer</code>实例的部分内容。</li>
+</ul>
+</li>
+<li>其他方法：<ul>
+<li><code>Buffer.isBuffer(obj)</code>: 检查一个对象是否是<code>Buffer</code>实例。</li>
+<li><code>Buffer.concat(list[, totalLength])</code>: 将一组<code>Buffer</code>实例或字节数组连接起来形成一个新的<code>Buffer</code>实例。</li>
+</ul>
+</li>
+</ol>
+<p>请注意，从Node.js 6.0版本开始，<code>Buffer</code>构造函数的使用已被弃用，推荐使用<code>Buffer.alloc()</code>、<code>Buffer.from()</code>等方法来创建<code>Buffer</code>实例。</p>
+<p><code>Buffer</code>类在处理文件、网络通信、加密和解密等操作中非常有用，尤其是在需要处理二进制数据时</p>
+<h2 id="7-CSR-SSR-SEO"><a href="#7-CSR-SSR-SEO" class="headerlink" title="7.CSR SSR SEO"></a>7.CSR SSR SEO</h2><h4 id="CSR（Client-Side-Rendering）——客户端渲染"><a href="#CSR（Client-Side-Rendering）——客户端渲染" class="headerlink" title="CSR（Client-Side Rendering）——客户端渲染"></a><strong>CSR（Client-Side Rendering）——客户端渲染</strong></h4><p><strong>渲染时机</strong>：所有页面内容在客户端通过 JavaScript 渲染。</p>
+<p><strong>工作流程</strong>：</p>
+<pre><code>1. 浏览器加载一个基础 HTML 文件（通常包含空的` &lt;div&gt;` 标签）。
+1. 加载并执行 JavaScript（如 React、Vue 等框架）。
+1. JavaScript 渲染页面内容
+</code></pre>
+<p><strong>优点</strong>：</p>
+<pre><code>1. 页面切换流畅，适合单页应用（SPA）。
+1. 减少服务器压力，更多任务转移到客户端。
+</code></pre>
+<p><strong>缺点</strong>：</p>
+<pre><code>1. 初次加载慢，尤其是 JavaScript 文件较大时。
+1. 对 SEO 不友好，因为爬虫可能无法解析动态生成的内容。
+</code></pre>
+<p><strong>适用场景</strong>：</p>
+<ul>
+<li>后台管理系统。</li>
+<li>用户交互复杂、实时性强的应用（如聊天、仪表盘）</li>
+</ul>
+<h4 id="SSR（Server-Side-Rendering）——服务端渲染"><a href="#SSR（Server-Side-Rendering）——服务端渲染" class="headerlink" title="SSR（Server-Side Rendering）——服务端渲染"></a><strong>SSR（Server-Side Rendering）——服务端渲染</strong></h4><p><strong>渲染时机</strong>：页面内容在服务器生成，然后返回完整的 HTML。</p>
+<p><strong>工作流程</strong>：</p>
+<p>​    1. 用户请求页面时，服务器渲染完整的 HTML 页面。</p>
+<p>​    2. 浏览器显示完整内容。</p>
+<p>​    3. 后续通过 JavaScript 提供交互功能。</p>
+<p><strong>优点</strong>：</p>
+<p>​    1. 更快的首屏加载，用户可以更快看到内容。</p>
+<p>​    2. 更好的 SEO 支持，搜索引擎爬虫可以直接读取 HTML 内容。</p>
+<p><strong>缺点</strong>：</p>
+<p>​    1.增加服务器负担，每次请求都需要渲染页面。</p>
+<p>​    2.页面动态交互需要额外处理（如数据绑定）。</p>
+<p><strong>适用场景</strong>：</p>
+<ul>
+<li>需要强 SEO 支持的内容型网站（如博客、电商）。</li>
+<li>高度关注首屏加载速度的应用。</li>
+</ul>
+<h4 id="SEO（Search-Engine-Optimization）——搜索引擎优化"><a href="#SEO（Search-Engine-Optimization）——搜索引擎优化" class="headerlink" title="SEO（Search Engine Optimization）——搜索引擎优化"></a><strong>SEO（Search Engine Optimization）——搜索引擎优化</strong></h4><p><strong>目标</strong>：通过优化网站结构和内容，提高搜索引擎收录和排名，吸引更多自然流量。</p>
+<p><strong>关键点</strong>：</p>
+<ol>
+<li><p><strong>内容优化</strong>：关键词、标题、描述等。</p>
+</li>
+<li><p><strong>技术优化</strong>：</p>
+<ul>
+<li><p>确保页面内容可被搜索引擎爬取（CSR 的内容需要特别处理）。</p>
+</li>
+<li><p>使用 SSR 或静态生成（SSG）提升爬虫的可见性。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>性能优化</strong>：</p>
+</li>
+</ol>
+<ul>
+<li>提高页面加载速度。</li>
+<li>使用 CDN、压缩资源等手段。</li>
+</ul>
+<h4 id="CSR-和-SSR-区别"><a href="#CSR-和-SSR-区别" class="headerlink" title="CSR 和 SSR 区别"></a>CSR 和 SSR 区别</h4><table>
+<thead>
+<tr>
+<th>对比项</th>
+<th><strong>CSR</strong></th>
+<th>SSR</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>首屏加载速度</td>
+<td>较慢，需等待 JavaScript 渲染完成</td>
+<td>较快，直接返回完整 HTML</td>
+</tr>
+<tr>
+<td>SEO 支持</td>
+<td>较差，需额外配置</td>
+<td>较好，HTML 可被直接爬取</td>
+</tr>
+<tr>
+<td>服务器压力</td>
+<td>较小，渲染在客户端完成</td>
+<td>较大，每次请求需服务器渲染</td>
+</tr>
+<tr>
+<td>开发复杂度</td>
+<td>较低，前后端分离</td>
+<td>较高，需同时处理前端和后端渲染逻辑</td>
+</tr>
+<tr>
+<td>适用场景</td>
+<td>动态交互强的 SPA</td>
+<td>内容型网站或注重首屏体验的应用</td>
+</tr>
+</tbody></table>
+<h2 id="8-path"><a href="#8-path" class="headerlink" title="8.path"></a>8.path</h2><blockquote>
+<p>path模块在不同的操作系统是有差异的(windows | posix)</p>
+</blockquote>
+<p><code>windows</code>大家肯定熟悉，<code>posix</code>可能大家没听说过</p>
+<p><strong>posix（Portable Operating System Interface of UNIX）</strong></p>
+<p>posix表示可移植操作系统接口，也就是定义了一套标准，遵守这套标准的操作系统有(unix,like unix,linux,macOs,windows wsl)，为什么要定义这套标准，比如在Linux系统启动一个进程需要调用<code>fork</code>函数,在windows启动一个进程需要调用<code>creatprocess</code>函数，这样就会有问题，比如我在linux写好了代码，需要移植到windows发现函数不统一，posix标准的出现就是为了解决这个问题。</p>
+<p>Windows 并没有完全遵循 POSIX 标准。Windows 在设计上采用了不同于 POSIX 的路径表示方法。</p>
+<p>在 Windows 系统中，路径使用反斜杠（<code>\</code>）作为路径分隔符。这与 POSIX 系统使用的正斜杠（<code>/</code>）是不同的。这是 Windows 系统的历史原因所致，早期的 Windows 操作系统采用了不同的设计选择。</p>
+<h4 id="windows-posix-差异"><a href="#windows-posix-差异" class="headerlink" title="windows posix 差异"></a>windows posix 差异</h4><p><code>path.basename()</code> 方法返回的是给定路径中的最后一部分</p>
+<p>在posix处理windows路径</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">path.basename(<span class="string">&#x27;C:\temp\myfile.html&#x27;</span>);</span><br><span class="line"><span class="comment">// 返回: &#x27;C:\temp\myfile.html&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>结果返回的并不对 应该返回 myfile.html</p>
+<p>如果要在posix系统处理windows的路径需要调用对应操作系统的方法应该修改为</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">path.win32.basename(<span class="string">&#x27;C:\temp\myfile.html&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>返回 myfile.html</p>
+<h4 id="path-dirname"><a href="#path-dirname" class="headerlink" title="path.dirname"></a>path.dirname</h4><p>这个API和basename正好互补</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">path.dirname(<span class="string">&#x27;/aaaa/bbbb/cccc/index.html&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>dirname API 返回 /aaaa/bbbb/cccc 除了最后一个路径的其他路径。</p>
+<p>basename API 返回 最后一个路径 index.html</p>
+<h4 id="path-extname"><a href="#path-extname" class="headerlink" title="path.extname"></a>path.extname</h4><p>这个API 用来返回扩展名例如/bbb/ccc/file.txt 返回就是.txt</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">path.extname(<span class="string">&#x27;/aaaa/bbbb/cccc/index.html.ccc.ddd.aaa&#x27;</span>)</span><br><span class="line"><span class="comment">//.aaa</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果有多个 <strong>.</strong> 返回最后一个 如果没有扩展名返回空</p>
+</blockquote>
+<h4 id="path-join"><a href="#path-join" class="headerlink" title="path.join"></a>path.join</h4><p>这个API 主要是用来拼接路径的</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">path.join(<span class="string">&#x27;/foo&#x27;</span>,<span class="string">&#x27;/cxk&#x27;</span>,<span class="string">&#x27;/ikun&#x27;</span>)</span><br><span class="line"><span class="comment">// /foo/cxk/ikun</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>可以支持 .. ./ ../操作符</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">path.join(<span class="string">&#x27;/foo&#x27;</span>,<span class="string">&#x27;/cxk&#x27;</span>,<span class="string">&#x27;/ikun&#x27;</span>,<span class="string">&#x27;../&#x27;</span>)</span><br><span class="line"><span class="comment">// /foo/cxk/</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="path-resolve"><a href="#path-resolve" class="headerlink" title="path.resolve"></a>path.resolve</h4><p>用于将相对路径解析并且返回<code>绝对路径</code></p>
+<p>如果传入了多个绝对路径 它将返回最右边的绝对路径</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">path.resolve(<span class="string">&#x27;/aaa&#x27;</span>,<span class="string">&#x27;/bbb&#x27;</span>,<span class="string">&#x27;/ccc&#x27;</span>)</span><br><span class="line"><span class="comment">//   /ccc</span></span><br></pre></td></tr></table></figure>
+
+<p>传入绝对路径 + 相对路径</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">path.resolve(__dirname,<span class="string">&#x27;./index.js&#x27;</span>)</span><br><span class="line"><span class="comment">//  /User/xiaoman/DeskTop/node/index.js</span></span><br></pre></td></tr></table></figure>
+
+<p>如果只传入相对路径</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">path.resolve(<span class="string">&#x27;./index.js&#x27;</span>)</span><br><span class="line"><span class="comment">// 返回工作目录 + index.js</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="path-parse-path-format"><a href="#path-parse-path-format" class="headerlink" title="path.parse  path.format"></a>path.parse  path.format</h4><p>path.format 和 path.parse 正好互补</p>
+<p><strong>parse</strong></p>
+<p>用于解析文件路径。它接受一个路径字符串作为输入，并返回一个包含路径各个组成部分的对象</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">path.parse(<span class="string">&#x27;/home/user/dir/file.txt&#x27;</span>)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  root: <span class="string">&#x27;/&#x27;</span>,</span><br><span class="line">  dir: <span class="string">&#x27;/home/user/dir&#x27;</span>,</span><br><span class="line">  base: <span class="string">&#x27;file.txt&#x27;</span>,</span><br><span class="line">  ext: <span class="string">&#x27;.txt&#x27;</span>,</span><br><span class="line">  name: <span class="string">&#x27;file&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>root</code>：路径的根目录，即 <code>/</code>。</li>
+<li><code>dir</code>：文件所在的目录，即 <code>/home/user/documents</code>。</li>
+<li><code>base</code>：文件名，即 <code>file.txt</code>。</li>
+<li><code>ext</code>：文件扩展名，即 <code>.txt</code>。</li>
+<li><code>name</code>：文件名去除扩展名，即 <code>file</code>。</li>
+</ul>
+<p><strong>format</strong> 正好相反 在把对象转回字符串</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">path.format(&#123;</span><br><span class="line">    root: <span class="string">&#x27;/&#x27;</span>,</span><br><span class="line">    dir: <span class="string">&#x27;/home/user/documents&#x27;</span>,</span><br><span class="line">    base: <span class="string">&#x27;file.txt&#x27;</span>,</span><br><span class="line">    ext: <span class="string">&#x27;.txt&#x27;</span>,</span><br><span class="line">    name: <span class="string">&#x27;file&#x27;</span></span><br><span class="line"> &#125;)</span><br><span class="line"> <span class="comment">// /home/user/dir/file.txt</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="9-os"><a href="#9-os" class="headerlink" title="9.os"></a>9.os</h2><p><strong>Nodejs os 模块可以跟操作系统进行交互</strong></p>
+<p>Nodejs os 模块可以跟操作系统进行交互</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> os = <span class="built_in">require</span>(<span class="string">&quot;node:os&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>API</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td><strong>os.type()</strong></td>
+<td>它在 Linux 上返回 <code>&#39;Linux&#39;</code>，在 macOS 上返回 <code>&#39;Darwin&#39;</code>，在 Windows 上返回 <code>&#39;Windows_NT&#39;</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>os.platform()</strong></td>
+<td>返回标识为其编译 Node.js 二进制文件的操作系统平台的字符串。 该值在编译时设置。 可能的值为 <code>&#39;aix&#39;</code>、<code>&#39;darwin&#39;</code>、<code>&#39;freebsd&#39;</code>、<code>&#39;linux&#39;</code>、<code>&#39;openbsd&#39;</code>、<code>&#39;sunos&#39;</code>、以及 <code>&#39;win32&#39;</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>os.release()</strong></td>
+<td>返回操作系统的版本例如10.xxxx win10</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>os.homedir()</strong></td>
+<td>返回用户目录 例如c:\user\xiaoman 原理就是 windows <code>echo %USERPROFILE% </code>posix $HOME</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>os.arch()</strong></td>
+<td>返回cpu的架构  可能的值为 <code>&#39;arm&#39;</code>、<code>&#39;arm64&#39;</code>、<code>&#39;ia32&#39;</code>、<code>&#39;mips&#39;</code>、<code>&#39;mipsel&#39;</code>、<code>&#39;ppc&#39;</code>、<code>&#39;ppc64&#39;</code>、<code>&#39;s390&#39;</code>、<code>&#39;s390x&#39;</code>、以及 <code>&#39;x64&#39;</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>os.cpus()</strong></td>
+<td>获取CPU的线程以及详细信息</td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>os.networkInterfaces()</strong></td>
+<td>获取网络信息</td>
+</tr>
+</tbody></table>
+<h2 id="10-process"><a href="#10-process" class="headerlink" title="10.process"></a>10.process</h2><p><code>process</code> 是Nodejs操作当前进程和控制当前进程的API，并且是挂载到globalThis下面的全局API</p>
+<h4 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h4><p><strong>process.version：返回 Node.js 的版本号</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(process.version); <span class="comment">// 输出: &#x27;v18.16.0&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>process.versions：返回一个对象，包含 Node.js 和其依赖的版本信息。</strong></p>
+<p><strong>process.platform：返回当前运行平台（如 ‘win32’、’linux’、’darwin’）</strong></p>
+<p><strong>process.arch：返回当前 CPU 的架构（如 ‘x64’、’arm’）</strong></p>
+<p><strong>process.pid：返回当前进程的 PID（进程 ID）</strong></p>
+<p><strong>process.title：获取或设置进程的标题</strong></p>
+<h4 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h4><p><strong>process.env：返回包含环境变量的对象</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(process.env.PATH);</span><br><span class="line">process.env.MY_VAR = <span class="string">&#x27;123&#x27;</span>;</span><br><span class="line"><span class="built_in">console</span>.log(process.env.MY_VAR); <span class="comment">// 输出: &#x27;123&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="当前工作目录"><a href="#当前工作目录" class="headerlink" title="当前工作目录"></a><strong>当前工作目录</strong></h4><p><strong>process.cwd()：返回当前工作目录</strong></p>
+<p><strong>process.chdir(directory)：更改当前工作目录</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">process.chdir(<span class="string">&#x27;/tmp&#x27;</span>);</span><br><span class="line"><span class="built_in">console</span>.log(process.cwd()); <span class="comment">// 输出: &#x27;/tmp&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="进程运行信息"><a href="#进程运行信息" class="headerlink" title="进程运行信息"></a><strong>进程运行信息</strong></h4><p><strong>process.uptime()：返回当前进程的运行时间（以秒为单位）</strong></p>
+<p><strong>process.memoryUsage()：返回一个对象，显示内存使用情况</strong></p>
+<p><strong>process.hrtime([time])：返回高精度的时间，适合测量性能</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> start = process.hrtime();</span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> end = process.hrtime(start);</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`Time: <span class="subst">$&#123;end[<span class="number">0</span>]&#125;</span> seconds and <span class="subst">$&#123;end[<span class="number">1</span>]&#125;</span> nanoseconds`</span>);</span><br><span class="line">&#125;, <span class="number">1000</span>);</span><br></pre></td></tr></table></figure>
+
+<h4 id="标准输入输出"><a href="#标准输入输出" class="headerlink" title="标准输入输出"></a><strong>标准输入输出</strong></h4><p><strong>process.stdin：获取用户输入</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">process.stdin.on(<span class="string">&#x27;data&#x27;</span>, <span class="function">(<span class="params">data</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`You typed: <span class="subst">$&#123;data&#125;</span>`</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><strong>process.stdout：输出到控制台</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">process.stdout.write(<span class="string">&#x27;Hello, World!\n&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p><strong>process.stderr:输出错误信息到控制台</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">process.stderr.write(<span class="string">&#x27;Error occurred!\n&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<h4 id="信号处理"><a href="#信号处理" class="headerlink" title="信号处理"></a><strong>信号处理</strong></h4><p><strong>process.on(event, callback):监听进程事件</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">process.on(<span class="string">&#x27;exit&#x27;</span>, <span class="function">(<span class="params">code</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`Process exited with code: <span class="subst">$&#123;code&#125;</span>`</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">process.on(<span class="string">&#x27;SIGINT&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;Caught interrupt signal&#x27;</span>);</span><br><span class="line">  process.exit();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><strong>process.kill(pid, [signal]):向进程发送信号</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">process.kill(process.pid, <span class="string">&#x27;SIGTERM&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<h4 id="退出进程"><a href="#退出进程" class="headerlink" title="退出进程"></a><strong>退出进程</strong></h4><p><strong>process.exit([code]):退出当前进程，默认 code 为 0。</strong></p>
+<p><strong>process.exitCode:设置退出码，但不会立即退出。</strong></p>
+<h4 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a><strong>异常处理</strong></h4><p><strong>process.on(‘uncaughtException’, callback):捕获未处理的异常</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">process.on(<span class="string">&#x27;uncaughtException&#x27;</span>, <span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.error(<span class="string">&#x27;Caught exception:&#x27;</span>, err);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&#x27;Test Error&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p><strong>process.on(‘unhandledRejection’, callback):捕获未处理的 Promise 拒绝</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">process.on(<span class="string">&#x27;unhandledRejection&#x27;</span>, <span class="function">(<span class="params">reason, promise</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.error(<span class="string">&#x27;Unhandled Rejection at:&#x27;</span>, promise, <span class="string">&#x27;reason:&#x27;</span>, reason);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">Promise</span>.reject(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&#x27;Promise Rejection&#x27;</span>));</span><br></pre></td></tr></table></figure>
+
+<p>process 提供了强大的功能，用于管理和监控 Node.js 应用程序的生命周期，是编写 CLI 工具和系统级脚本的重要工具。</p>
+<h2 id="11-child-process"><a href="#11-child-process" class="headerlink" title="11.child_process"></a><strong>11.child_process</strong></h2><p>在 Node.js 中，<strong>child_process</strong> 模块用于创建子进程，以便执行系统命令或运行其他脚本。通过这个模块，你可以执行 shell 命令、调用其他脚本、以及启动独立的子进程。</p>
+<h4 id="创建子进程"><a href="#创建子进程" class="headerlink" title="创建子进程"></a>创建子进程</h4><p>Nodejs创建子进程共有<code>7个</code>API Sync同步API 不加是异步API</p>
+<ol>
+<li>spawn  执行命令</li>
+<li>exec   执行命令</li>
+<li>execFile   执行可执行文件</li>
+<li>fork   创建node子进程</li>
+<li><code>execSync</code> 执行命令 同步执行</li>
+<li><code>execFileSync</code> 执行可执行文件 同步执行</li>
+<li><code>spawnSync</code> 执行命令 同步执行</li>
+</ol>
+<h4 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h4><p><strong>exec：适合运行短时间的命令并获取命令的输出结果，输出会以缓冲区的形式返回，适合处理小量数据。</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; exec &#125; = <span class="built_in">require</span>(<span class="string">&#x27;child_process&#x27;</span>);</span><br><span class="line"></span><br><span class="line">exec(<span class="string">&#x27;ls -la&#x27;</span>, <span class="function">(<span class="params">error, stdout, stderr</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (error) &#123;</span><br><span class="line">    <span class="built_in">console</span>.error(<span class="string">`Error: <span class="subst">$&#123;error.message&#125;</span>`</span>);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (stderr) &#123;</span><br><span class="line">    <span class="built_in">console</span>.error(<span class="string">`Stderr: <span class="subst">$&#123;stderr&#125;</span>`</span>);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`Stdout: <span class="subst">$&#123;stdout&#125;</span>`</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><strong>execFile：直接执行一个可执行文件（不通过 shell），更安全，因为它避免了 shell 注入攻击</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; execFile &#125; = <span class="built_in">require</span>(<span class="string">&#x27;child_process&#x27;</span>);</span><br><span class="line"></span><br><span class="line">execFile(<span class="string">&#x27;node&#x27;</span>, [<span class="string">&#x27;--version&#x27;</span>], <span class="function">(<span class="params">error, stdout, stderr</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (error) &#123;</span><br><span class="line">    <span class="built_in">console</span>.error(<span class="string">`Error: <span class="subst">$&#123;error.message&#125;</span>`</span>);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (stderr) &#123;</span><br><span class="line">    <span class="built_in">console</span>.error(<span class="string">`Stderr: <span class="subst">$&#123;stderr&#125;</span>`</span>);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`Stdout: <span class="subst">$&#123;stdout&#125;</span>`</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><strong>spawn：用于创建一个子进程并通过流（stream）处理数据，适合处理大量数据，或需要与子进程进行实时通信。</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; spawn &#125; = <span class="built_in">require</span>(<span class="string">&#x27;child_process&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> child = spawn(<span class="string">&#x27;ls&#x27;</span>, [<span class="string">&#x27;-la&#x27;</span>]);</span><br><span class="line"></span><br><span class="line">child.stdout.on(<span class="string">&#x27;data&#x27;</span>, <span class="function">(<span class="params">data</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`Stdout: <span class="subst">$&#123;data&#125;</span>`</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">child.stderr.on(<span class="string">&#x27;data&#x27;</span>, <span class="function">(<span class="params">data</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.error(<span class="string">`Stderr: <span class="subst">$&#123;data&#125;</span>`</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">child.on(<span class="string">&#x27;close&#x27;</span>, <span class="function">(<span class="params">code</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`Child process exited with code <span class="subst">$&#123;code&#125;</span>`</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><strong>fork：专门用于创建 Node.js 子进程，加载一个独立的 JavaScript 模块，适合处理需要子进程与主进程通信的场景（通过 message 事件）。</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; fork &#125; = <span class="built_in">require</span>(<span class="string">&#x27;child_process&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> child = fork(<span class="string">&#x27;child.js&#x27;</span>);</span><br><span class="line"></span><br><span class="line">child.on(<span class="string">&#x27;message&#x27;</span>, <span class="function">(<span class="params">message</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;Message from child:&#x27;</span>, message);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">child.send(&#123; <span class="attr">hello</span>: <span class="string">&#x27;world&#x27;</span> &#125;);</span><br></pre></td></tr></table></figure>
+
+<p><strong>execSync：同步执行命令，返回命令的标准输出。适用场景：需要立即获取结果并不介意阻塞主线程的情况。</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; execSync &#125; = <span class="built_in">require</span>(<span class="string">&#x27;child_process&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> output = execSync(<span class="string">&#x27;ls -la&#x27;</span>);</span><br><span class="line">  <span class="built_in">console</span>.log(output.toString()); <span class="comment">// 将 Buffer 转为字符串</span></span><br><span class="line">&#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">  <span class="built_in">console</span>.error(<span class="string">`Error: <span class="subst">$&#123;error.message&#125;</span>`</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>execFileSync：同步执行一个文件，直接运行可执行文件，不经过 shell。适用场景：直接执行某个二进制文件或脚本，避免 shell 注入风险。</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; execFileSync &#125; = <span class="built_in">require</span>(<span class="string">&#x27;child_process&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> output = execFileSync(<span class="string">&#x27;node&#x27;</span>, [<span class="string">&#x27;--version&#x27;</span>]);</span><br><span class="line">  <span class="built_in">console</span>.log(output.toString()); <span class="comment">// 输出 Node.js 版本</span></span><br><span class="line">&#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">  <span class="built_in">console</span>.error(<span class="string">`Error: <span class="subst">$&#123;error.message&#125;</span>`</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>spawnSync：同步生成子进程，用流（stream）处理数据。    适用场景：需要同步处理复杂的子进程任务，同时控制输入输出流。</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; spawnSync &#125; = <span class="built_in">require</span>(<span class="string">&#x27;child_process&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> result = spawnSync(<span class="string">&#x27;ls&#x27;</span>, [<span class="string">&#x27;-la&#x27;</span>]);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (result.error) &#123;</span><br><span class="line">  <span class="built_in">console</span>.error(<span class="string">`Error: <span class="subst">$&#123;result.error.message&#125;</span>`</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(result.stdout.toString()); <span class="comment">// 标准输出</span></span><br><span class="line">  <span class="built_in">console</span>.error(result.stderr.toString()); <span class="comment">// 标准错误</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="12-event"><a href="#12-event" class="headerlink" title="12.event"></a>12.event</h2><p><strong>on：用于绑定事件监听器</strong></p>
+<p><strong>emit:用于触发事件</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> emitter = <span class="built_in">require</span>(<span class="string">&#x27;events&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> event = <span class="keyword">new</span> emitter()</span><br><span class="line"><span class="comment">//监听test</span></span><br><span class="line">event.on(<span class="string">&#x27;test&#x27;</span>,<span class="function">(<span class="params">data</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">event.emit(<span class="string">&#x27;test&#x27;</span>,<span class="string">&#x27;xmxmxmxmx&#x27;</span>) <span class="comment">//派发事件</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>once:绑定的监听器只会被调用一次，之后自动移除。</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">emitter.once(eventName, listener);</span><br></pre></td></tr></table></figure>
+
+<p><strong>off:移除指定事件的监听器</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">emitter.off(eventName, listener);</span><br></pre></td></tr></table></figure>
+
+<p><strong>setMaxListeners:默认最大监听器数量是 10，可以通过 setMaxListeners 调整。</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">emitter.setMaxListeners(<span class="number">20</span>);</span><br></pre></td></tr></table></figure>
+
+<p>一些核心模块（如 fs、http）使用 EventEmitter 实现事件驱动。例如：</p>
+<p><strong>http.Server</strong>：request 事件用于处理传入的 HTTP 请求。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> server = http.createServer();</span><br><span class="line"></span><br><span class="line">server.on(<span class="string">&#x27;request&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  res.end(<span class="string">&#x27;Hello World!&#x27;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">server.listen(<span class="number">3000</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;Server running on port 3000&#x27;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><strong>process</strong></p>
+<p>![image-20241230163536476](/Users/dayuyu/Library/Application Support/typora-user-images/image-20241230163536476.png)</p>
+<p>打开nodejs 源码 搜索 <code>setupProcessObject</code> 这个函数</p>
+<p>![image-20241230163615645](/Users/dayuyu/Library/Application Support/typora-user-images/image-20241230163615645.png)</p>
+<ol>
+<li>它首先引入 event模块</li>
+<li>获取process 的原型对象</li>
+<li>将evnet的原型对象设给了process 的原型对象</li>
+<li>并且重新绑定上下文</li>
+<li>将process 挂载到globalThis 所以我们可以全局访问这个API</li>
+</ol>
+<h2 id="13-unit"><a href="#13-unit" class="headerlink" title="13.unit"></a>13.unit</h2><p>util 是Node.js内部提供的很多实用或者工具类型的API，方便我们快速开发。</p>
+<p><strong>util.promisify</strong>：使用util的<code>promisify</code> 改为promise 风格 Promiseify 接受 <code>original</code>一个函数体</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; exec &#125; <span class="keyword">from</span> <span class="string">&#x27;node:child_process&#x27;</span></span><br><span class="line"><span class="keyword">import</span> util <span class="keyword">from</span> <span class="string">&#x27;node:util&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> execPromise = util.promisify(exec)</span><br><span class="line"></span><br><span class="line">execPromise(<span class="string">&#x27;node -v&#x27;</span>).then(<span class="function"><span class="params">res</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(res,<span class="string">&#x27;res&#x27;</span>)</span><br><span class="line">&#125;).catch(<span class="function"><span class="params">err</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(err,<span class="string">&#x27;err&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>util.callbackify</strong>:将promise类型的API变成 回调函数。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> util <span class="keyword">from</span> <span class="string">&#x27;node:util&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> fn = <span class="function">(<span class="params">type</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span>(type == <span class="number">1</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve(<span class="string">&#x27;test&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(<span class="string">&#x27;error&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> callback = util.callbackify(fn)</span><br><span class="line"></span><br><span class="line">callback(<span class="number">1222</span>,<span class="function">(<span class="params">err,val</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(err,val)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>util.format</strong></p>
+<ul>
+<li><code>%s</code>: <code>String</code> 将用于转换除 <code>BigInt</code>、<code>Object</code> 和 <code>-0</code> 之外的所有值。 <code>BigInt</code> 值将用 <code>n</code> 表示，没有用户定义的 <code>toString</code> 函数的对象使用具有选项 <code>&#123; depth: 0, colors: false, compact: 3 &#125;</code> 的 <code>util.inspect()</code> 进行检查。</li>
+<li><code>%d</code>: <code>Number</code> 将用于转换除 <code>BigInt</code> 和 <code>Symbol</code> 之外的所有值。</li>
+<li><code>%i</code>: <code>parseInt(value, 10)</code> 用于除 <code>BigInt</code> 和 <code>Symbol</code> 之外的所有值。</li>
+<li><code>%f</code>: <code>parseFloat(value)</code> 用于除 <code>Symbol</code> 之外的所有值。</li>
+<li><code>%j</code>: JSON。 如果参数包含循环引用，则替换为字符串 <code>&#39;[Circular]&#39;</code>。</li>
+<li><code>%o</code>: <code>Object</code>. 具有通用 JavaScript 对象格式的对象的字符串表示形式。 类似于具有选项 <code>&#123; showHidden: true, showProxy: true &#125;</code> 的 <code>util.inspect()</code>。 这将显示完整的对象，包括不可枚举的属性和代理。</li>
+<li><code>%O</code>: <code>Object</code>. 具有通用 JavaScript 对象格式的对象的字符串表示形式。 类似于没有选项的 <code>util.inspect()</code>。 这将显示完整的对象，但不包括不可枚举的属性和代理。</li>
+<li><code>%c</code>: <code>CSS</code>. 此说明符被忽略，将跳过任何传入的 CSS。</li>
+<li><code>%%</code>: 单个百分号 (<code>&#39;%&#39;</code>)。 这不消费参数。</li>
+</ul>
+<p>语法 跟 C 语言的 <code>printf</code> 一样的</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">util.format(format, [args])</span><br></pre></td></tr></table></figure>
+
+<p>例子 格式化一个字符串</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">util.format(<span class="string">&#x27;%s-----%s %s/%s&#x27;</span>,<span class="string">&#x27;foo&#x27;</span>,<span class="string">&#x27;bar&#x27;</span>,<span class="string">&#x27;xm&#x27;</span>,<span class="string">&#x27;zs&#x27;</span>)</span><br><span class="line"><span class="comment">//foo-----bar xm/zs  可以返回指定的格式</span></span><br></pre></td></tr></table></figure>
+
+<p>如果不传入格式化参数 就按空格分开</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">util.format(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line"><span class="comment">//1 2 3</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="14-fs"><a href="#14-fs" class="headerlink" title="14.fs"></a>14.fs</h2><p>在 Node.js 中，<code>fs</code> 模块是文件系统模块（File System module）的缩写，它提供了与文件系统进行交互的各种功能。通过 <code>fs</code> 模块，你可以执行诸如读取文件、写入文件、更改文件权限、创建目录等操作，<code>Node.js 核心API之一</code>。</p>
+<h4 id="fs多种策略"><a href="#fs多种策略" class="headerlink" title="fs多种策略"></a>fs多种策略</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> fs <span class="keyword">from</span> <span class="string">&#x27;node:fs&#x27;</span></span><br><span class="line"><span class="keyword">import</span> fs2 <span class="keyword">from</span> <span class="string">&#x27;node:fs/promises&#x27;</span></span><br><span class="line"><span class="comment">//读取文件</span></span><br><span class="line">fs2.readFile(<span class="string">&#x27;./index.txt&#x27;</span>).then(<span class="function"><span class="params">result</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(result.toString())</span><br><span class="line">&#125;)</span><br><span class="line">fs.readFile(<span class="string">&#x27;./index.txt&#x27;</span>, <span class="function">(<span class="params">err, data</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">        <span class="keyword">return</span> err</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">console</span>.log(data.toString())</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">let</span> txt = fs.readFileSync(<span class="string">&#x27;./index.txt&#x27;</span>)</span><br><span class="line"><span class="built_in">console</span>.log(txt.toString())</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>fs支持同步和异步两种模式 增加了<code>Sync</code> fs 就会采用同步的方式运行代码，会阻塞下面的代码，不加Sync就是异步的模式不会阻塞。</li>
+<li>fs新增了promise版本，只需要在引入包后面增加/promise即可，fs便可支持promise回调。</li>
+<li>fs返回的是一个buffer二进制数据 每两个十六进制数字表示一个字节</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Buffer <span class="number">31</span> e3 <span class="number">80</span> <span class="number">81</span> e9 <span class="number">82</span> a3 e4 b8 <span class="number">80</span> e5 b9 b4 e5 <span class="number">86</span> b3 e8 b5 9b ef bc 8c e6 <span class="number">98</span> af <span class="number">53</span> <span class="number">53</span> <span class="number">47</span> e5 af b9 e6 <span class="number">88</span> <span class="number">98</span> <span class="number">53</span> 4b <span class="number">54</span> ef bc 8c e6 9c <span class="number">80</span> e7 bb <span class="number">88</span> e6 af <span class="number">94</span> e5 ... <span class="number">635</span> more bytes&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="常用API-介绍"><a href="#常用API-介绍" class="headerlink" title="常用API 介绍"></a>常用API 介绍</h4><p>读取文件 <code>readFile</code> 第一个参数 读取的路径， 第二个参数是个配置项</p>
+<p><code>encoding</code> 支持各种编码 utf-8之类的</p>
+<p>flag 就很多了</p>
+<ul>
+<li><p><code>&#39;a&#39;</code>: 打开文件进行追加。 如果文件不存在，则创建该文件。</p>
+</li>
+<li><p><code>&#39;ax&#39;</code>: 类似于 <code>&#39;a&#39;</code> 但如果路径存在则失败。</p>
+</li>
+<li><p><code>&#39;a+&#39;</code>: 打开文件进行读取和追加。 如果文件不存在，则创建该文件。</p>
+</li>
+<li><p><code>&#39;ax+&#39;</code>: 类似于 <code>&#39;a+&#39;</code> 但如果路径存在则失败。</p>
+</li>
+<li><p><code>&#39;as&#39;</code>: 以同步模式打开文件进行追加。 如果文件不存在，则创建该文件。</p>
+</li>
+<li><p><code>&#39;as+&#39;</code>: 以同步模式打开文件进行读取和追加。 如果文件不存在，则创建该文件。</p>
+</li>
+<li><p><code>&#39;r&#39;</code>: 打开文件进行读取。 如果文件不存在，则会发生异常。</p>
+</li>
+<li><p><code>&#39;r+&#39;</code>: 打开文件进行读写。 如果文件不存在，则会发生异常。</p>
+</li>
+<li><p><code>&#39;rs+&#39;</code>: 以同步模式打开文件进行读写。 指示操作系统绕过本地文件系统缓存。</p>
+<p>这主要用于在 NFS 挂载上打开文件，因为它允许跳过可能过时的本地缓存。 它对 I/O 性能有非常实际的影响，因此除非需要，否则不建议使用此标志。</p>
+<p>这不会将 <code>fs.open()</code> 或 <code>fsPromises.open()</code> 变成同步阻塞调用。 如果需要同步操作，应该使用类似 <code>fs.openSync()</code> 的东西。</p>
+</li>
+<li><p><code>&#39;w&#39;</code>: 打开文件进行写入。 创建（如果它不存在）或截断（如果它存在）该文件。</p>
+</li>
+<li><p><code>&#39;wx&#39;</code>: 类似于 <code>&#39;w&#39;</code> 但如果路径存在则失败。</p>
+</li>
+<li><p><code>&#39;w+&#39;</code>: 打开文件进行读写。 创建（如果它不存在）或截断（如果它存在）该文件。</p>
+</li>
+<li><p><code>&#39;wx+&#39;</code>: 类似于 <code>&#39;w+&#39;</code> 但如果路径存在则失败。</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> fs2 <span class="keyword">from</span> <span class="string">&#x27;node:fs/promises&#x27;</span></span><br><span class="line"></span><br><span class="line">fs2.readFile(<span class="string">&#x27;./index.txt&#x27;</span>,&#123;</span><br><span class="line">    encoding:<span class="string">&quot;utf8&quot;</span>,</span><br><span class="line">    flag:<span class="string">&quot;&quot;</span>,</span><br><span class="line">&#125;).then(<span class="function"><span class="params">result</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(result.toString())</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>使用可读流读取 使用场景适合读取<code>大文件</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> readStream = fs.createReadStream(<span class="string">&#x27;./index.txt&#x27;</span>,&#123;</span><br><span class="line">    encoding:<span class="string">&quot;utf8&quot;</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">readStream.on(<span class="string">&#x27;data&#x27;</span>,<span class="function">(<span class="params">chunk</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(chunk)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">readStream.on(<span class="string">&#x27;end&#x27;</span>,<span class="function">()=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;close&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><strong>创建文件夹</strong> 如果开启 <strong>recursive</strong> 可以递归创建多个文件夹</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fs.mkdir(<span class="string">&#x27;path/test/ccc&#x27;</span>, &#123; <span class="attr">recursive</span>: <span class="literal">true</span> &#125;,<span class="function">(<span class="params">err</span>)=&gt;</span>&#123;&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>删除文件夹 如果开启<strong>recursive</strong> 递归删除全部文件夹</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fs.rm(<span class="string">&#x27;path&#x27;</span>, &#123; <span class="attr">recursive</span>: <span class="literal">true</span> &#125;,<span class="function">(<span class="params">err</span>)=&gt;</span>&#123;&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><strong>重命名文件</strong> 第一个参数原始名称 第二个参数新的名称</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fs.renameSync(<span class="string">&#x27;./test.txt&#x27;</span>,<span class="string">&#x27;./test2.txt&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>监听文件的变化</strong> 返回监听的事件如<code>change</code>,和监听的内容<code>filename</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fs.watch(<span class="string">&#x27;./test2.txt&#x27;</span>,<span class="function">(<span class="params">event,filename</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(event,filename)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><strong>写入内容</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;node:fs&#x27;</span>)</span><br><span class="line">fs.writeFileSync(<span class="string">&#x27;index.txt&#x27;</span>, <span class="string">&#x27;java之父\n余胜军&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>追加内容</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//方式一</span></span><br><span class="line">fs.writeFileSync(<span class="string">&#x27;index.txt&#x27;</span>, <span class="string">&#x27;\nvue之父\n鱿鱼须&#x27;</span>,&#123;</span><br><span class="line">    flag: <span class="string">&#x27;a&#x27;</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//方式二</span></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;node:fs&#x27;</span>)</span><br><span class="line">fs.appendFileSync(<span class="string">&#x27;index.txt&#x27;</span>, <span class="string">&#x27;\nunshift创始人\n麒麟哥&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>可写流</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;node:fs&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> verse = [</span><br><span class="line">    <span class="string">&#x27;待到秋来九月八&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;我花开后百花杀&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;冲天香阵透长安&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;满城尽带黄金甲&#x27;</span></span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> writeStream = fs.createWriteStream(<span class="string">&#x27;index.txt&#x27;</span>)</span><br><span class="line"></span><br><span class="line">verse.forEach(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">    writeStream.write(item + <span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">writeStream.end()</span><br><span class="line"></span><br><span class="line">writeStream.on(<span class="string">&#x27;finish&#x27;</span>,<span class="function">()=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;写入完成&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>我们可以创建一个可写流 打开一个通道，可以一直写入数据，用于处理大量的数据写入，写入完成之后调用end 关闭可写流，监听finish 事件 写入完成</p>
+<h4 id="源码解析"><a href="#源码解析" class="headerlink" title="源码解析"></a>源码解析</h4><p>fs的源码是通过 <code>C++</code> 层的 <code>FSReqCallback</code> 这个类 对<code>libuv</code> 的<code>uv_fs_t</code> 的一个封装，其实也就是将我们fs 的参数透传给 <code>libuv</code> 层</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建目录的异步操作函数，通过uv_fs_mkdir函数调用</span></span><br><span class="line"><span class="comment">// 参数：</span></span><br><span class="line"><span class="comment">// - loop: 事件循环对象，用于处理异步操作</span></span><br><span class="line"><span class="comment">// - req: 文件系统请求对象，用于保存操作的状态和结果</span></span><br><span class="line"><span class="comment">// - path: 要创建的目录的路径</span></span><br><span class="line"><span class="comment">// - mode: 目录的权限模式 777 421</span></span><br><span class="line"><span class="comment">// - cb: 操作完成后的回调函数</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">uv_fs_mkdir</span><span class="params">(<span class="keyword">uv_loop_t</span>* loop,</span></span></span><br><span class="line"><span class="function"><span class="params">                <span class="keyword">uv_fs_t</span>* req,</span></span></span><br><span class="line"><span class="function"><span class="params">                <span class="keyword">const</span> <span class="keyword">char</span>* path,</span></span></span><br><span class="line"><span class="function"><span class="params">                <span class="keyword">int</span> mode,</span></span></span><br><span class="line"><span class="function"><span class="params">                uv_fs_cb cb)</span> </span>&#123;</span><br><span class="line">  INIT(MKDIR);</span><br><span class="line">  PATH;</span><br><span class="line">  req-&gt;mode = mode;</span><br><span class="line">  <span class="keyword">if</span> (cb != <span class="literal">NULL</span>)</span><br><span class="line">    <span class="keyword">if</span> (uv__iou_fs_mkdir(loop, req))</span><br><span class="line">      <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  POST;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;node:fs&#x27;</span>)</span><br><span class="line"></span><br><span class="line">fs.readFile(<span class="string">&#x27;./index.txt&#x27;</span>, &#123;</span><br><span class="line">    encoding: <span class="string">&#x27;utf-8&#x27;</span>,</span><br><span class="line">    flag: <span class="string">&#x27;r&#x27;</span></span><br><span class="line">&#125;, <span class="function">(<span class="params">err, dataStr</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">setImmediate(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;setImmediate&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>为什么先走setImmediate 呢，而不是fs</p>
+<p>Node.js 读取文件的时候是使用libuv进行调度的</p>
+<p>而setImmediate是由V8进行调度的</p>
+<p>文件读取完成后 libuv 才会将 fs的结果 推入V8的队列</p>
+<h4 id="硬链接-和-软连接"><a href="#硬链接-和-软连接" class="headerlink" title="硬链接 和 软连接"></a>硬链接 和 软连接</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fs.linkSync(<span class="string">&#x27;./index.txt&#x27;</span>, <span class="string">&#x27;./index2.txt&#x27;</span>) <span class="comment">//硬链接</span></span><br><span class="line"></span><br><span class="line">fs.symlinkSync(<span class="string">&#x27;./index.txt&#x27;</span>, <span class="string">&#x27;./index3.txt&#x27;</span> ,<span class="string">&quot;file&quot;</span>) <span class="comment">//软连接</span></span><br></pre></td></tr></table></figure>
+
+<p>硬链接的作用和用途如下：</p>
+<ol>
+<li>文件共享：硬链接允许多个文件名指向同一个文件，这样可以在不同的位置使用不同的文件名引用相同的内容。这样的共享文件可以节省存储空间，并且在多个位置对文件的修改会反映在所有引用文件上。</li>
+<li>文件备份：通过创建硬链接，可以在不复制文件的情况下创建文件的备份。如果原始文件发生更改，备份文件也会自动更新。这样可以节省磁盘空间，并确保备份文件与原始文件保持同步。</li>
+<li>文件重命名：通过创建硬链接，可以为文件创建一个新的文件名，而无需复制或移动文件。这对于需要更改文件名但保持相同内容和属性的场景非常有用。</li>
+</ol>
+<p>软链接的一些特点和用途如下：</p>
+<ol>
+<li>软链接可以创建指向文件或目录的引用。这使得你可以在不复制或移动文件的情况下引用它们，并在不同位置使用不同的文件名访问相同的内容。</li>
+<li>软链接可以用于创建快捷方式或别名，使得你可以通过一个简短或易记的路径来访问复杂或深层次的目录结构。</li>
+<li>软链接可以用于解决文件或目录的位置变化问题。如果目标文件或目录被移动或重命名，只需更新软链接的目标路径即可，而不需要修改引用该文件或目录的其他代码。</li>
+</ol>
+<h2 id="15-crypto"><a href="#15-crypto" class="headerlink" title="15.crypto"></a>15.crypto</h2><p>crypto模块的目的是为了提供通用的<code>加密和哈希算法</code>。用纯JavaScript代码实现这些功能不是不可能，但速度会非常慢。nodejs用C/C++实现这些算法后，通过crypto这个模块暴露为JavaScript接口，这样用起来方便，运行速度也快。</p>
+<p>密码学是计算机科学中的一个重要领域，它涉及到加密、解密、哈希函数和数字签名等技术。Node.js是一个流行的服务器端JavaScript运行环境，它提供了强大的密码学模块，使开发人员能够轻松地在其应用程序中实现各种密码学功能。本文将介绍密码学的基本概念，并探讨Node.js中常用的密码学API。</p>
+<h3 id="对称加密"><a href="#对称加密" class="headerlink" title="对称加密"></a>对称加密</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> crypto = <span class="built_in">require</span>(<span class="string">&#x27;node:crypto&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 生成一个随机的 16 字节的初始化向量 (IV)</span></span><br><span class="line"><span class="keyword">const</span> iv = Buffer.from(crypto.randomBytes(<span class="number">16</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 生成一个随机的 32 字节的密钥</span></span><br><span class="line"><span class="keyword">const</span> key = crypto.randomBytes(<span class="number">32</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建加密实例，使用 AES-256-CBC 算法，提供密钥和初始化向量</span></span><br><span class="line"><span class="keyword">const</span> cipher = crypto.createCipheriv(<span class="string">&quot;aes-256-cbc&quot;</span>, key, iv);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 对输入数据进行加密，并输出加密结果的十六进制表示</span></span><br><span class="line">cipher.update(<span class="string">&quot;test&quot;</span>, <span class="string">&quot;utf-8&quot;</span>, <span class="string">&quot;hex&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> result = cipher.final(<span class="string">&quot;hex&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 解密</span></span><br><span class="line"><span class="keyword">const</span> de = crypto.createDecipheriv(<span class="string">&quot;aes-256-cbc&quot;</span>, key, iv);</span><br><span class="line">de.update(result, <span class="string">&quot;hex&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> decrypted = de.final(<span class="string">&quot;utf-8&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;Decrypted:&quot;</span>, decrypted);</span><br></pre></td></tr></table></figure>
+
+<p>对称加密是一种简单而快速的加密方式，它使用相同的密钥（称为对称密钥）来进行加密和解密。这意味着发送者和接收者在加密和解密过程中都使用相同的密钥。对称加密算法的加密速度很快，适合对大量数据进行加密和解密操作。然而，对称密钥的安全性是一个挑战，因为需要确保发送者和接收者都安全地共享密钥，否则有风险被未授权的人获取密钥并解密数据。</p>
+<h3 id="非对称加密"><a href="#非对称加密" class="headerlink" title="非对称加密"></a>非对称加密</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> crypto = <span class="built_in">require</span>(<span class="string">&#x27;node:crypto&#x27;</span>)</span><br><span class="line"><span class="comment">// 生成 RSA 密钥对</span></span><br><span class="line"><span class="keyword">const</span> &#123; privateKey, publicKey &#125; = crypto.generateKeyPairSync(<span class="string">&#x27;rsa&#x27;</span>, &#123;</span><br><span class="line">  modulusLength: <span class="number">2048</span>,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 要加密的数据</span></span><br><span class="line"><span class="keyword">const</span> text = <span class="string">&#x27;test&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用公钥进行加密</span></span><br><span class="line"><span class="keyword">const</span> encrypted = crypto.publicEncrypt(publicKey, Buffer.from(text, <span class="string">&#x27;utf-8&#x27;</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用私钥进行解密</span></span><br><span class="line"><span class="keyword">const</span> decrypted = crypto.privateDecrypt(privateKey, encrypted);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(decrypted.toString());</span><br></pre></td></tr></table></figure>
+
+<p>非对称加密使用一对密钥，分别是公钥和私钥。发送者使用接收者的公钥进行加密，而接收者使用自己的私钥进行解密。公钥可以自由分享给任何人，而私钥必须保密。非对称加密算法提供了更高的安全性，因为即使公钥泄露，只有持有私钥的接收者才能解密数据。然而，非对称加密算法的加密速度相对较慢，不适合加密大量数据。因此，在实际应用中，通常使用非对称加密来交换对称密钥，然后使用对称加密算法来加密实际的数据。</p>
+<h3 id="哈希函数"><a href="#哈希函数" class="headerlink" title="哈希函数"></a>哈希函数</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> crypto = <span class="built_in">require</span>(<span class="string">&#x27;node:crypto&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 要计算哈希的数据</span></span><br><span class="line"><span class="keyword">let</span> text = <span class="string">&#x27;123456&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建哈希对象，并使用 MD5 算法</span></span><br><span class="line"><span class="keyword">const</span> hash = crypto.createHash(<span class="string">&#x27;md5&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 更新哈希对象的数据</span></span><br><span class="line">hash.update(text);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 计算哈希值，并以十六进制字符串形式输出</span></span><br><span class="line"><span class="keyword">const</span> hashValue = hash.digest(<span class="string">&#x27;hex&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;Text:&#x27;</span>, text);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;Hash:&#x27;</span>, hashValue);</span><br></pre></td></tr></table></figure>
+
+<p>哈希函数具有以下特点：</p>
+<ol>
+<li>固定长度输出：不论输入数据的大小，哈希函数的输出长度是固定的。例如，常见的哈希函数如 MD5 和 SHA-256 生成的哈希值长度分别为 128 位和 256 位。</li>
+<li>不可逆性：哈希函数是单向的，意味着从哈希值推导出原始输入数据是非常困难的，几乎不可能。即使输入数据发生微小的变化，其哈希值也会完全不同。</li>
+<li>唯一性：哈希函数应该具有较低的碰撞概率，即不同的输入数据生成相同的哈希值的可能性应该非常小。这有助于确保哈希值能够唯一地标识输入数据。</li>
+</ol>
+<p>使用场景</p>
+<ol>
+<li>我们可以避免密码明文传输 使用md5加密或者sha256</li>
+<li>验证文件完整性，读取文件内容生成md5 如果前端上传的md5和后端的读取文件内部的md5匹配说明文件是完整的</li>
+</ol>
+<h2 id="16-cli"><a href="#16-cli" class="headerlink" title="16.cli"></a>16.cli</h2><h4 id="什么是脚手架？"><a href="#什么是脚手架？" class="headerlink" title="什么是脚手架？"></a>什么是脚手架？</h4><p>例如:<code>vue-cli</code> <code>Angular CLI</code>  <code>Create React App</code></p>
+<p>编写自己的脚手架是指创建一个定制化的工具，用于快速生成项目的基础结构和代码文件，以及提供一些常用的命令和功能。通过编写自己的脚手架，你可以定义项目的目录结构、文件模板，管理项目的依赖项，生成代码片段，以及提供命令行接口等功能</p>
+<ol>
+<li>项目结构：脚手架定义了项目的目录结构，包括源代码、配置文件、静态资源等。</li>
+<li>文件模板：脚手架提供了一些预定义的文件模板，如HTML模板、样式表、配置文件等，以加快开发者创建新文件的速度。</li>
+<li>命令行接口：脚手架通常提供一个命令行接口，通过输入命令和参数，开发者可以执行各种任务，如创建新项目、生成代码文件、运行测试等。</li>
+<li>依赖管理：脚手架可以帮助开发者管理项目的依赖项，自动安装和配置所需的库和工具。</li>
+<li>代码生成：脚手架可以生成常见的代码结构，如组件、模块、路由等，以提高开发效率。</li>
+<li>配置管理：脚手架可以提供一些默认的配置选项，并允许开发者根据需要进行自定义配置。</li>
+</ol>
+<p>![image-20241231170909079](/Users/dayuyu/Library/Application Support/typora-user-images/image-20241231170909079.png)</p>
+<h4 id="相关工具"><a href="#相关工具" class="headerlink" title="相关工具"></a>相关工具</h4><ul>
+<li><strong><code>commander</code></strong></li>
+</ul>
+<blockquote>
+<p>Commander 是一个用于构建命令行工具的 npm 库。它提供了一种简单而直观的方式来创建命令行接口，并处理命令行参数和选项。使用 Commander，你可以轻松定义命令、子命令、选项和帮助信息。它还可以处理命令行的交互，使用户能够与你的命令行工具进行交互</p>
+</blockquote>
+<ul>
+<li><strong><code>inquirer</code></strong></li>
+</ul>
+<blockquote>
+<p>Inquirer 是一个强大的命令行交互工具，用于与用户进行交互和收集信息。它提供了各种丰富的交互式提示（如输入框、选择列表、确认框等），可以帮助你构建灵活的命令行界面。通过 Inquirer，你可以向用户提出问题，获取用户的输入，并根据用户的回答采取相应的操作。</p>
+</blockquote>
+<ul>
+<li><strong><code>ora</code></strong></li>
+</ul>
+<blockquote>
+<p>Ora 是一个用于在命令行界面显示加载动画的 npm 库。它可以帮助你在执行耗时的任务时提供一个友好的加载状态提示。Ora 提供了一系列自定义的加载动画，如旋转器、进度条等，你可以根据需要选择合适的加载动画效果，并在任务执行期间显示对应的加载状态。</p>
+</blockquote>
+<ul>
+<li><strong><code>download-git-repo</code></strong></li>
+</ul>
+<blockquote>
+<p>Download-git-repo 是一个用于下载 Git 仓库的 npm 库。它提供了一个简单的接口，可以方便地从远程 Git 仓库中下载项目代码。你可以指定要下载的仓库和目标目录，并可选择指定分支或标签。Download-git-repo 支持从各种 Git 托管平台（如 GitHub、GitLab、Bitbucket 等）下载代码。</p>
+</blockquote>
+<h4 id="编写代码"><a href="#编写代码" class="headerlink" title="编写代码"></a>编写代码</h4><ul>
+<li>index.js</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env node</span></span><br><span class="line"><span class="keyword">import</span> &#123; program &#125; <span class="keyword">from</span> <span class="string">&#x27;commander&#x27;</span></span><br><span class="line"><span class="keyword">import</span> inquirer <span class="keyword">from</span> <span class="string">&#x27;inquirer&#x27;</span></span><br><span class="line"><span class="keyword">import</span> fs <span class="keyword">from</span> <span class="string">&#x27;node:fs&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; checkPath, downloadTemp &#125; <span class="keyword">from</span> <span class="string">&#x27;./utils.js&#x27;</span></span><br><span class="line"><span class="keyword">let</span> json = fs.readFileSync(<span class="string">&#x27;./package.json&#x27;</span>, <span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">json = <span class="built_in">JSON</span>.parse(json)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">program.version(json.version) <span class="comment">//创建版本号</span></span><br><span class="line"><span class="comment">//添加create 命令 和 别名crt 以及描述 以及 执行完成之后的动作</span></span><br><span class="line">program.command(<span class="string">&#x27;create &lt;project&gt;&#x27;</span>).alias(<span class="string">&#x27;ctr&#x27;</span>).description(<span class="string">&#x27;create a new project&#x27;</span>).action(<span class="function">(<span class="params">project</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">//命令行交互工具</span></span><br><span class="line">    inquirer.prompt([</span><br><span class="line">        &#123;</span><br><span class="line">        type: <span class="string">&#x27;input&#x27;</span>, <span class="comment">// 输入</span></span><br><span class="line">    		name: <span class="string">&#x27;projectName&#x27;</span>, <span class="comment">// 返回值的key</span></span><br><span class="line">    		message: <span class="string">&#x27;project name&#x27;</span>, <span class="comment">// 描述</span></span><br><span class="line">    		<span class="keyword">default</span>: project <span class="comment">// 默认值</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            type: <span class="string">&#x27;confirm&#x27;</span>,</span><br><span class="line">            name: <span class="string">&#x27;isTs&#x27;</span>,</span><br><span class="line">            message: <span class="string">&#x27;是否支持typeScript&#x27;</span>,</span><br><span class="line">        &#125;</span><br><span class="line">    ]).then(<span class="function">(<span class="params">answers</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (checkPath(answers.projectName)) &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">&#x27;文件已存在&#x27;</span>)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (answers.isTs) &#123;</span><br><span class="line">            downloadTemp(<span class="string">&#x27;ts&#x27;</span>, answers.projectName)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            downloadTemp(<span class="string">&#x27;js&#x27;</span>, answers.projectName)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">program.parse(process.argv)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>为什么第一行要写 <code>#!/usr/bin/env node</code></p>
+<p>这是一个 特殊的注释 用于告诉操作系统用node解释器去执行这个文件，而不是显式地调用 <code>node</code> 命令</p>
+<ul>
+<li>utils.js</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> fs <span class="keyword">from</span> <span class="string">&#x27;node:fs&#x27;</span></span><br><span class="line"><span class="keyword">import</span> download <span class="keyword">from</span> <span class="string">&#x27;download-git-repo&#x27;</span></span><br><span class="line"><span class="keyword">import</span> ora <span class="keyword">from</span> <span class="string">&#x27;ora&#x27;</span></span><br><span class="line"><span class="keyword">const</span> spinner = ora(<span class="string">&#x27;下载中...&#x27;</span>)</span><br><span class="line"><span class="comment">//验证路径</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> checkPath = <span class="function">(<span class="params">path</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> fs.existsSync(path)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//下载</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> downloadTemp = <span class="function">(<span class="params">branch,project</span>) =&gt;</span> &#123;</span><br><span class="line">    spinner.start()</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">        download(<span class="string">`direct:https://gitee.com/chinafaker/vue-template.git#<span class="subst">$&#123;branch&#125;</span>`</span>, project , &#123; <span class="attr">clone</span>: <span class="literal">true</span>, &#125;, <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (err) &#123;</span><br><span class="line">                reject(err)</span><br><span class="line">                <span class="built_in">console</span>.log(err)</span><br><span class="line">            &#125;</span><br><span class="line">            resolve()</span><br><span class="line">            spinner.succeed(<span class="string">&#x27;下载完成&#x27;</span>)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>package.json</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&quot;type&quot;: &quot;module&quot;, //使用import需要设置这个</span><br><span class="line">&quot;bin&quot;: &#123;</span><br><span class="line">   &quot;vue-cli&quot;: &quot;src/index.js&quot;</span><br><span class="line"> &#125;,</span><br></pre></td></tr></table></figure>
+
+<p>用于生成软连接挂载到全局，便可以全局执行vue-cli 这个命令，配置完成之后 需要执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm link</span><br></pre></td></tr></table></figure>
+
+<h2 id="17-zlib"><a href="#17-zlib" class="headerlink" title="17.zlib"></a>17.zlib</h2><p>在 Node.js 中，<code>zlib</code> 模块提供了对数据压缩和解压缩的功能，以便在应用程序中减少数据的传输大小和提高性能。该模块支持多种压缩算法，包括 Deflate、Gzip 和 Raw Deflate。</p>
+<p><code>zlib</code> 模块的主要作用如下：</p>
+<ol>
+<li>数据压缩：使用 <code>zlib</code> 模块可以将数据以无损压缩算法（如 Deflate、Gzip）进行压缩，减少数据的大小。这在网络传输和磁盘存储中特别有用，可以节省带宽和存储空间。</li>
+<li>数据解压缩：<code>zlib</code> 模块还提供了对压缩数据的解压缩功能，可以还原压缩前的原始数据。</li>
+<li>流压缩：<code>zlib</code> 模块支持使用流（<code>Stream</code>）的方式进行数据的压缩和解压缩。这种方式使得可以对大型文件或网络数据流进行逐步处理，而不需要将整个数据加载到内存中。</li>
+<li>压缩格式支持：<code>zlib</code> 模块支持多种常见的压缩格式，如 Gzip 和 Deflate。这些格式在各种应用场景中广泛使用，例如 HTTP 响应的内容编码、文件压缩和解压缩等。</li>
+</ol>
+<p>使用 <code>zlib</code> 模块进行数据压缩和解压缩可以帮助优化应用程序的性能和资源利用。通过减小数据的大小，可以减少网络传输的时间和带宽消耗，同时减少磁盘上的存储空间。此外，<code>zlib</code> 模块还提供了丰富的选项和方法，使得开发者可以根据具体需求进行灵活的压缩和解压缩操作。</p>
+<h3 id="代码案例"><a href="#代码案例" class="headerlink" title="代码案例"></a>代码案例</h3><p>压缩一个txt文件<strong>gzip</strong>  <code>index.txt(439kb)</code>   <code>压缩完index.txt.gz(4b)</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 引入所需的模块</span></span><br><span class="line"><span class="keyword">const</span> zlib = <span class="built_in">require</span>(<span class="string">&#x27;zlib&#x27;</span>); <span class="comment">// zlib 模块提供数据压缩和解压缩功能</span></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;node:fs&#x27;</span>); <span class="comment">// 引入 Node.js 的 fs 模块用于文件操作</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建可读流和可写流</span></span><br><span class="line"><span class="keyword">const</span> readStream = fs.createReadStream(<span class="string">&#x27;index.txt&#x27;</span>); <span class="comment">// 创建可读流，读取名为 index.txt 的文件</span></span><br><span class="line"><span class="keyword">const</span> writeStream = fs.createWriteStream(<span class="string">&#x27;index.txt.gz&#x27;</span>); <span class="comment">// 创建可写流，将压缩后的数据写入 index.txt.gz 文件</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用管道将可读流中的数据通过 Gzip 压缩，再通过管道传输到可写流中进行写入</span></span><br><span class="line">readStream.pipe(zlib.createGzip()).pipe(writeStream)</span><br></pre></td></tr></table></figure>
+
+<p>解压 <strong>gzip</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> readStream = fs.createReadStream(<span class="string">&#x27;index.txt.gz&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> writeStream = fs.createWriteStream(<span class="string">&#x27;index2.txt&#x27;</span>)</span><br><span class="line">readStream.pipe(zlib.createGunzip()).pipe(writeStream)</span><br></pre></td></tr></table></figure>
+
+<p>无损压缩 <code>deflate</code>  使用 createDeflate方法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> readStream = fs.createReadStream(<span class="string">&#x27;index.txt&#x27;</span>); <span class="comment">// 创建可读流，读取名为 index.txt 的文件</span></span><br><span class="line"><span class="keyword">const</span> writeStream = fs.createWriteStream(<span class="string">&#x27;index.txt.deflate&#x27;</span>); <span class="comment">// 创建可写流，将压缩后的数据写入 index.txt.deflate 文件</span></span><br><span class="line">readStream.pipe(zlib.createDeflate()).pipe(writeStream);</span><br></pre></td></tr></table></figure>
+
+<p>解压 <strong>deflate</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> readStream = fs.createReadStream(<span class="string">&#x27;index.txt.deflate&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> writeStream = fs.createWriteStream(<span class="string">&#x27;index3.txt&#x27;</span>)</span><br><span class="line">readStream.pipe(zlib.createInflate()).pipe(writeStream)</span><br></pre></td></tr></table></figure>
+
+<h3 id="gzip-和-deflate-区别"><a href="#gzip-和-deflate-区别" class="headerlink" title="gzip 和 deflate 区别"></a>gzip 和 deflate 区别</h3><ol>
+<li>压缩算法：Gzip 使用的是 Deflate 压缩算法，该算法结合了 LZ77 算法和哈夫曼编码。LZ77 算法用于数据的重复字符串的替换和引用，而哈夫曼编码用于进一步压缩数据。</li>
+<li>压缩效率：Gzip 压缩通常具有更高的压缩率，因为它使用了哈夫曼编码来进一步压缩数据。哈夫曼编码根据字符的出现频率，将较常见的字符用较短的编码表示，从而减小数据的大小。</li>
+<li>压缩速度：相比于仅使用 Deflate 的方式，Gzip 压缩需要更多的计算和处理时间，因为它还要进行哈夫曼编码的步骤。因此，在压缩速度方面，Deflate 可能比 Gzip 更快。</li>
+<li>应用场景：Gzip 压缩常用于文件压缩、网络传输和 HTTP 响应的内容编码。它广泛应用于 Web 服务器和浏览器之间的数据传输，以减小文件大小和提高网络传输效率。</li>
+</ol>
+<h3 id="http请求压缩"><a href="#http请求压缩" class="headerlink" title="http请求压缩"></a>http请求压缩</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//deflate 压缩前(8.2kb)` -&gt; `压缩后(236b)</span></span><br><span class="line"><span class="keyword">const</span> zlib = <span class="built_in">require</span>(<span class="string">&#x27;zlib&#x27;</span>); </span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&#x27;node:http&#x27;</span>); </span><br><span class="line"><span class="keyword">const</span> server = http.createServer(<span class="function">(<span class="params">req,res</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> txt = <span class="string">&#x27;test&#x27;</span>.repeat(<span class="number">1000</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//res.setHeader(&#x27;Content-Encoding&#x27;,&#x27;gzip&#x27;)</span></span><br><span class="line">    res.setHeader(<span class="string">&#x27;Content-Encoding&#x27;</span>,<span class="string">&#x27;deflate&#x27;</span>)</span><br><span class="line">    res.setHeader(<span class="string">&#x27;Content-type&#x27;</span>,<span class="string">&#x27;text/plan;charset=utf-8&#x27;</span>)</span><br><span class="line">   </span><br><span class="line">    <span class="keyword">const</span> result = zlib.deflateSync(txt);</span><br><span class="line">    res.end(result)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">server.listen(<span class="number">3000</span>)</span><br><span class="line"><span class="comment">//gizp 压缩前(8.2kb)` -&gt; `压缩后(245b)</span></span><br><span class="line"><span class="keyword">const</span> zlib = <span class="built_in">require</span>(<span class="string">&#x27;zlib&#x27;</span>); </span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&#x27;node:http&#x27;</span>); </span><br><span class="line"><span class="keyword">const</span> server = http.createServer(<span class="function">(<span class="params">req,res</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> txt = <span class="string">&#x27;test&#x27;</span>.repeat(<span class="number">1000</span>);</span><br><span class="line"></span><br><span class="line">    res.setHeader(<span class="string">&#x27;Content-Encoding&#x27;</span>,<span class="string">&#x27;gzip&#x27;</span>)</span><br><span class="line">    <span class="comment">//res.setHeader(&#x27;Content-Encoding&#x27;,&#x27;deflate&#x27;)</span></span><br><span class="line">    res.setHeader(<span class="string">&#x27;Content-type&#x27;</span>,<span class="string">&#x27;text/plan;charset=utf-8&#x27;</span>)</span><br><span class="line">   </span><br><span class="line">    <span class="keyword">const</span> result = zlib.gzipSync(txt);</span><br><span class="line">    res.end(result)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">server.listen(<span class="number">3000</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="18-http"><a href="#18-http" class="headerlink" title="18.http"></a>18.http</h2><p>在 Node.js 中，你可以使用 http 模块创建 HTTP 服务器或客户端。</p>
+<h3 id="创建-HTTP-服务器"><a href="#创建-HTTP-服务器" class="headerlink" title="创建 HTTP 服务器"></a>创建 HTTP 服务器</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> server = http.createServer(<span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  res.writeHead(<span class="number">200</span>, &#123; <span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">&#x27;text/plain&#x27;</span> &#125;);</span><br><span class="line">  res.end(<span class="string">&#x27;Hello, Node.js HTTP Server!&#x27;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">server.listen(<span class="number">3000</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;Server running at http://localhost:3000/&#x27;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>✅ <strong>解释</strong>：</p>
+<ul>
+<li> http.createServer() 创建一个 HTTP 服务器。</li>
+<li> req 是请求对象，res 是响应对象。</li>
+<li> res.writeHead(200, { ‘Content-Type’: ‘text/plain’ }) 设置 HTTP 头部信息。</li>
+<li> res.end() 结束响应并发送数据。</li>
+<li> server.listen(3000, callback) 监听 <strong>3000 端口</strong>。</li>
+</ul>
+<h3 id="创建-HTTP-客户端请求"><a href="#创建-HTTP-客户端请求" class="headerlink" title="创建 HTTP 客户端请求"></a>创建 HTTP 客户端请求</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> options = &#123;</span><br><span class="line">  hostname: <span class="string">&#x27;jsonplaceholder.typicode.com&#x27;</span>,</span><br><span class="line">  path: <span class="string">&#x27;/posts/1&#x27;</span>,</span><br><span class="line">  method: <span class="string">&#x27;GET&#x27;</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> req = http.request(options, <span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> data = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line"></span><br><span class="line">  res.on(<span class="string">&#x27;data&#x27;</span>, <span class="function">(<span class="params">chunk</span>) =&gt;</span> &#123;</span><br><span class="line">    data += chunk;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  res.on(<span class="string">&#x27;end&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;Response:&#x27;</span>, data);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">req.on(<span class="string">&#x27;error&#x27;</span>, <span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.error(<span class="string">&#x27;Request error:&#x27;</span>, err);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">req.end();</span><br></pre></td></tr></table></figure>
+
+<p>✅ <strong>解释</strong>：</p>
+<ul>
+<li> 使用 http.request(options, callback) 发起 HTTP 请求。</li>
+<li> 监听 res.on(‘data’, callback) 处理数据流。</li>
+<li> res.on(‘end’, callback) 处理请求完成后的逻辑。</li>
+<li> req.end() 结束请求。</li>
+</ul>
+<h3 id="处理-JSON-数据"><a href="#处理-JSON-数据" class="headerlink" title="处理 JSON 数据"></a><strong>处理 JSON 数据</strong></h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> server = http.createServer(<span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  res.writeHead(<span class="number">200</span>, &#123; <span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">&#x27;application/json&#x27;</span> &#125;);</span><br><span class="line">  res.end(<span class="built_in">JSON</span>.stringify(&#123; <span class="attr">message</span>: <span class="string">&#x27;Hello, JSON!&#x27;</span> &#125;));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">server.listen(<span class="number">3000</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;JSON Server running at http://localhost:3000/&#x27;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>✅ <strong>解释</strong>：</p>
+<ul>
+<li> res.writeHead(200, { ‘Content-Type’: ‘application/json’ }) 设置 JSON 响应。</li>
+<li> JSON.stringify() 转换对象为 JSON 字符串。</li>
+</ul>
+<h3 id="解析-URL-路由"><a href="#解析-URL-路由" class="headerlink" title="解析 URL 路由"></a><strong>解析 URL 路由</strong></h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> url = <span class="built_in">require</span>(<span class="string">&#x27;url&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> server = http.createServer(<span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> parsedUrl = url.parse(req.url, <span class="literal">true</span>);</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span> (parsedUrl.pathname === <span class="string">&#x27;/hello&#x27;</span>) &#123;</span><br><span class="line">    res.writeHead(<span class="number">200</span>, &#123; <span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">&#x27;text/plain&#x27;</span> &#125;);</span><br><span class="line">    res.end(<span class="string">&#x27;Hello, World!&#x27;</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    res.writeHead(<span class="number">404</span>, &#123; <span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">&#x27;text/plain&#x27;</span> &#125;);</span><br><span class="line">    res.end(<span class="string">&#x27;Not Found&#x27;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">server.listen(<span class="number">3000</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;Server running at http://localhost:3000/&#x27;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>✅ <strong>解释</strong>：</p>
+<ul>
+<li>使用 url.parse(req.url, true) 解析 URL。</li>
+<li>根据 pathname 处理不同的路由。</li>
+</ul>
+<h2 id="19-反向代理"><a href="#19-反向代理" class="headerlink" title="19.反向代理"></a>19.反向代理</h2><h3 id="什么是反向代理"><a href="#什么是反向代理" class="headerlink" title="什么是反向代理?"></a>什么是反向代理?</h3><p>反向代理（Reverse Proxy）是一种网络通信模式，它充当服务器和客户端之间的中介，将客户端的请求转发到一个或多个后端服务器，并将后端服务器的响应返回给客户端。</p>
+<ol>
+<li>负载均衡：反向代理可以根据预先定义的算法将请求分发到多个后端服务器，以实现负载均衡。这样可以避免某个后端服务器过载，提高整体性能和可用性。</li>
+<li>高可用性：通过反向代理，可以将请求转发到多个后端服务器，以提供冗余和故障转移。如果一个后端服务器出现故障，代理服务器可以将请求转发到其他可用的服务器，从而实现高可用性。</li>
+<li>缓存和性能优化：反向代理可以缓存静态资源或经常访问的动态内容，以减轻后端服务器的负载并提高响应速度。它还可以通过压缩、合并和优化资源等技术来优化网络性能。</li>
+<li>安全性：反向代理可以作为防火墙，保护后端服务器免受恶意请求和攻击。它可以过滤恶意请求、检测和阻止攻击，并提供安全认证和访问控制。</li>
+<li>域名和路径重写：反向代理可以根据特定的规则重写请求的域名和路径，以实现 URL 路由和重定向。这对于系统架构的灵活性和可维护性非常有用。</li>
+</ol>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><blockquote>
+<p>用到的库 <code>http-proxy-middleware</code></p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install http-proxy-middleware</span><br></pre></td></tr></table></figure>
+
+<p><strong>根目录自定义配置文件</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aiolimp.config.js</span><br></pre></td></tr></table></figure>
+
+<p>配置proxy代理</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    server:&#123;</span><br><span class="line">        proxy:&#123;</span><br><span class="line">        <span class="comment">//代理的路径</span></span><br><span class="line">            <span class="string">&#x27;/api&#x27;</span>: &#123;</span><br><span class="line">                target: <span class="string">&#x27;http://localhost:3000&#x27;</span>, <span class="comment">//转发的地址</span></span><br><span class="line">                changeOrigin: <span class="literal">true</span>, <span class="comment">//是否有跨域</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>index.js 实现层</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&#x27;node:http&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;node:fs&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> url = <span class="built_in">require</span>(<span class="string">&#x27;node:url&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> html = fs.readFileSync(<span class="string">&#x27;./index.html&#x27;</span>) <span class="comment">//给html文件起个服务</span></span><br><span class="line"><span class="keyword">const</span> &#123;createProxyMiddleware&#125; = <span class="built_in">require</span>(<span class="string">&#x27;http-proxy-middleware&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> config = <span class="built_in">require</span>(<span class="string">&#x27;./aiolimp.config.js&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> server = http.createServer(<span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123;pathname&#125; = url.parse(req.url)</span><br><span class="line">    <span class="keyword">const</span> proxyList = <span class="built_in">Object</span>.keys(config.server.proxy) <span class="comment">//获取代理的路径</span></span><br><span class="line">    <span class="keyword">if</span>(proxyList.includes(pathname))&#123; <span class="comment">//如果请求的路径在里面匹配到 就进行代理</span></span><br><span class="line">        <span class="keyword">const</span> proxy = createProxyMiddleware(config.server.proxy[pathname]) <span class="comment">//代理</span></span><br><span class="line">        proxy(req,res)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">console</span>.log(proxyList)</span><br><span class="line">    res.writeHead(<span class="number">200</span>, &#123;</span><br><span class="line">        <span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">&#x27;text/html&#x27;</span></span><br><span class="line">    &#125;)</span><br><span class="line">    res.end(html) <span class="comment">//返回html</span></span><br><span class="line"></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">server.listen(<span class="number">80</span>) <span class="comment">//监听端口</span></span><br></pre></td></tr></table></figure>
+
+<p>test.js 因为我们从80端口转发到3000端口</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&#x27;node:http&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> url = <span class="built_in">require</span>(<span class="string">&#x27;node:url&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">http.createServer(<span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">const</span> &#123;pathname&#125; = url.parse(req.url)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(pathname === <span class="string">&#x27;/api&#x27;</span>)&#123;</span><br><span class="line">        res.end(<span class="string">&#x27;success proxy&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;).listen(<span class="number">3000</span>)</span><br></pre></td></tr></table></figure>
+
+<p>index.html</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    </span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">          fetch(<span class="string">&#x27;/api&#x27;</span>).then(<span class="function"><span class="params">res</span>=&gt;</span>res.text()).then(<span class="function"><span class="params">res</span>=&gt;</span>&#123;</span></span><br><span class="line"><span class="javascript">            <span class="built_in">console</span>.log(res);</span></span><br><span class="line">          &#125;)</span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line">这样就从80代理到了3000端口 并且无跨域</span><br></pre></td></tr></table></figure>
+
+<h2 id="20-动静分离"><a href="#20-动静分离" class="headerlink" title="20.动静分离"></a>20.<strong>动静分离</strong></h2><p><strong>动静分离</strong>（Separation of Dynamic and Static Content）是一种 <strong>优化网站性能</strong> 的架构模式。它的核心思想是：</p>
+<ul>
+<li><strong>动态请求</strong>（API、数据库交互）交给 <strong>Node.js 或后端服务器</strong> 处理。</li>
+<li><strong>静态资源</strong>（HTML、CSS、JS、图片）交给 <strong>CDN 或 Nginx</strong> 处理，以减少服务器压力，加快访问速度。</li>
+</ul>
+<p><strong>动静分离的几种实现方式</strong></p>
+<p><strong>方式 1：Node.js 直接托管静态资源</strong></p>
+<p>如果你的项目是一个 <strong>Node.js</strong> 应用（比如 Express），可以使用 express.static 提供静态资源：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> app = express();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 托管静态资源</span></span><br><span class="line">app.use(<span class="string">&#x27;/static&#x27;</span>, express.static(<span class="string">&#x27;public&#x27;</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// API 接口</span></span><br><span class="line">app.get(<span class="string">&#x27;/api/data&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    res.json(&#123; <span class="attr">message</span>: <span class="string">&#x27;This is a dynamic response&#x27;</span> &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">8080</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;Server running at http://localhost:8080&#x27;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>✅ <strong>优点</strong>：</p>
+<p>​    •    <strong>简单易用</strong>，不需要额外配置服务器。</p>
+<p>​    •    <strong>适用于小型应用</strong>，开发环境测试很方便。</p>
+<p>❌ <strong>缺点</strong>：</p>
+<p>​    •    <strong>性能不如 Nginx/CDN</strong>，流量大时会影响 API 请求性能。</p>
+<p>​    •    <strong>不适合生产环境</strong>。</p>
+<p><strong>方式 2：Nginx + Node.js 动静分离</strong></p>
+<p><strong>Nginx</strong> 非常适合动静分离，它可以：</p>
+<p>​    •    <strong>直接返回静态资源</strong>，不经过 Node.js，提高性能。</p>
+<p>​    •    <strong>将 API 请求代理到 Node.js</strong>，保证后端业务逻辑正常运行。</p>
+<p>📌 <strong>示例：Nginx 配置</strong></p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span> example.com;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 静态资源处理</span></span><br><span class="line">    <span class="attribute">location</span> /static/ &#123;</span><br><span class="line">        <span class="attribute">root</span> /var/www/html;</span><br><span class="line">        <span class="attribute">index</span> index.html index.htm;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 代理 API 请求到 Node.js 服务器</span></span><br><span class="line">    <span class="attribute">location</span> /api/ &#123;</span><br><span class="line">        <span class="attribute">proxy_pass</span> http://localhost:3000;  <span class="comment"># 你的 Node.js API 服务</span></span><br><span class="line">        <span class="attribute">proxy_set_header</span> Host $host;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Real-IP $remote_addr;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>✅ <strong>优点</strong>：</p>
+<p>​    •    <strong>Nginx 处理静态资源，减少 Node.js 服务器压力</strong>。</p>
+<p>​    •    <strong>缓存优化</strong>，提高访问速度。</p>
+<p>​    •    <strong>更适合高并发场景</strong>。</p>
+<p><strong>方式 3：CDN + Node.js 动静分离</strong></p>
+<p>如果你的网站 <strong>用户量大、覆盖范围广</strong>，可以使用 <strong>CDN（内容分发网络）</strong>：</p>
+<p>​    •    <strong>静态资源</strong>（HTML/CSS/JS/图片）托管到 CDN，如 <strong>Cloudflare、阿里云 OSS、七牛云</strong>。</p>
+<p>​    •    <strong>API 请求</strong> 仍然由 <strong>Node.js 处理</strong>。</p>
+<p>📌 <strong>示例：前端 Vue/React 配置静态资源 CDN</strong></p>
+<p>在 vite.config.js 或 webpack.config.js 里设置 <strong>CDN 地址</strong>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> defineConfig(&#123;</span><br><span class="line">  build: &#123;</span><br><span class="line">    rollupOptions: &#123;</span><br><span class="line">      output: &#123;</span><br><span class="line">        assetFileNames: <span class="function">(<span class="params">&#123; name &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">          <span class="keyword">if</span> (<span class="regexp">/\.(gif|jpe?g|png|svg|css|js)$/</span>.test(name)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">`https://cdn.example.com/static/<span class="subst">$&#123;name&#125;</span>`</span>;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">return</span> <span class="string">&#x27;[name].[ext]&#x27;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>✅ <strong>优点</strong>：</p>
+<p>​    •    <strong>全球加速</strong>，适合跨区域用户。</p>
+<p>​    •    <strong>CDN 自动缓存</strong>，减少服务器带宽消耗。</p>
+<p>​    •    <strong>API 和静态资源完全解耦，提升稳定性</strong>。</p>
+<p>❌ <strong>缺点</strong>：</p>
+<p>​    •    <strong>CDN 需要额外的成本</strong>（不过很多云厂商有免费额度）。</p>
+<p>​    •    <strong>文件更新时要刷新 CDN 缓存</strong>。</p>
+<p>🚀 <strong>推荐方案</strong>：</p>
+<p>​    •    <strong>小项目</strong>：直接用 express.static() 处理静态资源。</p>
+<p>​    •    <strong>中大型项目</strong>：使用 <strong>Nginx 代理</strong>，让它处理静态资源，Node.js 只负责 API。</p>
+<p>​    •    <strong>超大流量项目</strong>：结合 <strong>CDN</strong>，最大化加速访问。</p>
+<h2 id="21-防盗链"><a href="#21-防盗链" class="headerlink" title="21.防盗链"></a>21.防盗链</h2><p>防盗链（Hotlinking）是指在网页或其他网络资源中，通过直接链接到其他网站上的图片、视频或其他媒体文件，从而显示在自己的网页上。这种行为通常会给被链接的网站带来额外的带宽消耗和资源浪费，而且可能侵犯了原始网站的版权。</p>
+<p>为了防止盗链，网站管理员可以采取一些措施：</p>
+<ol>
+<li>通过HTTP引用检查：网站可以检查HTTP请求的来源，如果来源网址与合法的来源不匹配，就拒绝提供资源。这可以通过服务器配置文件或特定的脚本实现。</li>
+<li>使用Referrer检查：网站可以检查HTTP请求中的Referrer字段，该字段指示了请求资源的来源页面。如果Referrer字段不符合预期，就拒绝提供资源。这种方法可以在服务器配置文件或脚本中实现。</li>
+<li>使用访问控制列表（ACL）：网站管理员可以配置服务器的访问控制列表，只允许特定的域名或IP地址访问资源，其他来源的请求将被拒绝。</li>
+<li>使用防盗链插件或脚本：一些网站平台和内容管理系统提供了专门的插件或脚本来防止盗链。这些工具可以根据需要配置，阻止来自未经授权的网站的盗链请求。</li>
+<li>使用水印技术：在图片或视频上添加水印可以帮助识别盗链行为，并提醒用户资源的来源。</li>
+</ol>
+<p><strong>1.防盗链一般主要就是验证<code>host</code> 或者 <code>referer</code></strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> express <span class="keyword">from</span> <span class="string">&#x27;express&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = express();</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> whitelist = [<span class="string">&#x27;localhost&#x27;</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 防止热链中间件</span></span><br><span class="line"><span class="keyword">const</span> preventHotLinking = <span class="function">(<span class="params">req, res, next</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">//浏览器直接访问静态资源是不会携带referer字段的，需要在html中发起一个访问静态资源的请求才会携带     referer字段</span></span><br><span class="line">  <span class="keyword">const</span> referer = req.get(<span class="string">&#x27;referer&#x27;</span>); <span class="comment">// 获取请求头部中的 referer 字段</span></span><br><span class="line">  <span class="keyword">if</span> (referer) &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; hostname &#125; = <span class="keyword">new</span> URL(referer); <span class="comment">// 从 referer 中解析主机名</span></span><br><span class="line">    <span class="keyword">if</span> (!whitelist.includes(hostname)) &#123; <span class="comment">// 检查主机名是否在白名单中</span></span><br><span class="line">      res.status(<span class="number">403</span>).send(<span class="string">&#x27;Forbidden&#x27;</span>); <span class="comment">// 如果不在白名单中，返回 403 Forbidden</span></span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  next(); <span class="comment">// 如果在白名单中，继续处理下一个中间件或路由</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">app.use(preventHotLinking); <span class="comment">// 应用防止热链中间件</span></span><br><span class="line">app.use(<span class="string">&#x27;/assets&#x27;</span>, express.static(<span class="string">&#x27;static&#x27;</span>)); <span class="comment">// 处理静态资源请求</span></span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3000</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;Listening on port 3000&#x27;</span>); <span class="comment">// 启动服务器，监听端口3000</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><strong>2.基于 Token 认证</strong></p>
+<p>如果防盗链更严格，可以使用<strong>签名 Token 认证</strong>，例如：</p>
+<ul>
+<li><p>访问静态资源时，前端附带一个临时 Token（如 <a target="_blank" rel="noopener" href="https://yourwebsite.com/images/logo.png?token=abc123%EF%BC%89%E3%80%82">https://yourwebsite.com/images/logo.png?token=abc123）。</a></p>
+</li>
+<li><p>服务器校验 Token 是否合法，合法才返回资源。</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> crypto = <span class="built_in">require</span>(<span class="string">&#x27;crypto&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> SECRET_KEY = <span class="string">&#x27;your-secret-key&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 生成 Token</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">generateToken</span>(<span class="params">filePath</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> crypto.createHmac(<span class="string">&#x27;sha256&#x27;</span>, SECRET_KEY).update(filePath).digest(<span class="string">&#x27;hex&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 中间件：检查 Token</span></span><br><span class="line">app.use(<span class="string">&#x27;/images&#x27;</span>, <span class="function">(<span class="params">req, res, next</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; token &#125; = req.query;</span><br><span class="line">    <span class="keyword">const</span> filePath = req.path;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!token || token !== generateToken(filePath)) &#123;</span><br><span class="line">        <span class="keyword">return</span> res.status(<span class="number">403</span>).send(<span class="string">&#x27;Invalid Token&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    next();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.use(<span class="string">&#x27;/images&#x27;</span>, express.static(path.join(__dirname, <span class="string">&#x27;images&#x27;</span>)));</span><br></pre></td></tr></table></figure>
+
+<p><strong>说明</strong></p>
+<ul>
+<li><p>在请求资源时，前端需要带上 token（比如 logo.png?token=xyz）。</p>
+</li>
+<li><p>服务器验证 token 是否匹配，否则拒绝访问。</p>
+</li>
+</ul>
+<p><strong>3.Nginx 配合 Express 防盗链</strong></p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> /images/ &#123;</span><br><span class="line">    <span class="attribute">valid_referers</span> <span class="literal">none</span> <span class="literal">blocked</span> yourwebsite.com;</span><br><span class="line">    <span class="attribute">if</span> ($invalid_referer) &#123;</span><br><span class="line">        <span class="attribute">return</span> <span class="number">403</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://Aiolimp.com">Aiolimp</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://aiolimp.com/2024/03/11/node/">http://aiolimp.com/2024/03/11/node/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://Aiolimp.com" target="_blank">Aiolimp</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Node/">Node</a></div><div class="post_share"><div class="social-share" data-image="https://static001.geekbang.org/resource/image/bd/2e/bddfad3dc8fb2f7c4942a0dc1286c92e.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/04/13/WebWork/" title="Web Worker 基本使用"><img class="cover" src="https://static001.geekbang.org/resource/image/fb/c0/fb4e210a483a7892433331082f5f09c0.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Web Worker 基本使用</div></div></a></div><div class="next-post pull-right"><a href="/2023/08/12/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" title="代理模式"><img class="cover" src="https://static001.geekbang.org/resource/image/bd/2e/bddfad3dc8fb2f7c4942a0dc1286c92e.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">代理模式</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/05/09/Node.js%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/" title="Node.js学习笔记"><img class="cover" src="https://static001.geekbang.org/resource/image/bd/2e/bddfad3dc8fb2f7c4942a0dc1286c92e.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-09</div><div class="title">Node.js学习笔记</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/images/touxiang.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Aiolimp</div><div class="author-info__description">生如长河,渡船千艘</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">84</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">20</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">20</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Aiolimp" target="_blank" title="Github"><i class="fab fa-github"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">1.介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-NPM"><span class="toc-number">2.</span> <span class="toc-text">2.NPM</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#npm"><span class="toc-number">2.0.1.</span> <span class="toc-text">npm</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#npm%E5%91%BD%E4%BB%A4"><span class="toc-number">2.0.2.</span> <span class="toc-text">npm命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Package-json"><span class="toc-number">2.0.3.</span> <span class="toc-text">Package json</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Npm-install-%E5%8E%9F%E7%90%86"><span class="toc-number">2.0.4.</span> <span class="toc-text">Npm install 原理</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%9C%A8%E6%89%A7%E8%A1%8Cnpm-install-%E7%9A%84%E6%97%B6%E5%80%99%E5%8F%91%E7%94%9F%E4%BA%86%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">2.0.4.1.</span> <span class="toc-text">在执行npm install 的时候发生了什么？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#npm-install-%E5%90%8E%E7%BB%AD%E6%B5%81%E7%A8%8B"><span class="toc-number">2.0.4.2.</span> <span class="toc-text">npm install 后续流程</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Npm-run-%E5%8E%9F%E7%90%86"><span class="toc-number">2.0.5.</span> <span class="toc-text">Npm run 原理</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#npm-run-xxx-%E5%8F%91%E7%94%9F%E4%BA%86%E4%BB%80%E4%B9%88"><span class="toc-number">2.0.5.1.</span> <span class="toc-text">npm run xxx 发生了什么</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#npm-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">2.0.5.2.</span> <span class="toc-text">npm 生命周期</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-npx"><span class="toc-number">3.</span> <span class="toc-text">3.npx</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-nvm%E5%92%8Cnrm"><span class="toc-number">4.</span> <span class="toc-text">4.nvm和nrm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E6%A8%A1%E5%9D%97%E5%8C%96"><span class="toc-number">5.</span> <span class="toc-text">5.模块化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#CommonJS-%E8%A7%84%E8%8C%83"><span class="toc-number">5.0.1.</span> <span class="toc-text">CommonJS 规范</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ESM%E6%A8%A1%E5%9D%97%E8%A7%84%E8%8C%83"><span class="toc-number">5.0.2.</span> <span class="toc-text">ESM模块规范</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Cjs-%E5%92%8C-ESM-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">5.0.3.</span> <span class="toc-text">Cjs 和 ESM 的区别</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F"><span class="toc-number">6.</span> <span class="toc-text">6.全局变量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%9C%A8nodejs%E5%AE%9A%E4%B9%89%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F"><span class="toc-number">6.0.1.</span> <span class="toc-text">如何在nodejs定义全局变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E5%85%B6%E4%BB%96%E5%85%A8%E5%B1%80API"><span class="toc-number">6.0.2.</span> <span class="toc-text">关于其他全局API</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#nodejs%E5%86%85%E7%BD%AE%E5%85%A8%E5%B1%80API"><span class="toc-number">6.0.3.</span> <span class="toc-text">nodejs内置全局API</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#process"><span class="toc-number">6.0.4.</span> <span class="toc-text">process</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Buffer"><span class="toc-number">6.0.5.</span> <span class="toc-text">Buffer</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-CSR-SSR-SEO"><span class="toc-number">7.</span> <span class="toc-text">7.CSR SSR SEO</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#CSR%EF%BC%88Client-Side-Rendering%EF%BC%89%E2%80%94%E2%80%94%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%B8%B2%E6%9F%93"><span class="toc-number">7.0.1.</span> <span class="toc-text">CSR（Client-Side Rendering）——客户端渲染</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SSR%EF%BC%88Server-Side-Rendering%EF%BC%89%E2%80%94%E2%80%94%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%B8%B2%E6%9F%93"><span class="toc-number">7.0.2.</span> <span class="toc-text">SSR（Server-Side Rendering）——服务端渲染</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SEO%EF%BC%88Search-Engine-Optimization%EF%BC%89%E2%80%94%E2%80%94%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E4%BC%98%E5%8C%96"><span class="toc-number">7.0.3.</span> <span class="toc-text">SEO（Search Engine Optimization）——搜索引擎优化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CSR-%E5%92%8C-SSR-%E5%8C%BA%E5%88%AB"><span class="toc-number">7.0.4.</span> <span class="toc-text">CSR 和 SSR 区别</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-path"><span class="toc-number">8.</span> <span class="toc-text">8.path</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#windows-posix-%E5%B7%AE%E5%BC%82"><span class="toc-number">8.0.1.</span> <span class="toc-text">windows posix 差异</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#path-dirname"><span class="toc-number">8.0.2.</span> <span class="toc-text">path.dirname</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#path-extname"><span class="toc-number">8.0.3.</span> <span class="toc-text">path.extname</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#path-join"><span class="toc-number">8.0.4.</span> <span class="toc-text">path.join</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#path-resolve"><span class="toc-number">8.0.5.</span> <span class="toc-text">path.resolve</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#path-parse-path-format"><span class="toc-number">8.0.6.</span> <span class="toc-text">path.parse  path.format</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-os"><span class="toc-number">9.</span> <span class="toc-text">9.os</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-process"><span class="toc-number">10.</span> <span class="toc-text">10.process</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="toc-number">10.0.1.</span> <span class="toc-text">基本信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-number">10.0.2.</span> <span class="toc-text">环境变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BD%93%E5%89%8D%E5%B7%A5%E4%BD%9C%E7%9B%AE%E5%BD%95"><span class="toc-number">10.0.3.</span> <span class="toc-text">当前工作目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E8%BF%90%E8%A1%8C%E4%BF%A1%E6%81%AF"><span class="toc-number">10.0.4.</span> <span class="toc-text">进程运行信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%87%E5%87%86%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA"><span class="toc-number">10.0.5.</span> <span class="toc-text">标准输入输出</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86"><span class="toc-number">10.0.6.</span> <span class="toc-text">信号处理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%80%E5%87%BA%E8%BF%9B%E7%A8%8B"><span class="toc-number">10.0.7.</span> <span class="toc-text">退出进程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="toc-number">10.0.8.</span> <span class="toc-text">异常处理</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-child-process"><span class="toc-number">11.</span> <span class="toc-text">11.child_process</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%AD%90%E8%BF%9B%E7%A8%8B"><span class="toc-number">11.0.1.</span> <span class="toc-text">创建子进程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%A8%E6%B3%95"><span class="toc-number">11.0.2.</span> <span class="toc-text">用法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-event"><span class="toc-number">12.</span> <span class="toc-text">12.event</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-unit"><span class="toc-number">13.</span> <span class="toc-text">13.unit</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14-fs"><span class="toc-number">14.</span> <span class="toc-text">14.fs</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#fs%E5%A4%9A%E7%A7%8D%E7%AD%96%E7%95%A5"><span class="toc-number">14.0.1.</span> <span class="toc-text">fs多种策略</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8API-%E4%BB%8B%E7%BB%8D"><span class="toc-number">14.0.2.</span> <span class="toc-text">常用API 介绍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90"><span class="toc-number">14.0.3.</span> <span class="toc-text">源码解析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A1%AC%E9%93%BE%E6%8E%A5-%E5%92%8C-%E8%BD%AF%E8%BF%9E%E6%8E%A5"><span class="toc-number">14.0.4.</span> <span class="toc-text">硬链接 和 软连接</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#15-crypto"><span class="toc-number">15.</span> <span class="toc-text">15.crypto</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86"><span class="toc-number">15.1.</span> <span class="toc-text">对称加密</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86"><span class="toc-number">15.2.</span> <span class="toc-text">非对称加密</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E5%87%BD%E6%95%B0"><span class="toc-number">15.3.</span> <span class="toc-text">哈希函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#16-cli"><span class="toc-number">16.</span> <span class="toc-text">16.cli</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E8%84%9A%E6%89%8B%E6%9E%B6%EF%BC%9F"><span class="toc-number">16.0.1.</span> <span class="toc-text">什么是脚手架？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E5%B7%A5%E5%85%B7"><span class="toc-number">16.0.2.</span> <span class="toc-text">相关工具</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%96%E5%86%99%E4%BB%A3%E7%A0%81"><span class="toc-number">16.0.3.</span> <span class="toc-text">编写代码</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#17-zlib"><span class="toc-number">17.</span> <span class="toc-text">17.zlib</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E6%A1%88%E4%BE%8B"><span class="toc-number">17.1.</span> <span class="toc-text">代码案例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#gzip-%E5%92%8C-deflate-%E5%8C%BA%E5%88%AB"><span class="toc-number">17.2.</span> <span class="toc-text">gzip 和 deflate 区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#http%E8%AF%B7%E6%B1%82%E5%8E%8B%E7%BC%A9"><span class="toc-number">17.3.</span> <span class="toc-text">http请求压缩</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#18-http"><span class="toc-number">18.</span> <span class="toc-text">18.http</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA-HTTP-%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">18.1.</span> <span class="toc-text">创建 HTTP 服务器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA-HTTP-%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AF%B7%E6%B1%82"><span class="toc-number">18.2.</span> <span class="toc-text">创建 HTTP 客户端请求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%84%E7%90%86-JSON-%E6%95%B0%E6%8D%AE"><span class="toc-number">18.3.</span> <span class="toc-text">处理 JSON 数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E6%9E%90-URL-%E8%B7%AF%E7%94%B1"><span class="toc-number">18.4.</span> <span class="toc-text">解析 URL 路由</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#19-%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86"><span class="toc-number">19.</span> <span class="toc-text">19.反向代理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86"><span class="toc-number">19.1.</span> <span class="toc-text">什么是反向代理?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="toc-number">19.2.</span> <span class="toc-text">代码实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#20-%E5%8A%A8%E9%9D%99%E5%88%86%E7%A6%BB"><span class="toc-number">20.</span> <span class="toc-text">20.动静分离</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#21-%E9%98%B2%E7%9B%97%E9%93%BE"><span class="toc-number">21.</span> <span class="toc-text">21.防盗链</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/08/03/Fabric/" title="Fabric.js"><img src="https://static001.geekbang.org/resource/image/ee/70/ee7627bac9defb7621c2489fbacb3a70.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Fabric.js"/></a><div class="content"><a class="title" href="/2024/08/03/Fabric/" title="Fabric.js">Fabric.js</a><time datetime="2024-08-03T08:57:49.000Z" title="发表于 2024-08-03 16:57:49">2024-08-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/06/02/MySql/" title="MySql"><img src="https://static001.geekbang.org/resource/image/1b/21/1b809d9a2bdf3ecc481322d7c9223c21.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MySql"/></a><div class="content"><a class="title" href="/2024/06/02/MySql/" title="MySql">MySql</a><time datetime="2024-06-01T16:00:00.000Z" title="发表于 2024-06-02 00:00:00">2024-06-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/04/13/WebWork/" title="Web Worker 基本使用"><img src="https://static001.geekbang.org/resource/image/fb/c0/fb4e210a483a7892433331082f5f09c0.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Web Worker 基本使用"/></a><div class="content"><a class="title" href="/2024/04/13/WebWork/" title="Web Worker 基本使用">Web Worker 基本使用</a><time datetime="2024-04-12T16:00:00.000Z" title="发表于 2024-04-13 00:00:00">2024-04-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/03/11/node/" title="node基础"><img src="https://static001.geekbang.org/resource/image/bd/2e/bddfad3dc8fb2f7c4942a0dc1286c92e.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="node基础"/></a><div class="content"><a class="title" href="/2024/03/11/node/" title="node基础">node基础</a><time datetime="2024-03-10T16:00:00.000Z" title="发表于 2024-03-11 00:00:00">2024-03-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/08/12/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" title="代理模式"><img src="https://static001.geekbang.org/resource/image/bd/2e/bddfad3dc8fb2f7c4942a0dc1286c92e.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="代理模式"/></a><div class="content"><a class="title" href="/2023/08/12/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" title="代理模式">代理模式</a><time datetime="2023-08-12T08:57:49.000Z" title="发表于 2023-08-12 16:57:49">2023-08-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Aiolimp</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
