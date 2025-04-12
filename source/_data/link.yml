@@ -1,0 +1,35 @@
+- class_name: 语言基础
+  link_list:
+    - name: JavaScript高级程序设计
+      descr: JavaScript高级程序设计
+      link: https://link.juejin.cn?target=https%3A%2F%2Fbook.douban.com%2Fsubject%2F10546125%2F
+    - name: 高性能JavaScript
+      descr: 高性能JavaScript
+      link: https://link.juejin.cn?target=https%3A%2F%2Fbook.douban.com%2Fsubject%2F5362856%2F
+    - name: 现代JavaScript教程
+      descr: 现代JavaScript教程
+      link: https://link.juejin.cn?target=https%3A%2F%2Fzh.javascript.info%2F
+    - name: 阮一峰的ECMAScript 6教程
+      descr: 阮一峰的ECMAScript 6教程
+      link: https://link.juejin.cn?target=http%3A%2F%2Fes6.ruanyifeng.com%2F\    
+
+- class_name: 推荐博客：
+  link_list:
+    - name: 冴羽的博客
+      avatar: https://i.loli.net/2020/05/14/9ZkGg8v3azHJfM1.png
+      descr: 冴羽的博客
+      link: https://link.juejin.cn?target=https%3A%2F%2Fgithub.com%2Fmqyqingfeng%2FBlog
+    - name: 张鑫旭的博客
+      avatar: https://i.loli.net/2020/05/14/9ZkGg8v3azHJfM1.png
+      descr: 张鑫旭的博客
+      link: https://link.juejin.cn?target=https%3A%2F%2Fwww.zhangxinxu.com%2Fwordpress%2F
+    - name: 冴羽的博客
+      avatar: https://i.loli.net/2020/05/14/9ZkGg8v3azHJfM1.png
+      descr: 左耳朵耗子：
+      link: https://link.juejin.cn?target=https%3A%2F%2Fcoolshell.cn%2F
+    - name: 神三元：
+      avatar: https://i.loli.net/2020/05/14/9ZkGg8v3azHJfM1.png
+      descr: 神三元：
+      link: http://47.98.159.95/my_blog/
+      
+  
